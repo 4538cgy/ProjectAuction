@@ -8,6 +8,9 @@
         <variable
             name="activitylogin"
             type="com.example.project_auction.view.activity.login.LoginActivity" />
+        <variable
+            name="loginsignupviewmodel"
+            type="com.example.project_auction.viewmodel.LoginSignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -103,6 +106,7 @@
             android:src="@drawable/btn_signin_google"
             android:scaleType="centerInside"
             android:background="@android:color/transparent"
+            android:onClick="@{activitylogin.google}"
             />
 
         <Button

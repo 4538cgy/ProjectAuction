@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import com.example.project_auction.R
 import com.example.project_auction.base.BaseActivity
 import com.example.project_auction.databinding.ActivitySplashBinding
+import com.example.project_auction.view.activity.login.LoginActivity
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.uos.smsmsm.util.shareddate.PreferenceUtil
 
@@ -70,7 +71,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
                 if(PreferenceUtil(binding.root.context).getString("adultCheck","") == "true") {
                     //startActivity(Intent(this, FirstTimeActivity::class.java))
                 }else{
-                    //startActivity(Intent(this,WelcomeMainActivity::class.java))
+                    startActivity(Intent(this,LoginActivity::class.java))
                 }
                 this.finish()
             }
