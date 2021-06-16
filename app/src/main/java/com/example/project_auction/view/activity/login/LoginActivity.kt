@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import com.example.project_auction.R
 import com.example.project_auction.base.BaseActivity
 import com.example.project_auction.databinding.ActivityLoginBinding
+import com.example.project_auction.view.activity.signup.SignUpActivity
 import com.example.project_auction.viewmodel.LoginSignUpViewModel
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -37,6 +38,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                 firebaseAuthWithGoogle(account)
             }
         }
+    }
+
+    fun signUp(view : View){
+        startActivity(Intent(binding.root.context,SignUpActivity::class.java))
+        finish()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

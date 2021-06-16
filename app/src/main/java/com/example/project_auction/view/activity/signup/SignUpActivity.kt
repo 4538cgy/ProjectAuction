@@ -24,7 +24,10 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
             val fragmentList = arrayListOf<Fragment>(SignUpFirstFragment())
             val adapter = SignUpViewPagerAdapter(this@SignUpActivity)
             adapter.fragments = fragmentList
-            activitySignUpViewpager2.adapter = adapter
+            activitySignUpViewpager2.apply {
+                this.adapter = adapter
+                this.run { isUserInputEnabled = false }
+            }
         }
     }
 
