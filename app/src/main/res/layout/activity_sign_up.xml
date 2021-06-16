@@ -8,6 +8,9 @@
         <variable
             name="activitysignup"
             type="com.example.project_auction.view.activity.signup.SignUpActivity" />
+        <variable
+            name="loginsignupviewmodel"
+            type="com.example.project_auction.viewmodel.LoginSignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
