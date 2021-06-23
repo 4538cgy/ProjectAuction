@@ -1,4 +1,4 @@
-package com.uos.smsmsm.util.shareddate
+package com.example.project_auction.util.shared
 
 import android.app.Application
 

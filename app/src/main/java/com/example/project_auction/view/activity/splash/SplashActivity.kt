@@ -2,7 +2,6 @@ package com.example.project_auction.view.activity.splash
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
@@ -11,7 +10,7 @@ import com.example.project_auction.base.BaseActivity
 import com.example.project_auction.databinding.ActivitySplashBinding
 import com.example.project_auction.view.activity.login.LoginActivity
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.uos.smsmsm.util.shareddate.PreferenceUtil
+import com.example.project_auction.util.shared.PreferenceUtil
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_splash) {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -121,6 +121,7 @@
             android:layout_marginHorizontal="12dp"
             android:backgroundTintMode="add"
             android:text="카카오 로그인"
+            android:onClick="@{activitylogin.kakaoLogin}"
             />
 
         <Button
