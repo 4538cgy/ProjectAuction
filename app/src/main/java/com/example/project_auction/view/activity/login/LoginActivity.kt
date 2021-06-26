@@ -27,6 +27,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
+import com.nhn.android.naverlogin.OAuthLogin
+import com.nhn.android.naverlogin.OAuthLoginHandler
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,6 +39,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     private val auth = FirebaseAuth.getInstance()
     private var googleSignInClient : GoogleSignInClient ?= null
     private val GOOGLE_LOGIN_CODE = 9001
+
+    private val mOAuthLoginModule = OAuthLogin.getInstance()
 
     private val googleLoginCallback = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         val result = Auth.GoogleSignInApi.getSignInResultFromIntent(it.data)
@@ -71,6 +75,24 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                         println("data = ${response.body()?.data}")
                         println("msg = ${response.body()?.msg}")
                         println("-----------------------------")
+
+
+                        FirebaseAuth.getInstance().signInWithCustomToken(response.body()?.data!!)
+                            .addOnCompleteListener {
+                                if (it.isSuccessful){
+                                    println("-----------------------------")
+                                    println("signInWithCustomToken:success")
+                                    println("${FirebaseAuth.getInstance().currentUser?.uid}")
+                                    println("-----------------------------")
+                                }else{
+                                    println("signInWithCustomToken:fail")
+                                    println("그아아아 ${it.addOnFailureListener { cause ->
+                                        println("왜 실패? ${cause.toString()}")
+                                    }}")
+                                }
+                            }.addOnFailureListener {
+                                println("로그인 실패 ${it.toString()}")
+                            }
                     }
 
                     override fun onFailure(call: Call<KakaoDTO.KakaoResponse>, t: Throwable) {
@@ -93,6 +115,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         var keyHash = Utility.getKeyHash(this)
         println("아아 키해쉬 입니다 $keyHash")
 
+        //naver sdk 초기화
+        mOAuthLoginModule.init(this,"D0nkJ2NHnNrr9qsuaobQ","oeQaBdgtSn","Auction")
+
+
         //kakao sdk 초기화
         KakaoSdk.init(binding.root.context, "a569b6cca45eb6678adf418f11dc4357")
 
@@ -105,6 +131,30 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             activitylogin = this@LoginActivity
             loginsignupviewmodel = viewModel
         }
+    }
+
+    fun naver(view : View){
+        val mOAuthHandler = object : OAuthLoginHandler(){
+            override fun run(success: Boolean) {
+                if (success){
+                    val accessToken = mOAuthLoginModule.getAccessToken(binding.root.context)
+                    val refreshToken = mOAuthLoginModule.getRefreshToken(binding.root.context)
+                    val expireAt = mOAuthLoginModule.getExpiresAt(binding.root.context)
+                    val tokenType = mOAuthLoginModule.getTokenType(binding.root.context)
+
+                    println("네이버 로그인에 성공하였습니다." +
+                            "\n $accessToken" +
+                            "\n $refreshToken" +
+                            "\n $expireAt" +
+                            "\n $tokenType")
+                }else{
+                    println("네이버 로그인 실패")
+                }
+            }
+
+        }
+
+        mOAuthLoginModule.startOauthLoginActivity(this,mOAuthHandler)
     }
 
     fun google(view : View){
