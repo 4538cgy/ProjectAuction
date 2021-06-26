@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import com.example.project_auction.R
 import com.example.project_auction.base.BaseActivity
 import com.example.project_auction.data.KakaoDTO
+import com.example.project_auction.data.NaverDTO
 import com.example.project_auction.databinding.ActivityLoginBinding
 import com.example.project_auction.util.http.HttpApi
 import com.example.project_auction.view.activity.signup.SignUpActivity
@@ -147,6 +148,46 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                             "\n $refreshToken" +
                             "\n $expireAt" +
                             "\n $tokenType")
+
+                    var naverDTO = NaverDTO(accessToken)
+
+                    HttpApi().test2(naverDTO).enqueue(object :
+                        retrofit2.Callback<NaverDTO.NaverResponse> {
+                        override fun onResponse(
+                            call: Call<NaverDTO.NaverResponse>,
+                            response: Response<NaverDTO.NaverResponse>
+                        ) {
+                            println("-----------------------------" )
+                            println("body = ${response.body()}")
+                            println("code = ${response.body()?.code}")
+                            println("data = ${response.body()?.data}")
+                            println("msg = ${response.body()?.msg}")
+                            println("-----------------------------")
+
+
+                            FirebaseAuth.getInstance().signInWithCustomToken(response.body()?.data!!)
+                                .addOnCompleteListener {
+                                    if (it.isSuccessful){
+                                        println("-----------------------------")
+                                        println("signInWithCustomToken:success")
+                                        println("${FirebaseAuth.getInstance().currentUser?.uid}")
+                                        println("-----------------------------")
+                                    }else{
+                                        println("signInWithCustomToken:fail")
+                                        println("그아아아 ${it.addOnFailureListener { cause ->
+                                            println("왜 실패? ${cause.toString()}")
+                                        }}")
+                                    }
+                                }.addOnFailureListener {
+                                    println("로그인 실패 ${it.toString()}")
+                                }
+                        }
+
+                        override fun onFailure(call: Call<NaverDTO.NaverResponse>, t: Throwable) {
+                            println(" 토큰 받아오기 실패 ")
+                        }
+
+                    })
                 }else{
                     println("네이버 로그인 실패")
                 }
@@ -163,24 +204,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         //startActivityForResult(signInIntent, GOOGLE_LOGIN_CODE)
     }
 
-    /*
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == GOOGLE_LOGIN_CODE) {
-            // var -> val [result, account]
-            val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
-            if (result != null) {
-                if (result.isSuccess) {
-                    val account = result.signInAccount
-                    // second step
-                    firebaseAuthWithGoogle(account)
-                }
-            }
-        }
-    }
-
-     */
 
     // Make private
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {

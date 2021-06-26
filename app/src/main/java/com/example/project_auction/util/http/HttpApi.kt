@@ -1,6 +1,7 @@
 package com.example.project_auction.util.http
 
 import com.example.project_auction.data.KakaoDTO
+import com.example.project_auction.data.NaverDTO
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -25,5 +26,9 @@ class HttpApi {
 
     fun test(testDTO: KakaoDTO) : Call<KakaoDTO.KakaoResponse>{
         return loginTokenInterface.test(testDTO)
+    }
+
+    fun test2(testDTO : NaverDTO) : Call<NaverDTO.NaverResponse>{
+        return loginTokenInterface.test2(testDTO)
     }
 }
