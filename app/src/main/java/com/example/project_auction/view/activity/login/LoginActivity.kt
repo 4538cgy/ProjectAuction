@@ -63,6 +63,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             }else if(token != null){
                 println("로그인 성공")
 
+
                 var kakaoDTO = KakaoDTO(token.accessToken)
 
                 HttpApi().test(kakaoDTO).enqueue(object : Callback<KakaoDTO.KakaoResponse>{
@@ -85,6 +86,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                                     println("signInWithCustomToken:success")
                                     println("${FirebaseAuth.getInstance().currentUser?.uid}")
                                     println("-----------------------------")
+
+                                    //signUp으로 보내기
                                 }else{
                                     println("signInWithCustomToken:fail")
                                     println("그아아아 ${it.addOnFailureListener { cause ->
@@ -172,6 +175,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                                         println("signInWithCustomToken:success")
                                         println("${FirebaseAuth.getInstance().currentUser?.uid}")
                                         println("-----------------------------")
+
+                                        //signUp으로 보내기
                                     }else{
                                         println("signInWithCustomToken:fail")
                                         println("그아아아 ${it.addOnFailureListener { cause ->
