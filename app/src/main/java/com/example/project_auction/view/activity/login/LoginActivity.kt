@@ -13,6 +13,7 @@ import com.example.project_auction.data.KakaoDTO
 import com.example.project_auction.data.NaverDTO
 import com.example.project_auction.databinding.ActivityLoginBinding
 import com.example.project_auction.util.http.HttpApi
+import com.example.project_auction.view.activity.lobby.LobbyActivity
 import com.example.project_auction.view.activity.signup.SignUpActivity
 import com.example.project_auction.viewmodel.LoginSignUpViewModel
 import com.google.android.gms.auth.api.Auth
@@ -88,6 +89,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                                     println("-----------------------------")
 
                                     //signUp으로 보내기
+                                    moveMainPage(it.result.user)
                                 }else{
                                     println("signInWithCustomToken:fail")
                                     println("그아아아 ${it.addOnFailureListener { cause ->
@@ -177,6 +179,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                                         println("-----------------------------")
 
                                         //signUp으로 보내기
+                                        moveMainPage(it.result.user)
                                     }else{
                                         println("signInWithCustomToken:fail")
                                         println("그아아아 ${it.addOnFailureListener { cause ->
@@ -233,9 +236,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                     .addSnapshotListener { documentSnapshot, _ -> // Remove useless parameter
                         if (documentSnapshot != null) {
                             if (!documentSnapshot.isEmpty) { // Remove NonNull
-                                //startActivity(Intent(this, LobbyActivity::class.java))
+                                startActivity(Intent(this, LobbyActivity::class.java))
                             } else {
-                                //startActivity(Intent(this, SignUpActivity::class.java))
+                                startActivity(Intent(this, SignUpActivity::class.java))
                             }
                             finish()
                         }
