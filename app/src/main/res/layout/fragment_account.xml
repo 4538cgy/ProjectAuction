@@ -1,14 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragment.lobby.account.AccountFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+        <variable
+            name="fragmentaccount"
+            type="com.example.project_auction.view.fragment.lobby.account.AccountFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        >
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_account_constraint_nickname_container"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="32dp"
+            >
+            <ImageView
+                android:id="@+id/fragment_account_imageview_profile"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginLeft="24dp"
+                />
+
+            <TextView
+                android:id="@+id/fragment_account_textview_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="닉네임"
+                app:layout_constraintLeft_toRightOf="@+id/fragment_account_imageview_profile"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginLeft="12dp"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_account_constraint_history_container"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_account_constraint_nickname_container"
+            >
+
+            <Button
+                android:id="@+id/fragment_account_button_auction_history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="경매 등록 내역"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/fragment_account_button_auction_join_history"
+                />
+
+            <Button
+                android:id="@+id/fragment_account_button_auction_join_history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="경매 참여 내역"
+                app:layout_constraintLeft_toRightOf="@+id/fragment_account_button_auction_history"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/fragment_account_button_auction_success_history"
+                />
+
+            <Button
+                android:id="@+id/fragment_account_button_auction_success_history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="경매 낙찰 내역"
+                app:layout_constraintLeft_toRightOf="@+id/fragment_account_button_auction_join_history"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
