@@ -13,4 +13,5 @@ class SignUpViewPagerAdapter(fragment : FragmentActivity)  : FragmentStateAdapte
     override fun createFragment(position: Int): Fragment {
         return fragments.get(position)
     }
+
 }

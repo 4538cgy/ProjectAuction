@@ -6,16 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.project_auction.R
+import com.example.project_auction.base.BaseFragment
+import com.example.project_auction.databinding.FragmentSignUpFirstBinding
 
 
-class SignUpFirstFragment : Fragment() {
+class SignUpFirstFragment : BaseFragment<FragmentSignUpFirstBinding>(R.layout.fragment_sign_up_first) {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_up_first, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.fragmentsignupfirst = this
     }
 
 }
