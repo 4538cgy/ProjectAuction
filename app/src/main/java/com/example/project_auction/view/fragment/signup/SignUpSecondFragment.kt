@@ -22,6 +22,7 @@ class SignUpSecondFragment : BaseFragment<FragmentSignUpSecondBinding>(R.layout.
         binding.apply {
             fragmentSignUpSecondEdittextNick.addTextChangedListener {
                 updateView(it!!.length)
+                loginSignViewModel.profileNickName.postValue(it.toString())
             }
             fragmentSignUpSecondButtonNickCheck.setOnClickListener {
 
