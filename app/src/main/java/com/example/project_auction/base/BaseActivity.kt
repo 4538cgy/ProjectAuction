@@ -3,6 +3,7 @@ package com.example.project_auction.base
 import android.content.Context
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -19,5 +20,6 @@ abstract class BaseActivity <B : ViewDataBinding>(val layoutId: Int) : AppCompat
         binding.lifecycleOwner = this
         rootContext = binding.root.context
     }
+
 
 }

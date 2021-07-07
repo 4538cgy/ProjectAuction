@@ -59,6 +59,7 @@ class SignUpSecondFragment : BaseFragment<FragmentSignUpSecondBinding>(R.layout.
                                     setPositiveButton("예" , DialogInterface.OnClickListener { dialog, which ->
                                         binding.fragmentSignUpSecondEdittextNick.isEnabled = false
                                         loginSignViewModel.nickNameNextButtonState.postValue(true)
+                                        loginSignViewModel.nickName.postValue(binding.fragmentSignUpSecondEdittextNick.text.toString())
                                     })
                                     setNegativeButton("아니요" , DialogInterface.OnClickListener { dialog, which ->
                                         binding.fragmentSignUpSecondEdittextNick.setText("")

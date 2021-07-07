@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.example.project_auction.R
 import com.example.project_auction.base.BaseFragment
@@ -26,6 +27,9 @@ class SignUpThirdFragment : BaseFragment<FragmentSignUpThirdBinding>(R.layout.fr
             updateView(it.data!!.getStringExtra("address_arg2")!!,
                 it.data!!.getStringExtra("address_arg3")!!
             )
+
+            loginSignViewModel.buildingAddress.postValue(it.data!!.getStringExtra("address_arg3"))
+            loginSignViewModel.address.postValue(it.data!!.getStringExtra("address_arg2"))
         }
     }
 
@@ -38,6 +42,15 @@ class SignUpThirdFragment : BaseFragment<FragmentSignUpThirdBinding>(R.layout.fr
             fragmentSignUpButtonSearchAddress.setOnClickListener {
                 val intent = Intent(binding.root.context,SearchAddressActivity::class.java)
                 addressCallback.launch(intent)
+            }
+
+            fragmentSignUpThirdEdittextDetailAddress.addTextChangedListener {
+                if (it!!.isNotEmpty()){
+                    if (binding.fragmentSignUpThirdEdittextAddress.text.isNotEmpty()) {
+                        loginSignViewModel.addressCheck.postValue(true)
+                        loginSignViewModel.detailAddress.postValue(it.toString())
+                    }
+                }
             }
         }
     }
