@@ -10,10 +10,12 @@ import androidx.core.widget.addTextChangedListener
 import com.example.project_auction.R
 import com.example.project_auction.base.BaseFragment
 import com.example.project_auction.databinding.FragmentSignUpSecondBinding
+import com.google.firebase.firestore.FirebaseFirestore
 
 class SignUpSecondFragment : BaseFragment<FragmentSignUpSecondBinding>(R.layout.fragment_sign_up_second) {
 
     private var nickCheck : Boolean = false
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -25,7 +27,7 @@ class SignUpSecondFragment : BaseFragment<FragmentSignUpSecondBinding>(R.layout.
                 loginSignViewModel.profileNickName.postValue(it.toString())
             }
             fragmentSignUpSecondButtonNickCheck.setOnClickListener {
-
+                db.collection("nickname").
             }
         }
     }
