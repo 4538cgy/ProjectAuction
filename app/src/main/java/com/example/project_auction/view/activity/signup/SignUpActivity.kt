@@ -53,9 +53,8 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
         viewModel.profilePhotoUri.observe(this, Observer {
             binding.activitySignUpButtonNext.isEnabled = true
         })
-        viewModel.profileNickName.observe(this, Observer {
-            binding.activitySignUpButtonNext.isEnabled = it.isNotEmpty()
-
+        viewModel.nickNameNextButtonState.observe(this, Observer {
+            binding.activitySignUpButtonNext.isEnabled = it
         })
     }
 

@@ -6,6 +6,6 @@ import androidx.lifecycle.ViewModel
 class LoginSignUpViewModel(): ViewModel() {
 
     var profilePhotoUri = MutableLiveData<String>()
-    var profileNickName = MutableLiveData<String>()
+    var nickNameNextButtonState = MutableLiveData<Boolean>()
     var profileAddress = MutableLiveData<String>()
 }
