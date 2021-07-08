@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.fragment.lobby.alarm.AlarmFragment">
-    <data>
-        <variable
-            name="fragmentalarm"
-            type="com.example.project_auction.view.fragment.lobby.alarm.AlarmFragment" />
-    </data>
+    tools:context=".view.fragment.lobby.auction.AuctionFragment">
 
+  <data>
+      <variable
+          name="fragmentauction"
+          type="com.example.project_auction.view.fragment.lobby.auction.AuctionFragment" />
+  </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,5 +15,4 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>
