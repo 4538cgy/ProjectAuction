@@ -231,8 +231,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     private fun moveMainPage(user: FirebaseUser?) {
         if (user != null) {
 
-            FirebaseFirestore.getInstance().collection("User").document("UserData")
-                    .collection("userInfo").whereEqualTo("uid",auth.currentUser?.uid.toString())
+            FirebaseFirestore.getInstance().collection("User").whereEqualTo("uid",auth.currentUser?.uid.toString())
                     .addSnapshotListener { documentSnapshot, _ -> // Remove useless parameter
                         if (documentSnapshot != null) {
                             if (!documentSnapshot.isEmpty) { // Remove NonNull
