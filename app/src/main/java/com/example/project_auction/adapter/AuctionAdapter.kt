@@ -1,12 +1,13 @@
 package com.example.project_auction.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_auction.data.ProductAuctionDTO
 import com.example.project_auction.databinding.ItemAuctionBinding
 
-class AuctionAdapter(val context,val dataList : ArrayList<ProductAuctionDTO>) : RecyclerView.Adapter<AuctionViewHolder>() {
+class AuctionAdapter(val context: Context,val dataList : ArrayList<ProductAuctionDTO>) : RecyclerView.Adapter<AuctionViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AuctionViewHolder {
         val binding = ItemAuctionBinding.inflate(LayoutInflater.from(context),parent,false)
         return AuctionViewHolder(binding)
