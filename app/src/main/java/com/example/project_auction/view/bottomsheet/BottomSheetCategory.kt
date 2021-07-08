@@ -41,11 +41,17 @@ class BottomSheetCategory : BottomSheetDialogFragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.bottomSheetDialogCategoryRecycler.adapter!!.notifyDataSetChanged()
+    }
+
     fun initRecyclerData(){
-        categoryList.apply {
-            add(BottomSheetRecyclerDTO(R.drawable.close_btn_img,"닫기"))
-            add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24,"검색"))
-        }
+        println("리사이클러뷰 부착")
+
+            categoryList.add(BottomSheetRecyclerDTO(R.drawable.close_btn_img,"닫기"))
+            categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24,"검색"))
+
     }
 
     interface BottomSheetButtonClickListener {
@@ -69,13 +75,6 @@ class BottomSheetCategory : BottomSheetDialogFragment() {
 
     inner class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>(){
 
-        inner class CategoryViewHolder(val binding : ItemBottomSheetCategoryBinding) : RecyclerView.ViewHolder(binding.root){
-            fun onBind(data : BottomSheetRecyclerDTO) {
-                binding.itembottomsheetcategory = data
-            }
-
-        }
-
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
             val binding = ItemBottomSheetCategoryBinding.inflate(LayoutInflater.from(binding.root.context),parent,false)
             return CategoryViewHolder(binding)
@@ -89,7 +88,12 @@ class BottomSheetCategory : BottomSheetDialogFragment() {
                 bottomSheetButtonClickListener.onBottomSheetButtonClick(categoryList[position].text.toString())
                 dismiss()
             }
+
+            holder.binding.itemBottomSheetCategoryImageview.setImageResource(categoryList[position].drawable!!)
+            holder.binding.itemBottomSheetCategoryTextview.text = categoryList[position].text
         }
+
+
 
         override fun getItemCount(): Int {
             return if (categoryList != null){
@@ -97,6 +101,13 @@ class BottomSheetCategory : BottomSheetDialogFragment() {
             }else{
                 0
             }
+        }
+
+        inner class CategoryViewHolder(val binding : ItemBottomSheetCategoryBinding) : RecyclerView.ViewHolder(binding.root){
+            fun onBind(data : BottomSheetRecyclerDTO) {
+                binding.itembottomsheetcategory = data
+            }
+
         }
 
     }

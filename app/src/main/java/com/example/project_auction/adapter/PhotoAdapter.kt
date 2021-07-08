@@ -35,6 +35,11 @@ class PhotoAdapter(val context : Context,val photoList : ArrayList<String>) : Re
             notifyDataSetChanged()
         }
 
+        viewHolder.item_photo_imagebutton_close.setOnClickListener {
+            photoList.removeAt(position)
+
+            notifyDataSetChanged()
+        }
 
     }
 
