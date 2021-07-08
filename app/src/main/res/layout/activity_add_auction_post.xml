@@ -107,7 +107,7 @@
                     android:layout_margin="12dp"
                     android:background="@drawable/background_round_white_stroke_black_2dp"
                     android:hint="상품 명"
-                    android:maxLength="24dp"
+                    android:maxLength="24"
                     android:paddingLeft="12dp"
                     android:textColorHint="@color/colorBlack"
                     android:textSize="14dp"

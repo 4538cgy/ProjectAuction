@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable
-            name="itemphoto"
-            type="com.example.project_auction.data.PhotoListDTO" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
