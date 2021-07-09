@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.fragment.lobby.alarm.AlarmFragment">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
     <data>
         <variable
-            name="fragmentalarm"
-            type="com.example.project_auction.view.fragment.lobby.alarm.AlarmFragment" />
+            name="itemauction"
+            type="com.example.project_auction.data.ProductAuctionDTO" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

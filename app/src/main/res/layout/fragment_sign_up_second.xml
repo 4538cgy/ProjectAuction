@@ -1,14 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".view.fragment.signup.SignUpSecondFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="hello second fragment" />
+    <data>
 
-</FrameLayout>
+        <variable
+            name="fragmentsignupsecond"
+            type="com.example.project_auction.view.fragment.signup.SignUpSecondFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fragment_sign_up_second_textinput_nick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="40dp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/fragment_sign_up_second_edittext_nick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="닉네임을 입력해주세요"
+                android:maxLength="10" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/fragment_sign_up_second_textview_text_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0/10"
+            app:layout_constraintRight_toRightOf="@+id/fragment_sign_up_second_textinput_nick"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_sign_up_second_textinput_nick" />
+
+        <Button
+            android:id="@+id/fragment_sign_up_second_button_nick_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/background_round_gray_stroke_black_4dp"
+            android:padding="12dp"
+            android:text="닉네임 중복 체크"
+            android:textColor="@color/colorBlack"
+            app:layout_constraintRight_toRightOf="@+id/fragment_sign_up_second_textview_text_count"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_sign_up_second_textview_text_count"
+
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
