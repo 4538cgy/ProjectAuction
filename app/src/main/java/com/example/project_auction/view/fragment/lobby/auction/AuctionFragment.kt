@@ -59,7 +59,7 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
 
             ObjectAnimator.ofFloat(binding.fragmentAuctionTextviewWriteAuction, "translationY", -0f)
                 .apply { start() }
-            binding.fragmentAuctionFabWriteTrade.visibility = View.INVISIBLE
+            binding.fragmentAuctionTextviewWriteTrade.visibility = View.INVISIBLE
             binding.fragmentAuctionTextviewWriteAuction.visibility = View.INVISIBLE
             false
         }
