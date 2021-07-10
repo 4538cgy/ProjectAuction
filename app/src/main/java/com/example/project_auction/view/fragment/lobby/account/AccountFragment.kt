@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.example.project_auction.R
@@ -25,11 +26,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_account) { //Fragment() {
+class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_account) {
 
     private val profileCallback = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it != null) {
-            if (it.data != null){
+            if (it.data != null ){
                 photoUri = it.data!!.data.toString()
                 Glide.with(binding.root.context)
                     .load(it.data!!.data)
@@ -38,11 +39,17 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
 
                 loginSignViewModel.profilePhotoUri.postValue(it.data!!.data.toString())
             }
+            else if(it.resultCode == Activity.RESULT_OK) {
+                val file = File(currentPhotoPath)
+                Glide.with(binding.root.context)
+                    .load(currentPhotoPath)
+                    .circleCrop()
+                    .into(binding.fragmentAccountImageviewProfile)
+            }
         }
     }
 
     lateinit var photoUri : String
-    val REQUEST_IMAGE_CAPTURE = 1
     lateinit var currentPhotoPath : String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,10 +65,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
                 .setItems(selectImage) { dialog, which ->
                     when(which){
                         0 -> openGallery()
-                        1 -> {
-                            //settingPermission() // 권한체크 시작
-                            startCapture()
-                        }
+                        1 -> startCapture()
                     }
 
                 }.show()
@@ -92,8 +96,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
             override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
                 Toast.makeText(requireContext(), "권한 거부", Toast.LENGTH_SHORT)
                     .show()
-                //ActivityCompat.finishAffinity(this@MainActivity) // 권한 거부시 앱 종료
-                //System.exit(0)
+                ActivityCompat.finishAffinity(activity!!) // 권한 거부시 앱 종료
             }
         }
 
@@ -103,7 +106,6 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
             .setDeniedMessage("카메라 권한 요청 거부")
             .setPermissions(
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//                android.Manifest.permission.READ_EXTERNAL_STORAGE,
                 android.Manifest.permission.CAMERA)
             .check()
     }
@@ -138,40 +140,9 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
                         it
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    //startForResult.launch(takePictureIntent)
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                    profileCallback.launch(takePictureIntent)
                 }
             }
         }
     }
-
-    // 이미지뷰에 내가 촬영한 사진 표시
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK){
-            val file = File(currentPhotoPath)
-            if (Build.VERSION.SDK_INT < 28) {
-                val bitmap = MediaStore.Images.Media
-                    .getBitmap(requireContext().contentResolver, Uri.fromFile(file))
-                Glide.with(binding.root.context)
-                    .load(currentPhotoPath)
-                    .circleCrop()
-                    .into(binding.fragmentAccountImageviewProfile)
-
-                //binding.imgPicture.setImageBitmap(bitmap)
-            }
-            else{
-                val decode = ImageDecoder.createSource(requireContext().contentResolver,
-                    Uri.fromFile(file))
-                val bitmap = ImageDecoder.decodeBitmap(decode)
-                Glide.with(binding.root.context)
-                    .load(currentPhotoPath)
-                    .circleCrop()
-                    .into(binding.fragmentAccountImageviewProfile)
-                //binding.imgPicture.setImageBitmap(bitmap)
-            }
-        }
-    }
-
 }
