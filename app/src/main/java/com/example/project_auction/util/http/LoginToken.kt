@@ -2,6 +2,7 @@ package com.example.project_auction.util.http
 
 import com.example.project_auction.data.KakaoDTO
 import com.example.project_auction.data.NaverDTO
+import com.example.project_auction.data.TimeRequestDTO
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Headers
@@ -15,4 +16,8 @@ interface LoginToken {
     @Headers("Accept: application/json")
     @POST("/naverLogin")
     fun test2(@Body naverTestDTO: NaverDTO) : Call<NaverDTO.NaverResponse>
+
+    @Headers("Accept: application/json")
+    @POST("/getServerTime")
+    fun test3(@Body dto : TimeRequestDTO.Time) : Call<TimeRequestDTO.ResponseTime>
 }

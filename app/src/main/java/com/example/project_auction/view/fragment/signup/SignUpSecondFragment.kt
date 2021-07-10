@@ -19,7 +19,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 class SignUpSecondFragment : BaseFragment<FragmentSignUpSecondBinding>(R.layout.fragment_sign_up_second) {
 
     private var nickCheck : Boolean = false
-    private val db = FirebaseFirestore.getInstance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

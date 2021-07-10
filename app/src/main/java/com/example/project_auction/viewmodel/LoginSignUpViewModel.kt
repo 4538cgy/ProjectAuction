@@ -17,4 +17,6 @@ class LoginSignUpViewModel(): ViewModel() {
     var address = MutableLiveData<String>()
     //상세주소
     var detailAddress = MutableLiveData<String>()
+
+
 }

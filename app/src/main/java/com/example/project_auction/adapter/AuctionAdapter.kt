@@ -15,6 +15,9 @@ class AuctionAdapter(val context: Context,val dataList : ArrayList<ProductAuctio
 
     override fun onBindViewHolder(holder: AuctionViewHolder, position: Int) {
         holder.onBind(dataList[position])
+
+        holder.binding.itemAuctionTextviewTitle.text = dataList[position].title
+
     }
 
     override fun getItemCount(): Int {
