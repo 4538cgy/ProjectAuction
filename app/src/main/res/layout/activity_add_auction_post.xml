@@ -157,6 +157,8 @@
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:hint="경매 시작가"
+                        android:inputType="number"
+                        android:maxLength="18"
                         android:paddingLeft="12dp"
                         android:textSize="14dp" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -178,6 +180,8 @@
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:hint="즉시 입찰가 (선택)"
+                        android:inputType="number"
+                        android:maxLength="18"
                         android:paddingLeft="12dp"
                         android:textSize="14dp" />
 

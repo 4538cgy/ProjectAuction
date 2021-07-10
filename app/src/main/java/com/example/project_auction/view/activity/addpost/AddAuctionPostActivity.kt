@@ -4,6 +4,9 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
@@ -19,12 +22,18 @@ import com.example.project_auction.view.bottomsheet.BottomSheetCategory
 import com.google.android.gms.auth.api.Auth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
+import java.text.DecimalFormat
 
 class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.layout.activity_add_auction_post),BottomSheetCategory.BottomSheetButtonClickListener {
 
     private var photoList = arrayListOf<String>()
     private var photoUploadCount = 0
     private var photoDownloadUrlList = arrayListOf<String>()
+    private var thousandFormat = DecimalFormat("###,###")
+    private var thousandFormatStartCostResult = ""
+    private var thousandFormatCloseCostResult = ""
+    private lateinit var textWatcherCloseCost: TextWatcher
+    private lateinit var textWatcherStartCost: TextWatcher
 
     private val addPhotoCallback = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
 
@@ -72,13 +81,63 @@ class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.lay
             //상품명
             activityAddAuctionPostEdittextTitle.addTextChangedListener {
                 activityAddAuctionPostTextviewTitle.text = it!!.length.toString() + "/24"
-
             }
 
             //상품 설명
             activityAddAuctionPostEdittextProductIntro.addTextChangedListener {
                 activityAddAuctionPostTextviewProductIntroCount.text = it!!.length.toString() + "/400"
             }
+
+            //시작가
+             textWatcherStartCost = object : TextWatcher{
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) { }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if (!TextUtils.isEmpty(s.toString()) && !s.toString().equals(thousandFormatStartCostResult)){
+                        thousandFormatStartCostResult = thousandFormat.format(s.toString().replace(",".toRegex(),"").toLong())
+                        activityAddAuctionPostEdittextStartCost.removeTextChangedListener(textWatcherStartCost)
+                        activityAddAuctionPostEdittextStartCost.setText(thousandFormatStartCostResult)
+                        activityAddAuctionPostEdittextStartCost.setSelection(thousandFormatStartCostResult.length)
+                        activityAddAuctionPostEdittextStartCost.addTextChangedListener(textWatcherStartCost)
+
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {}
+
+            }
+
+
+            //즉시 입찰가
+            textWatcherCloseCost = object : TextWatcher{
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) { }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if (!TextUtils.isEmpty(s.toString()) && !s.toString().equals(thousandFormatCloseCostResult)){
+                        thousandFormatCloseCostResult = thousandFormat.format(s.toString().replace(",".toRegex(),"").toLong())
+                        activityAddAuctionPostEdittextCloseCost.removeTextChangedListener(textWatcherCloseCost)
+                        activityAddAuctionPostEdittextCloseCost.setText(thousandFormatCloseCostResult)
+                        activityAddAuctionPostEdittextCloseCost.setSelection(thousandFormatCloseCostResult.length)
+                        activityAddAuctionPostEdittextCloseCost.addTextChangedListener(textWatcherCloseCost)
+
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {}
+
+            }
+            activityAddAuctionPostEdittextCloseCost.addTextChangedListener(textWatcherCloseCost)
+            activityAddAuctionPostEdittextStartCost.addTextChangedListener(textWatcherStartCost)
 
             //사진 추가
             activityAddAuctionPostButtonPhotoAdd.setOnClickListener {
@@ -103,6 +162,8 @@ class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.lay
             }
         }
     }
+
+
 
     fun contentUpload(){
         if (photoUploadCount < photoList.size && photoList.size != 0){
