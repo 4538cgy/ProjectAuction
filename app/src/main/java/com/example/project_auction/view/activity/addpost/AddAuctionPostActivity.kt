@@ -19,12 +19,13 @@ import com.example.project_auction.databinding.ActivityAddAuctionPostBinding
 import com.example.project_auction.extension.toast
 import com.example.project_auction.util.time.TimeUtil
 import com.example.project_auction.view.bottomsheet.BottomSheetCategory
+import com.example.project_auction.view.bottomsheet.BottomSheetSetCloseProduct
 import com.google.android.gms.auth.api.Auth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import java.text.DecimalFormat
 
-class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.layout.activity_add_auction_post),BottomSheetCategory.BottomSheetButtonClickListener {
+class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.layout.activity_add_auction_post),BottomSheetCategory.BottomSheetButtonClickListener , BottomSheetSetCloseProduct.BottomSheetSetCloseProductButtonClickListener{
 
     private var photoList = arrayListOf<String>()
     private var photoUploadCount = 0
@@ -139,6 +140,8 @@ class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.lay
             activityAddAuctionPostEdittextCloseCost.addTextChangedListener(textWatcherCloseCost)
             activityAddAuctionPostEdittextStartCost.addTextChangedListener(textWatcherStartCost)
 
+
+
             //사진 추가
             activityAddAuctionPostButtonPhotoAdd.setOnClickListener {
                 //사진 추가
@@ -151,6 +154,12 @@ class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.lay
                 setCategory()
             }
 
+            //경매 기간 설정
+            activityAddAuctionPostTextviewCloseTime.setOnClickListener {
+                val bottomSheetSetCloseProduct = BottomSheetSetCloseProduct()
+                bottomSheetSetCloseProduct.show(supportFragmentManager,"lol")
+            }
+
             binding.activityAddAuctionPostButtonUpload.setOnClickListener { 
                 println("게시글 업로드")
                 binding.activityAddAuctionPostConstAllBar.visibility = View.GONE
@@ -158,7 +167,24 @@ class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.lay
                 binding.activityAddAuctionPostProgressbar.visibility = View.VISIBLE
                 binding.activityAddAuctionPostTextviewLoading.visibility = View.VISIBLE
                 binding.activityAddAuctionPostTextviewLoading.text = "사진을 업로드 중입니다. \n앱을 절대 종료하지마세요."
-                contentUpload()
+                
+                //게시글 완료 체크
+                if (photoList.size == 0) {
+                    toast("사진을 추가해주세요.")
+                }else if (binding.activityAddAuctionPostTextviewCategory.text.toString() == "카테고리 선택"){
+                    toast("카테고리를 선택해주세요")
+                }else if (binding.activityAddAuctionPostEdittextTitle.text.isEmpty()){
+                    toast("상품명을 입력해주세요.")
+                }else if (binding.activityAddAuctionPostTextviewCloseTime.text.toString() == "경매 기간 설정"){
+                    toast("경매 기간을 입력해주세요.")
+                }else if (binding.activityAddAuctionPostEdittextStartCost.text.isEmpty()){
+                    toast("경매 시작가를 입력해주세요.")
+                }else if (binding.activityAddAuctionPostEdittextProductIntro.text.isEmpty()){
+                    toast("상품 설명을 입력해주세요.")
+                }else{
+                    contentUpload()
+                }
+
             }
         }
     }
@@ -205,7 +231,11 @@ class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.lay
         product.title = binding.activityAddAuctionPostEdittextTitle.text.toString()
         product.category = binding.activityAddAuctionPostTextviewCategory.text.toString()
         product.uid = auth.currentUser!!.uid
-        product.closeCost = binding.activityAddAuctionPostEdittextCloseCost.text.toString()
+        if (binding.activityAddAuctionPostEdittextCloseCost.text.isNotEmpty()) {
+            product.closeCost = binding.activityAddAuctionPostEdittextCloseCost.text.toString()
+        }else{
+            product.closeCost = "0"
+        }
         product.content = binding.activityAddAuctionPostEdittextProductIntro.text.toString()
         product.delete = false
         product.startCost = binding.activityAddAuctionPostEdittextStartCost.text.toString()
@@ -237,5 +267,9 @@ class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.lay
 
     override fun onBottomSheetButtonClick(text: String) {
         binding.activityAddAuctionPostTextviewCategory.text = text
+    }
+
+    override fun onBottomSheetSetCloseProductButtonClick(text: String) {
+        binding.activityAddAuctionPostTextviewCloseTime.text = text + "일"
     }
 }
