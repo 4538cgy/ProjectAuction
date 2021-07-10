@@ -139,6 +139,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        moveMainPage(auth?.currentUser)
+    }
+
     fun naver(view : View){
         val mOAuthHandler = object : OAuthLoginHandler(){
             override fun run(success: Boolean) {
