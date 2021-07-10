@@ -38,7 +38,6 @@ import retrofit2.Response
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
 
     private val viewModel : LoginSignUpViewModel by viewModels()
-    private val auth = FirebaseAuth.getInstance()
     private var googleSignInClient : GoogleSignInClient ?= null
     private val GOOGLE_LOGIN_CODE = 9001
 

@@ -5,7 +5,7 @@ class ProductAuctionDTO (
     var photoList : ArrayList<String>? =null,
     var category : String ? = null,
     var title : String ? = null,
-    var timestamp : String ? = null,
+    var timestamp : Long ? = null,
     var closeTimestamp : String ? = null,
     var startCost : String ? = null,
     var closeCost : String ? = null,
