@@ -2,13 +2,13 @@ package com.example.project_auction.view.fragment.lobby.account
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -20,6 +20,7 @@ import com.example.project_auction.base.BaseFragment
 import com.example.project_auction.databinding.FragmentAccountBinding
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
+import kotlinx.android.synthetic.main.fragment_account.*
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -71,6 +72,44 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
                 }.show()
                 update()
             }
+
+            // NickName Change Event 처리
+            fragment_account_textview_nickname.setOnClickListener {
+                val builder = AlertDialog.Builder(requireContext())
+                val dialogView = layoutInflater.inflate(R.layout.alertdialog_edittext, null)
+                val dialogText = dialogView.findViewById<EditText>(R.id.alertdialog_edittext_nickname)
+
+                builder.setView(dialogView)
+                    .setPositiveButton("확인") { dialogInterface, i ->
+                        if (dialogText.text.isBlank()) {
+                            Toast.makeText(
+                                requireContext(),
+                                "공백 또는 띄어쓰기가 불가합니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return@setPositiveButton
+                        }
+                        fragment_account_textview_nickname.text = dialogText.text.toString().replace(" ","")
+                    }
+                    .setNegativeButton("취소") { dialogInterface, i ->
+                        /* 취소일 때 아무 액션이 없으므로 빈칸 */
+                    }
+
+                // dismiss를 사용하기 위하여 처리과정 변경
+                val dlgselect = builder.create()
+                dlgselect.show()
+
+                // Enter Event 처리
+                dialogText.setOnKeyListener { v, keyCode, event ->
+                    if (keyCode == KEYCODE_ENTER && dialogText.text.isNotBlank()){
+                        fragment_account_textview_nickname.text = dialogText.text.toString().replace(" ","")
+                        dlgselect.dismiss()
+                        true
+                    }
+                    true
+                }
+                update()
+            }
         }
     }
 
@@ -81,7 +120,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
     }
 
     fun update(){
-        //개인정보 db 업데이트
+        //개인정보 db 업데이트(프로필 사진, 닉네임)
     }
 
     //권한 설정
