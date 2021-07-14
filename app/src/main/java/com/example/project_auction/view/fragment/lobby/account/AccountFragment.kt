@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.example.project_auction.R
 import com.example.project_auction.base.BaseFragment
 import com.example.project_auction.databinding.FragmentAccountBinding
+import com.example.project_auction.view.activity.history.RegistrationHistoryActivity
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.fragment_account.*
@@ -109,6 +110,11 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
                     true
                 }
                 update()
+            }
+
+            fragmentAccountButtonAuctionHistory.setOnClickListener {
+                val intent = Intent(requireContext(),RegistrationHistoryActivity::class.java)
+                startActivity(intent)
             }
         }
     }
