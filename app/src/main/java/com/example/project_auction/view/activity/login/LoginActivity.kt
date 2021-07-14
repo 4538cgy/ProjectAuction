@@ -38,7 +38,6 @@ import retrofit2.Response
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
 
     private val viewModel : LoginSignUpViewModel by viewModels()
-    private val auth = FirebaseAuth.getInstance()
     private var googleSignInClient : GoogleSignInClient ?= null
     private val GOOGLE_LOGIN_CODE = 9001
 
@@ -137,6 +136,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             activitylogin = this@LoginActivity
             loginsignupviewmodel = viewModel
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        moveMainPage(auth?.currentUser)
     }
 
     fun naver(view : View){

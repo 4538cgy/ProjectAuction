@@ -10,12 +10,14 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.project_auction.viewmodel.LoginSignUpViewModel
+import com.google.firebase.firestore.FirebaseFirestore
 
 abstract class BaseFragment <B : ViewDataBinding> (val layoutId : Int) : Fragment(){
 
     lateinit var binding : B
     lateinit var rootContext : Context
     val loginSignViewModel : LoginSignUpViewModel by activityViewModels()
+    val db = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,

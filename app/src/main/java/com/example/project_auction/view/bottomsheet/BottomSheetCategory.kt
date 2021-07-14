@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_auction.R
@@ -36,7 +37,9 @@ class BottomSheetCategory : BottomSheetDialogFragment() {
         initRecyclerData()
 
         binding.bottomSheetDialogCategoryRecycler.adapter = CategoryAdapter()
-        binding.bottomSheetDialogCategoryRecycler.layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.VERTICAL,false)
+        binding.bottomSheetDialogCategoryRecycler.addItemDecoration(DividerItemDecoration(binding.root.context,DividerItemDecoration.VERTICAL))
+        binding.bottomSheetDialogCategoryRecycler.layoutManager =
+            LinearLayoutManager(binding.root.context, LinearLayoutManager.VERTICAL, false)
 
         return binding.root
     }
@@ -46,11 +49,53 @@ class BottomSheetCategory : BottomSheetDialogFragment() {
         binding.bottomSheetDialogCategoryRecycler.adapter!!.notifyDataSetChanged()
     }
 
-    fun initRecyclerData(){
+    fun initRecyclerData() {
         println("리사이클러뷰 부착")
 
-            categoryList.add(BottomSheetRecyclerDTO(R.drawable.close_btn_img,"닫기"))
-            categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24,"검색"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.close_btn_img, "관상어"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+
 
     }
 
@@ -71,12 +116,14 @@ class BottomSheetCategory : BottomSheetDialogFragment() {
     }
 
 
-
-
-    inner class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>(){
+    inner class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-            val binding = ItemBottomSheetCategoryBinding.inflate(LayoutInflater.from(binding.root.context),parent,false)
+            val binding = ItemBottomSheetCategoryBinding.inflate(
+                LayoutInflater.from(binding.root.context),
+                parent,
+                false
+            )
             return CategoryViewHolder(binding)
         }
 
@@ -94,17 +141,17 @@ class BottomSheetCategory : BottomSheetDialogFragment() {
         }
 
 
-
         override fun getItemCount(): Int {
-            return if (categoryList != null){
+            return if (categoryList != null) {
                 categoryList.size
-            }else{
+            } else {
                 0
             }
         }
 
-        inner class CategoryViewHolder(val binding : ItemBottomSheetCategoryBinding) : RecyclerView.ViewHolder(binding.root){
-            fun onBind(data : BottomSheetRecyclerDTO) {
+        inner class CategoryViewHolder(val binding: ItemBottomSheetCategoryBinding) :
+            RecyclerView.ViewHolder(binding.root) {
+            fun onBind(data: BottomSheetRecyclerDTO) {
                 binding.itembottomsheetcategory = data
             }
 

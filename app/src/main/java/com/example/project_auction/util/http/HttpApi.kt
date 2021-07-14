@@ -2,6 +2,7 @@ package com.example.project_auction.util.http
 
 import com.example.project_auction.data.KakaoDTO
 import com.example.project_auction.data.NaverDTO
+import com.example.project_auction.data.TimeRequestDTO
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -30,5 +31,10 @@ class HttpApi {
 
     fun test2(testDTO : NaverDTO) : Call<NaverDTO.NaverResponse>{
         return loginTokenInterface.test2(testDTO)
+    }
+
+    fun test3(testDTO : TimeRequestDTO.Time) : Call<TimeRequestDTO.ResponseTime>
+    {
+        return loginTokenInterface.test3(testDTO)
     }
 }
