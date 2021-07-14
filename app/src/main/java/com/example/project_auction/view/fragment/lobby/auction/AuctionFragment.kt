@@ -34,6 +34,7 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
         databaseReference.get().addOnSuccessListener {
             it?.let {
                 if (!it.isEmpty) {
+                    auctionData.clear()
                     var data = it.toObjects(ProductAuctionDTO::class.java)
                     auctionData.addAll(data)
                     binding.fragmentAuctionRecyclerview.adapter!!.notifyDataSetChanged()
@@ -49,6 +50,8 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
         binding.fragmentauction = this
 
         initRecyclerData()
+
+
 
         binding.apply {
             fragmentAuctionFabMain.setOnClickListener {
@@ -83,6 +86,11 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
 
             fragmentAuctionRecyclerview.adapter = AuctionAdapter(binding.root.context,auctionData)
             fragmentAuctionRecyclerview.layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.VERTICAL,false)
+
+            fragmentAuctionSwipeRefreshLayout.setOnRefreshListener {
+                initRecyclerData()
+                fragmentAuctionSwipeRefreshLayout.isRefreshing = false
+            }
         }
     }
 

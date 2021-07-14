@@ -17,15 +17,14 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:theme="@style/AppTheme"
-                app:layout_scrollFlags="scroll|enterAlways"
-                >
+                app:layout_scrollFlags="scroll|enterAlways">
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/fragment_auction_const_category_bar"
                     android:layout_width="match_parent"
@@ -69,80 +68,81 @@
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fragment_auction_recyclerview"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/fragment_auction_swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/fragment_auction_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fragment_auction_fab_write_trade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_post_add_24"
+                app:borderWidth="0dp"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="@+id/fragment_auction_fab_main"
+                app:layout_constraintLeft_toLeftOf="@+id/fragment_auction_fab_main"
+                app:layout_constraintRight_toRightOf="@+id/fragment_auction_fab_main"
+                app:layout_constraintTop_toTopOf="@+id/fragment_auction_fab_main" />
 
+            <TextView
+                android:id="@+id/fragment_auction_textview_write_trade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="12dp"
+                android:text="거래글 작성하기"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/fragment_auction_fab_write_trade"
+                app:layout_constraintRight_toLeftOf="@+id/fragment_auction_fab_write_trade"
 
+                app:layout_constraintTop_toTopOf="@+id/fragment_auction_fab_write_trade" />
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fragment_auction_fab_write_auction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_post_add_24"
+                app:borderWidth="0dp"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="@+id/fragment_auction_fab_main"
+                app:layout_constraintLeft_toLeftOf="@+id/fragment_auction_fab_main"
+                app:layout_constraintRight_toRightOf="@+id/fragment_auction_fab_main"
+                app:layout_constraintTop_toTopOf="@+id/fragment_auction_fab_main" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fragment_auction_fab_write_trade"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_post_add_24"
-            app:borderWidth="0dp"
-            app:fabSize="mini"
-            app:layout_constraintBottom_toBottomOf="@+id/fragment_auction_fab_main"
-            app:layout_constraintLeft_toLeftOf="@+id/fragment_auction_fab_main"
-            app:layout_constraintRight_toRightOf="@+id/fragment_auction_fab_main"
-            app:layout_constraintTop_toTopOf="@+id/fragment_auction_fab_main" />
+            <TextView
+                android:id="@+id/fragment_auction_textview_write_auction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="12dp"
+                android:text="경매글 작성하기"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/fragment_auction_fab_write_auction"
+                app:layout_constraintRight_toLeftOf="@+id/fragment_auction_fab_write_auction"
 
-        <TextView
-            android:id="@+id/fragment_auction_textview_write_trade"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="12dp"
-            android:text="거래글 작성하기"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/fragment_auction_fab_write_trade"
-            app:layout_constraintRight_toLeftOf="@+id/fragment_auction_fab_write_trade"
+                app:layout_constraintTop_toTopOf="@+id/fragment_auction_fab_write_auction" />
 
-            app:layout_constraintTop_toTopOf="@+id/fragment_auction_fab_write_trade" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fragment_auction_fab_write_auction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_post_add_24"
-            app:borderWidth="0dp"
-            app:fabSize="mini"
-            app:layout_constraintBottom_toBottomOf="@+id/fragment_auction_fab_main"
-            app:layout_constraintLeft_toLeftOf="@+id/fragment_auction_fab_main"
-            app:layout_constraintRight_toRightOf="@+id/fragment_auction_fab_main"
-            app:layout_constraintTop_toTopOf="@+id/fragment_auction_fab_main" />
-
-        <TextView
-            android:id="@+id/fragment_auction_textview_write_auction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="12dp"
-            android:text="경매글 작성하기"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/fragment_auction_fab_write_auction"
-            app:layout_constraintRight_toLeftOf="@+id/fragment_auction_fab_write_auction"
-
-            app:layout_constraintTop_toTopOf="@+id/fragment_auction_fab_write_auction" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fragment_auction_fab_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="24dp"
-            android:src="@drawable/ic_baseline_add_24"
-            app:borderWidth="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fragment_auction_fab_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="24dp"
+                android:src="@drawable/ic_baseline_add_24"
+                app:borderWidth="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
