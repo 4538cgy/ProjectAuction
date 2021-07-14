@@ -8,6 +8,7 @@ class ProductAuctionDTO (
     var timestamp : Long ? = null,
     var closeTimestamp : String ? = null,
     var startCost : String ? = null,
+    var currentCost : String ? = null,
     var closeCost : String ? = null,
     var content : String ? = null,
     var delete : Boolean = false,
