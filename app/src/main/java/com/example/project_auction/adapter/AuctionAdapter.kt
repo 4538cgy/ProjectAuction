@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.project_auction.data.ProductAuctionDTO
 import com.example.project_auction.databinding.ItemAuctionBinding
 
@@ -17,6 +18,16 @@ class AuctionAdapter(val context: Context,val dataList : ArrayList<ProductAuctio
         holder.onBind(dataList[position])
 
         holder.binding.itemAuctionTextviewTitle.text = dataList[position].title
+
+        Glide.with(context)
+            .load(dataList[position].photoList!![0])
+            .into(holder.binding.itemAuctionImageviewPhoto)
+
+        holder.binding.itemAuctionTextviewCategory.text = dataList[position].category
+
+        holder.binding.itemAuctionTextviewStartCost.text = dataList[position].startCost
+
+        holder.binding.itemAuctionTextviewFavorite.text = dataList[position].favoriteCount.toString()
 
     }
 

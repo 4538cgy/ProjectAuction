@@ -18,6 +18,7 @@ import com.example.project_auction.databinding.FragmentAuctionBinding
 import com.example.project_auction.util.http.HttpApi
 import com.example.project_auction.view.activity.addpost.AddAuctionPostActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.Query
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,22 +26,36 @@ import retrofit2.Response
 class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_auction) {
 
     private var isOpenFAB = false
-
+    private var viewState = "Auction" // default = Auction , [ Auction, Trade ]
     private var auctionData = arrayListOf<ProductAuctionDTO>()
 
     fun initRecyclerData(){
-        val databaseReference = db.collection("productAuction")
 
-        databaseReference.get().addOnSuccessListener {
-            it?.let {
-                if (!it.isEmpty) {
-                    auctionData.clear()
-                    var data = it.toObjects(ProductAuctionDTO::class.java)
-                    auctionData.addAll(data)
-                    binding.fragmentAuctionRecyclerview.adapter!!.notifyDataSetChanged()
+        if (viewState == "Auction") {
+            val databaseReference =
+                db.collection("productAuction").orderBy("timestamp", Query.Direction.ASCENDING)
+
+            databaseReference.get().addOnSuccessListener {
+                it?.let {
+                    if (!it.isEmpty) {
+                        auctionData.clear()
+                        var data = it.toObjects(ProductAuctionDTO::class.java)
+                        auctionData.addAll(data)
+                        binding.fragmentAuctionRecyclerview.adapter!!.notifyDataSetChanged()
+                    }
+                }?.run {
+
                 }
-            }?.run {
+            }
+        }else if (viewState == "Trade"){
+            val databaseReference = db.collection("productTrade").orderBy("timestamp",Query.Direction.ASCENDING)
 
+            databaseReference.get().addOnSuccessListener {
+                it.let {
+
+                }?.run{
+
+                }
             }
         }
     }
@@ -54,6 +69,8 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
 
 
         binding.apply {
+
+            //플로팅 버튼
             fragmentAuctionFabMain.setOnClickListener {
                 clickFab()
             }
@@ -84,6 +101,15 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
                 })
             }
 
+            //옥션 버튼
+            fragmentAuctionButtonAuction.setOnClickListener {
+
+            }
+
+            //거래 버튼
+            fragmentAuctionButtonTrade.setOnClickListener {
+
+            }
             fragmentAuctionRecyclerview.adapter = AuctionAdapter(binding.root.context,auctionData)
             fragmentAuctionRecyclerview.layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.VERTICAL,false)
 
