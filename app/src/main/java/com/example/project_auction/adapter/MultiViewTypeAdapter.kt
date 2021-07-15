@@ -18,6 +18,10 @@ class MultiViewTypeAdapter(private val list: List<ViewTypeModelDTO>) :
                 view = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_type_first, parent, false)
                 FirstTypeViewHolder(view)
             }
+            ViewTypeModelDTO.SECOND_TYPE -> {
+                view = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_type_second, parent, false)
+                SecondTypeViewHolder(view)
+            }
             else -> throw RuntimeException("Unknown view type error!!")
         }
     }
@@ -34,7 +38,23 @@ class MultiViewTypeAdapter(private val list: List<ViewTypeModelDTO>) :
                 holder.content.text = obj.contentString
                 holder.image.setImageResource(obj.data)
             }
+            ViewTypeModelDTO.SECOND_TYPE -> {
+                (holder as SecondTypeViewHolder).txtType.text = obj.text
+            }
         }
+        holder.itemView.setOnClickListener {
+            itemClickListener.onClick(it, position)
+        }
+    }
+
+    interface OnItemClickListener {
+        fun onClick(v: View, position: Int)
+    }
+
+    private lateinit var itemClickListener : OnItemClickListener
+
+    fun setItemClickListener(onItemClickListener: OnItemClickListener) {
+        this.itemClickListener = onItemClickListener
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -45,5 +65,9 @@ class MultiViewTypeAdapter(private val list: List<ViewTypeModelDTO>) :
         val txtType: TextView = itemView.findViewById(R.id.recyclerview_type_first_textview_title)
         val content: TextView = itemView.findViewById(R.id.recyclerview_type_first_textview_content)
         val image: ImageView = itemView.findViewById(R.id.recyclerview_type_first_imageview_image)
+    }
+
+    inner class SecondTypeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val txtType: TextView = itemView.findViewById(R.id.recyclerview_type_second_textview_item)
     }
 }

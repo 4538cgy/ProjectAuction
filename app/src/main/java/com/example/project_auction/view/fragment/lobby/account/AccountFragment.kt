@@ -21,6 +21,7 @@ import com.example.project_auction.databinding.FragmentAccountBinding
 import com.example.project_auction.view.activity.history.AuctionHistoryActivity
 import com.example.project_auction.view.activity.history.AuctionJoinHistoryActivity
 import com.example.project_auction.view.activity.history.AuctionSuccessHistoryActivity
+import com.example.project_auction.view.activity.setting.SettingActivity
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.fragment_account.*
@@ -128,6 +129,10 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
                 }
                 fragmentAccountButtonAuctionSuccessHistory.setOnClickListener {
                     val intent = Intent(requireContext(), AuctionSuccessHistoryActivity::class.java)
+                    startActivity(intent)
+                }
+                fragment_account_imagebutton_setting.setOnClickListener {
+                    val intent = Intent(requireContext(), SettingActivity::class.java)
                     startActivity(intent)
                 }
             }

@@ -2,6 +2,9 @@ package com.example.project_auction.view.activity.history
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_auction.R
@@ -32,8 +35,23 @@ class AuctionHistoryActivity : BaseActivity<ActivityAuctionHistoryBinding>(R.lay
             ViewTypeModelDTO(ViewTypeModelDTO.FIRST_TYPE, "Title Test 8 !!", R.drawable.ic_baseline_add_photo_alternate_24, "ContentString Test 8 !!")
         )
 
+        val dividerItemDecoration =
+            DividerItemDecoration(
+                binding.activityAuctionHistoryRecyclerviewItem.context,
+                LinearLayoutManager(this).orientation
+            )
+        binding.activityAuctionHistoryRecyclerviewItem.addItemDecoration(dividerItemDecoration)
+
         val adpater = MultiViewTypeAdapter(list)
         binding.activityAuctionHistoryRecyclerviewItem.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        adpater.setItemClickListener(object : MultiViewTypeAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                val item = list[position]
+
+                Toast.makeText(v.context, "Click = ${item.text}", Toast.LENGTH_SHORT).show()
+                adpater.notifyDataSetChanged()
+            }
+        })
         binding.activityAuctionHistoryRecyclerviewItem.adapter = adpater
     }
 
