@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.activity.detailproduct.DetailAuctionActivity">
+
+    <data>
+
+        <variable
+            name="activitydetailauction"
+            type="com.example.project_auction.view.activity.detailproduct.DetailAuctionActivity" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/activity_detail_auction_const_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme"
+                app:layout_scrollFlags="scroll|enterAlways">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:id="@+id/activity_detail_auction_imagebutton_close"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_baseline_close_24"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/activity_detail_auction_textview_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_marginLeft="12dp"
+                        android:singleLine="true"
+                        android:text="상품명"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="@+id/activity_detail_auction_const_bar_profile"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/activity_detail_auction_const_bar_profile" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_baseline_more_horiz_24"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/activity_detail_auction_const_bar_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        app:layout_constraintLeft_toRightOf="@+id/activity_detail_auction_imagebutton_close"
+                        app:layout_constraintTop_toTopOf="@+id/activity_detail_auction_imagebutton_close">
+
+                        <ImageView
+                            android:id="@+id/activity_detail_auction_imageview_profile"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/background_circle_white_stroke_black"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/activity_detail_auction_textview_nickname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:text="nickname"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="16dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/activity_detail_auction_imageview_profile"
+                            app:layout_constraintLeft_toRightOf="@+id/activity_detail_auction_imageview_profile"
+                            app:layout_constraintTop_toTopOf="@+id/activity_detail_auction_imageview_profile" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <ScrollView
+                android:id="@+id/activity_detail_auction_scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:nestedScrollingEnabled="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp">
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/activity_detail_auction_viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <me.relex.circleindicator.CircleIndicator3
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/activity_detail_auction_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/activity_detail_auction_viewpager"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:ci_height="7dp"
+                        app:ci_width="7dp"
+                        app:ci_margin="4dp"
+                        app:ci_drawable="@drawable/point_black_circle"
+                        />
+
+                    <TextView
+                        android:id="@+id/activity_detail_auction_textview_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:text="카테고리"
+                        android:textColor="@color/colorBlack"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/activity_detail_auction_indicator" />
+
+                    <TextView
+                        android:id="@+id/activity_detail_auction_textview_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:text="게시 시간"
+                        app:layout_constraintBottom_toBottomOf="@+id/activity_detail_auction_textview_category"
+                        app:layout_constraintLeft_toRightOf="@+id/activity_detail_auction_textview_category"
+                        app:layout_constraintTop_toTopOf="@+id/activity_detail_auction_textview_category" />
+
+                    <View
+                        android:id="@+id/activity_detail_auction_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_margin="8dp"
+                        android:background="@color/colorLightGray"
+                        app:layout_constraintTop_toBottomOf="@+id/activity_detail_auction_textview_time" />
+
+                    <TextView
+                        android:id="@+id/activity_detail_auction_textview_explain"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:text="안녕하세요 오늘 설명드릴 상품은 "
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/activity_detail_auction_line" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </ScrollView>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_detail_auction_const_bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/background_round_white_stroke_black_2dp"
+            android:padding="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="현재 참여자 : 11명"
+                android:textColor="@color/colorBlack"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@+id/activity_detail_auction_textview_closetime"
+                app:layout_constraintTop_toBottomOf="@+id/activity_detail_auction_textview_closetime" />
+
+            <TextView
+                android:id="@+id/activity_detail_auction_textview_closetime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="12dp"
+                android:text="경매 종료까지 : 66:00"
+                android:textColor="@color/colorBlack"
+                android:textSize="18dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/activity_detail_auction_button_join"
+                app:layout_constraintTop_toTopOf="@+id/activity_detail_auction_button_join" />
+
+            <Button
+                android:id="@+id/activity_detail_auction_button_join"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/background_round_yellow_24dp"
+                android:text="경매 참여"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -71,7 +71,7 @@ class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.lay
 
         binding.apply {
 
-            activityAddAuctionPostRecyclerviewPhotolist.adapter = PhotoAdapter(binding.root.context,photoList)
+            activityAddAuctionPostRecyclerviewPhotolist.adapter = PhotoAdapter(binding.root.context,photoList,true)
             activityAddAuctionPostRecyclerviewPhotolist.layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.HORIZONTAL,false)
 
 
@@ -243,6 +243,7 @@ class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.lay
         product.timestamp = System.currentTimeMillis()
         product.viewCount = 0
         product.photoList = photoDownloadUrlList
+        product.currentCost = binding.activityAddAuctionPostEdittextStartCost.text.toString()
 
         db.collection("productAuction").document().set(product).addOnSuccessListener {
             //success

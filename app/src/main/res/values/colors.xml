@@ -25,4 +25,5 @@
     <color name="colorLinkColor">#0900FF</color>
     <color name="colorYellow">#fde600</color>
     <color name="colorBlackTransparent">#B3000000</color>
+    <color name="colorTransparent">#00000000</color>
 </resources>

@@ -33,7 +33,7 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
 
         if (viewState == "Auction") {
             val databaseReference =
-                db.collection("productAuction").orderBy("timestamp", Query.Direction.ASCENDING)
+                db.collection("productAuction").orderBy("timestamp", Query.Direction.DESCENDING)
 
             databaseReference.get().addOnSuccessListener {
                 it?.let {
@@ -48,7 +48,7 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
                 }
             }
         }else if (viewState == "Trade"){
-            val databaseReference = db.collection("productTrade").orderBy("timestamp",Query.Direction.ASCENDING)
+            val databaseReference = db.collection("productTrade").orderBy("timestamp",Query.Direction.DESCENDING)
 
             databaseReference.get().addOnSuccessListener {
                 it.let {
@@ -132,6 +132,7 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
                 .apply { start() }
             binding.fragmentAuctionTextviewWriteTrade.visibility = View.VISIBLE
             binding.fragmentAuctionTextviewWriteAuction.visibility = View.VISIBLE
+            binding.fragmentAuctionBackground.setBackgroundResource(R.color.colorBlackTransparent)
             true
         } else {
             ObjectAnimator.ofFloat(binding.fragmentAuctionFabWriteTrade, "translationY", -0f)
@@ -145,6 +146,7 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
                 .apply { start() }
             binding.fragmentAuctionTextviewWriteTrade.visibility = View.INVISIBLE
             binding.fragmentAuctionTextviewWriteAuction.visibility = View.INVISIBLE
+            binding.fragmentAuctionBackground.setBackgroundResource(R.color.colorTransparent)
             false
         }
     }
