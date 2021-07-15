@@ -137,9 +137,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             activitylogin = this@LoginActivity
             loginsignupviewmodel = viewModel
         }
-
-        //test
-        startActivity(Intent(this, LobbyActivity::class.java))
     }
 
     fun naver(view : View){

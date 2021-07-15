@@ -8,16 +8,16 @@ import com.example.project_auction.R
 import com.example.project_auction.adapter.MultiViewTypeAdapter
 import com.example.project_auction.base.BaseActivity
 import com.example.project_auction.data.ViewTypeModelDTO
-import com.example.project_auction.databinding.ActivityRegistrationHistoryBinding
+import com.example.project_auction.databinding.ActivityAuctionJoinHistoryBinding
 
-class RegistrationHistoryActivity : BaseActivity<ActivityRegistrationHistoryBinding>(R.layout.activity_registration_history) {
+class AuctionJoinHistoryActivity : BaseActivity<ActivityAuctionJoinHistoryBinding>(R.layout.activity_auction_join_history) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.apply {
-            activityregistrationhistory = this@RegistrationHistoryActivity
+            activityauctionjoinhistory = this@AuctionJoinHistoryActivity
         }
 
-        setSupportActionBar(binding.activityRegistrationHistoryToolbarTitle)
+        setSupportActionBar(binding.activityAuctionJoinHistoryToolbarTitle)
         getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true);
 
         val list = listOf(
@@ -33,8 +33,8 @@ class RegistrationHistoryActivity : BaseActivity<ActivityRegistrationHistoryBind
         )
 
         val adpater = MultiViewTypeAdapter(list)
-        binding.activityRegistrationHistoryRecyclerviewItem.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        binding.activityRegistrationHistoryRecyclerviewItem.adapter = adpater
+        binding.activityAuctionJoinHistoryRecyclerviewItem.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        binding.activityAuctionJoinHistoryRecyclerviewItem.adapter = adpater
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
