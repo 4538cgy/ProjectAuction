@@ -2,7 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.project_auction">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Camera & Storage 권한 -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +18,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<<<<<<< HEAD
         <activity android:name=".view.activity.addpost.AddAuctionPostActivity"></activity>
+=======
+        <activity android:name=".view.activity.history.AuctionSuccessHistoryActivity"></activity>
+        <activity android:name=".view.activity.history.AuctionJoinHistoryActivity" />
+        <activity android:name=".view.activity.history.AuctionHistoryActivity" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.project_auction.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+>>>>>>> SettingFragment
         <activity android:name=".util.address.SearchAddressActivity" />
         <activity android:name=".view.activity.lobby.LobbyActivity" />
         <activity android:name=".view.activity.signup.SignUpLobbyActivity" />
