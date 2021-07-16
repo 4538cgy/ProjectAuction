@@ -1,8 +1,6 @@
 package com.example.project_auction.util.http
 
-import com.example.project_auction.data.KakaoDTO
-import com.example.project_auction.data.NaverDTO
-import com.example.project_auction.data.TimeRequestDTO
+import com.example.project_auction.data.*
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Headers
@@ -19,5 +17,10 @@ interface LoginToken {
 
     @Headers("Accept: application/json")
     @POST("/getServerTime")
-    fun test3(@Body dto : TimeRequestDTO.Time) : Call<TimeRequestDTO.ResponseTime>
+    fun test3(@Body dto : TimeRequestDTO.Time) : Call<TimeRequestDTO.data>
+
+
+    @Headers("Accept: application/json")
+    @POST("/AuctionRead")
+    fun getAuctionProduct(@Body postAuction : PostRequestDTO) : Call<ProductAuctionDTO>
 }

@@ -3,21 +3,16 @@ package com.example.project_auction.view.fragment.lobby.auction
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.algolia.search.saas.Client
 import com.example.project_auction.R
 import com.example.project_auction.adapter.AuctionAdapter
 import com.example.project_auction.base.BaseFragment
-import com.example.project_auction.data.KakaoDTO
-import com.example.project_auction.data.ProductAuctionDTO
-import com.example.project_auction.data.TimeRequestDTO
+import com.example.project_auction.data.*
 import com.example.project_auction.databinding.FragmentAuctionBinding
 import com.example.project_auction.util.http.HttpApi
 import com.example.project_auction.view.activity.addpost.AddAuctionPostActivity
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.Query
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,6 +23,8 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
     private var isOpenFAB = false
     private var viewState = "Auction" // default = Auction , [ Auction, Trade ]
     private var auctionData = arrayListOf<ProductAuctionDTO>()
+    private val client = Client("PRG26POP2U","8a97c353cba4db57d0853c46f9d5b0f1")
+    private val index = client.getIndex("helloworld")
 
     fun initRecyclerData(){
 
@@ -67,6 +64,31 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
         initRecyclerData()
 
 
+        var query = com.algolia.search.saas.Query("테스트")
+            query.apply {
+                setAttributesToRetrieve("title","content","timestamp")
+            }
+
+        index.searchAsync(query
+        ) { p0, p1 ->
+
+            println("p0 = ${p0.toString()}")
+            println("아아2 = ${p0!!.getJSONArray("hits")}")
+
+            var json = p0.getJSONArray("hits")
+
+            for (i in 0 .. json.length()-1){
+
+                var jsonData = json.getJSONObject(i)
+
+                println("$i 번째의 title = ${jsonData.getString("title")}")
+                println("$i 번째의 content = ${jsonData.getString("content")}")
+            }
+
+            println("p1 = ${p1.toString()}")
+        }
+
+
 
         binding.apply {
 
@@ -85,18 +107,41 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
                 var data = TimeRequestDTO.Time()
                 data.day = 3
 
-                HttpApi().test3(data).enqueue(object : Callback<TimeRequestDTO.ResponseTime> {
+                HttpApi().test3(data).enqueue(object : Callback<TimeRequestDTO.data> {
                     override fun onResponse(
-                        call: Call<TimeRequestDTO.ResponseTime>,
-                        response: Response<TimeRequestDTO.ResponseTime>
+                        call: Call<TimeRequestDTO.data>,
+                        response: Response<TimeRequestDTO.data>
                     ) {
+                        println("${response.toString()}")
                         println("${response.body()}")
                     }
 
-                    override fun onFailure(call: Call<TimeRequestDTO.ResponseTime>, t: Throwable) {
+                    override fun onFailure(call: Call<TimeRequestDTO.data>, t: Throwable) {
                         println("실패!")
                     }
 
+
+                })
+
+
+                //게시글 조회 요청
+                var data2 = PostRequestDTO()
+                data2.uid = auth.currentUser!!.uid.toString()
+                data2.page = 0
+                data2.orderBy = 1
+                data2.sortKey = "timestamp"
+
+                HttpApi().getAuctionProduct(data2).enqueue(object : Callback<ProductAuctionDTO>{
+                    override fun onResponse(
+                        call: Call<ProductAuctionDTO>,
+                        response: Response<ProductAuctionDTO>
+                    ) {
+                        println("게시글 조회 결과 ${response.body()}")
+                    }
+
+                    override fun onFailure(call: Call<ProductAuctionDTO>, t: Throwable) {
+                        println("실패")
+                    }
 
                 })
             }

@@ -7,7 +7,7 @@ data class TimeRequestDTO(
         var day : Int ? = null
     )
 
-    data class ResponseTime(
+    data class data(
         var nowTime : Long ? = null,
         var afterTime : Long ? = null
     )

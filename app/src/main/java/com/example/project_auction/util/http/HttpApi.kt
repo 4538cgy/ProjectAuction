@@ -1,8 +1,6 @@
 package com.example.project_auction.util.http
 
-import com.example.project_auction.data.KakaoDTO
-import com.example.project_auction.data.NaverDTO
-import com.example.project_auction.data.TimeRequestDTO
+import com.example.project_auction.data.*
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -33,8 +31,13 @@ class HttpApi {
         return loginTokenInterface.test2(testDTO)
     }
 
-    fun test3(testDTO : TimeRequestDTO.Time) : Call<TimeRequestDTO.ResponseTime>
+    fun test3(testDTO : TimeRequestDTO.Time) : Call<TimeRequestDTO.data>
     {
         return loginTokenInterface.test3(testDTO)
+    }
+
+    fun getAuctionProduct(auctionPost : PostRequestDTO) : Call<ProductAuctionDTO>
+    {
+        return loginTokenInterface.getAuctionProduct(auctionPost)
     }
 }
