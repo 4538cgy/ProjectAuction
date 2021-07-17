@@ -15,14 +15,27 @@ import com.example.project_auction.R
 import com.example.project_auction.adapter.PhotoAdapter
 import com.example.project_auction.base.BaseActivity
 import com.example.project_auction.data.ProductAuctionDTO
+import com.example.project_auction.data.TimeRequestDTO
 import com.example.project_auction.databinding.ActivityAddAuctionPostBinding
 import com.example.project_auction.extension.toast
+import com.example.project_auction.util.http.HttpApi
 import com.example.project_auction.util.time.TimeUtil
 import com.example.project_auction.view.bottomsheet.BottomSheetCategory
 import com.example.project_auction.view.bottomsheet.BottomSheetSetCloseProduct
 import com.google.android.gms.auth.api.Auth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.channels.sendBlocking
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.DecimalFormat
 
 class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.layout.activity_add_auction_post),BottomSheetCategory.BottomSheetButtonClickListener , BottomSheetSetCloseProduct.BottomSheetSetCloseProductButtonClickListener{
@@ -35,6 +48,8 @@ class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.lay
     private var thousandFormatCloseCostResult = ""
     private lateinit var textWatcherCloseCost: TextWatcher
     private lateinit var textWatcherStartCost: TextWatcher
+
+    private var mainScope = CoroutineScope(Dispatchers.Main)
 
     private val addPhotoCallback = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
 
@@ -240,19 +255,55 @@ class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.lay
         product.delete = false
         product.startCost = binding.activityAddAuctionPostEdittextStartCost.text.toString()
         product.favoriteCount = 0
-        product.timestamp = System.currentTimeMillis()
+        //product.timestamp = System.currentTimeMillis()
         product.viewCount = 0
         product.photoList = photoDownloadUrlList
         product.currentCost = binding.activityAddAuctionPostEdittextStartCost.text.toString()
 
-        db.collection("productAuction").document().set(product).addOnSuccessListener {
-            //success
-            finish()
-        }.addOnFailureListener {
-            //fail
+
+        mainScope.launch {
+            getTimestamp(binding.activityAddAuctionPostTextviewCloseTime.text.toString().replace(("[^0-9]").toRegex(),"").toInt()).collect {
+                product.timestamp = it.data!!.nowTime
+                product.closeTimestamp = it.data!!.afterTime
+
+                db.collection("productAuction").document().set(product).addOnSuccessListener {
+                    //success
+                    finish()
+                }.addOnFailureListener {
+                    //fail
+                }
+            }
         }
+
+
     }
 
+    @ExperimentalCoroutinesApi
+    fun getTimestamp(days : Int) = callbackFlow<TimeRequestDTO.TimeResponse>{
+        var data = TimeRequestDTO.Time()
+        data.day = days
+
+        HttpApi().test3(data).enqueue(object : Callback<TimeRequestDTO.TimeResponse> {
+            override fun onResponse(
+                call: Call<TimeRequestDTO.TimeResponse>,
+                response: Response<TimeRequestDTO.TimeResponse>
+            ) {
+                println("${response.message()}")
+                println("${response.code()}")
+                println("${response.body()}")
+
+                this@callbackFlow.sendBlocking(response.body()!!)
+            }
+
+            override fun onFailure(call: Call<TimeRequestDTO.TimeResponse>, t: Throwable) {
+                println("실패! ${call.toString()} ll ${t.toString()}")
+            }
+
+
+        })
+
+        awaitClose {  }
+    }
 
     fun addPhoto(){
 

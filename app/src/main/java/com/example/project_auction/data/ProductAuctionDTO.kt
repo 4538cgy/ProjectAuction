@@ -1,5 +1,6 @@
 package com.example.project_auction.data
 
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 class ProductAuctionDTO (
@@ -8,7 +9,7 @@ class ProductAuctionDTO (
     var category : String ? = null,
     var title : String ? = null,
     var timestamp : Long ? = null,
-    var closeTimestamp : String ? = null,
+    var closeTimestamp : Long ? = null,
     var startCost : String ? = null,
     var currentCost : String ? = null,
     var closeCost : String ? = null,
@@ -24,4 +25,9 @@ class ProductAuctionDTO (
     // Map<uid,nickname>
     var favoriters : MutableMap<String,String> = HashMap()
 
-) : Serializable
+) : Serializable {
+    data class ProductResponseDTO(
+        @SerializedName("data")
+        var data : ArrayList<ProductAuctionDTO> = arrayListOf()
+    )
+}

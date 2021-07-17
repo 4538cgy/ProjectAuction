@@ -18,6 +18,12 @@ class TimeUtil {
         const val HOUR = 24
         const val DAY = 30
         const val MONTH = 12
+
+        const val CLOSE_SEC = -60
+        const val CLOSE_MIN = -60
+        const val CLOSE_HOUR = -24
+        const val CLOSE_DAY = -30
+        const val CLOSE_MONTH = -12
     }
 
     fun getDayCheck(regTime: Long) : Boolean ? {
@@ -65,6 +71,25 @@ class TimeUtil {
         } else {
             msg = diffTime.toString() + "년 전"
         }
+        return msg
+    }
+
+    fun formatCloseTimeString(regTime: Long): String? {
+
+        var msg = ""
+
+        var HHmm = SimpleDateFormat("HH:mm",Locale.KOREAN)
+        var ddHHmm = SimpleDateFormat("dd일 HH:mm", Locale.KOREAN)
+        val timezone = TimeZone.getTimeZone("Asia/seoul")
+        msg = if ((regTime-System.currentTimeMillis()) < 86400000){
+            HHmm.timeZone = timezone
+            return HHmm.format(regTime-System.currentTimeMillis())
+        }else{
+            ddHHmm.timeZone = timezone
+            return ddHHmm.format(regTime-System.currentTimeMillis())
+        }
+
+
         return msg
     }
 }

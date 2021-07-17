@@ -31,13 +31,13 @@ class HttpApi {
         return loginTokenInterface.test2(testDTO)
     }
 
-    fun test3(testDTO : TimeRequestDTO.Time) : Call<TimeRequestDTO.data>
+    fun test3(testDTO : TimeRequestDTO.Time) : Call<TimeRequestDTO.TimeResponse>
     {
         return loginTokenInterface.test3(testDTO)
     }
 
-    fun getAuctionProduct(auctionPost : PostRequestDTO) : Call<ProductAuctionDTO>
+    fun getAuctionProduct(page : Int , orderBy : Int , uid : String , sortKey : String) : Call<ProductAuctionDTO.ProductResponseDTO>
     {
-        return loginTokenInterface.getAuctionProduct(auctionPost)
+        return loginTokenInterface.getAuctionProduct(page,orderBy,uid,sortKey)
     }
 }

@@ -23,6 +23,7 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
     private var isOpenFAB = false
     private var viewState = "Auction" // default = Auction , [ Auction, Trade ]
     private var auctionData = arrayListOf<ProductAuctionDTO>()
+    private var auctionDataId = arrayListOf<String>()
     private val client = Client("PRG26POP2U","8a97c353cba4db57d0853c46f9d5b0f1")
     private val index = client.getIndex("helloworld")
 
@@ -36,8 +37,12 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
                 it?.let {
                     if (!it.isEmpty) {
                         auctionData.clear()
+                        auctionDataId.clear()
                         var data = it.toObjects(ProductAuctionDTO::class.java)
                         auctionData.addAll(data)
+                        it.forEach { queryDocumentSnapshot ->
+                            auctionDataId.add(queryDocumentSnapshot.id)
+                        }
                         binding.fragmentAuctionRecyclerview.adapter!!.notifyDataSetChanged()
                     }
                 }?.run {
@@ -104,42 +109,32 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
 
             fragmentAuctionFabWriteTrade.setOnClickListener {
                 //거래 물품 등록
-                var data = TimeRequestDTO.Time()
-                data.day = 3
-
-                HttpApi().test3(data).enqueue(object : Callback<TimeRequestDTO.data> {
-                    override fun onResponse(
-                        call: Call<TimeRequestDTO.data>,
-                        response: Response<TimeRequestDTO.data>
-                    ) {
-                        println("${response.toString()}")
-                        println("${response.body()}")
-                    }
-
-                    override fun onFailure(call: Call<TimeRequestDTO.data>, t: Throwable) {
-                        println("실패!")
-                    }
 
 
-                })
+
 
 
                 //게시글 조회 요청
                 var data2 = PostRequestDTO()
                 data2.uid = auth.currentUser!!.uid.toString()
-                data2.page = 0
+                data2.page = 2
                 data2.orderBy = 1
                 data2.sortKey = "timestamp"
 
-                HttpApi().getAuctionProduct(data2).enqueue(object : Callback<ProductAuctionDTO>{
+                HttpApi().getAuctionProduct(1,-1,auth.currentUser!!.uid,"timestamp").enqueue(object : Callback<ProductAuctionDTO.ProductResponseDTO>{
                     override fun onResponse(
-                        call: Call<ProductAuctionDTO>,
-                        response: Response<ProductAuctionDTO>
+                        call: Call<ProductAuctionDTO.ProductResponseDTO>,
+                        response: Response<ProductAuctionDTO.ProductResponseDTO>
                     ) {
-                        println("게시글 조회 결과 ${response.body()}")
+                        println("게시글 조회 결과 ${response.body()!!.toString()}")
+
+                        response.body()!!.data.forEach {
+                            println("내부 데이터 ${it.title}")
+                        }
+
                     }
 
-                    override fun onFailure(call: Call<ProductAuctionDTO>, t: Throwable) {
+                    override fun onFailure(call: Call<ProductAuctionDTO.ProductResponseDTO>, t: Throwable) {
                         println("실패")
                     }
 
@@ -155,7 +150,7 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
             fragmentAuctionButtonTrade.setOnClickListener {
 
             }
-            fragmentAuctionRecyclerview.adapter = AuctionAdapter(binding.root.context,auctionData)
+            fragmentAuctionRecyclerview.adapter = AuctionAdapter(binding.root.context,auctionData,auctionDataId)
             fragmentAuctionRecyclerview.layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.VERTICAL,false)
 
             fragmentAuctionSwipeRefreshLayout.setOnRefreshListener {
