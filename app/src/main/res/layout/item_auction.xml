@@ -61,8 +61,8 @@
             android:text="종료시간"
             />
 
-        <TextView
-            android:id="@+id/item_auction_textview_favorite"
+        <ImageButton
+            android:id="@+id/item_auction_imagebutton_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toRightOf="@+id/item_auction_textview_closetime"
@@ -70,7 +70,8 @@
             android:layout_margin="8dp"
             android:textSize="16dp"
             android:gravity="center"
-            android:drawableLeft="@drawable/ic_baseline_favorite_border_24"
+            android:src="@drawable/ic_baseline_favorite_border_24"
+            android:background="@android:color/transparent"
             />
 
         <TextView
