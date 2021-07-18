@@ -71,7 +71,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
         }
         viewModel.profilePhotoUri.observe(this, Observer {
             binding.activitySignUpButtonNext.isEnabled = true
-            if (it.isNotEmpty()) {
+            if (it != null) {
                 binding.activitySignUpButtonNext.setBackgroundResource(R.drawable.background_round_yellow_24dp)
             }
         })
@@ -120,11 +120,13 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
     }
 
     fun uploadProfileData() {
+
+
         var storageRef =
             storage.reference.child("UserProfileImages").child(auth.currentUser!!.uid!!)
-        storageRef.putFile(Uri.parse(viewModel.profilePhotoUri.toString()))
-            .continueWith { task: Task<UploadTask.TaskSnapshot> ->
-                return@continueWith storageRef.downloadUrl
+        storageRef.putFile(Uri.parse(viewModel.profilePhotoUri.value.toString()))
+            .continueWithTask { task: Task<UploadTask.TaskSnapshot> ->
+                return@continueWithTask storageRef.downloadUrl
             }.addOnSuccessListener { uri ->
                 var map = HashMap<String, Any>()
                 map["image"] = uri.toString()

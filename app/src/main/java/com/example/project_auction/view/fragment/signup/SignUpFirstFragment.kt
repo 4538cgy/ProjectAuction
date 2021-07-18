@@ -27,7 +27,7 @@ class SignUpFirstFragment : BaseFragment<FragmentSignUpFirstBinding>(R.layout.fr
                     .circleCrop()
                     .into(binding.fragmentSignUpFirstImageviewProfile)
 
-                loginSignViewModel.profilePhotoUri.postValue(it.data!!.data.toString())
+                loginSignViewModel.profilePhotoUri.postValue(it.data!!.data)
             }
         }
     }

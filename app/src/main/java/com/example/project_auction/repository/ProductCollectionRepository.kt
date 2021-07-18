@@ -16,7 +16,7 @@ class ProductCollectionRepository {
 
         val transactionReference = db.collection("productAuction").document(postId)
 
-        db.runTransaction { transaction ->
+        val evenetListener = db.runTransaction { transaction ->
             val snapshot = transaction.get(transactionReference).toObject(ProductAuctionDTO::class.java)
 
             if (!snapshot!!.viewers.containsKey(uid))
@@ -39,14 +39,14 @@ class ProductCollectionRepository {
             this@callbackFlow.sendBlocking(false)
         }
 
-        awaitClose {  }
+        awaitClose { evenetListener }
     }
 
     @ExperimentalCoroutinesApi
     fun checkFavorite(postId: String, uid : String) = callbackFlow<Boolean> {
         val databaseReference = db.collection("productAuction").document(postId)
 
-        databaseReference.addSnapshotListener { value, error ->
+        val eventListener = databaseReference.addSnapshotListener { value, error ->
             value?.let{
               //non - null todo
                 if (it.exists()){
@@ -65,6 +65,6 @@ class ProductCollectionRepository {
             }
         }
 
-        awaitClose {  }
+        awaitClose { eventListener }
     }
 }
