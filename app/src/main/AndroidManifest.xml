@@ -14,6 +14,9 @@
         <activity android:name=".view.activity.photo.PhotoViewActivity"></activity>
         <activity android:name=".view.activity.detailproduct.DetailAuctionActivity" />
         <activity android:name=".view.activity.addpost.AddAuctionPostActivity" />
+
+
+        
         <activity android:name=".util.address.SearchAddressActivity" />
         <activity android:name=".view.activity.lobby.LobbyActivity" />
         <activity android:name=".view.activity.signup.SignUpLobbyActivity" />
