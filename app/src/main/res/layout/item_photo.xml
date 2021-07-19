@@ -25,9 +25,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_close_24"
-            android:background="@android:color/transparent"
+            android:background="@drawable/background_circle_white_stroke_black"
             app:layout_constraintRight_toRightOf="@+id/item_photo_imageview_photo"
             app:layout_constraintBottom_toBottomOf="@+id/item_photo_imageview_photo"
+            android:visibility="gone"
             />
 
 

@@ -59,8 +59,15 @@ dependencies {
     implementation "com.kakao.sdk:v2-link:2.5.2" // 메시지(카카오링크)
     implementation "com.kakao.sdk:v2-navi:2.5.2" // 카카오내비
 
+
+    //포토뷰
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
     //네아로
     implementation 'com.naver.nid:naveridlogin-android-sdk:4.2.6'
+
+    //알골리아
+    implementation 'com.algolia:algoliasearch-android:3.+'
 
     //retrofit-2 2.9.0
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
