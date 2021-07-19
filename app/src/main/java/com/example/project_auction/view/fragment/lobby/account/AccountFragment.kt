@@ -17,11 +17,13 @@ import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.example.project_auction.R
 import com.example.project_auction.base.BaseFragment
+import com.example.project_auction.data.UserDTO
 import com.example.project_auction.databinding.FragmentAccountBinding
 import com.example.project_auction.view.activity.history.AuctionHistoryActivity
 import com.example.project_auction.view.activity.history.AuctionJoinHistoryActivity
 import com.example.project_auction.view.activity.history.AuctionSuccessHistoryActivity
 import com.example.project_auction.view.activity.setting.SettingActivity
+import com.google.firebase.firestore.auth.User
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.fragment_account.*
@@ -55,12 +57,33 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
                 }
             }
 
+
         lateinit var photoUri: String
         lateinit var currentPhotoPath: String
+        private var currentProfile : UserDTO = UserDTO()
+
+        private fun initProfile() {
+            var uid = auth.currentUser!!.uid
+            db.collection("User").whereEqualTo("uid",uid).get()
+                .addOnCompleteListener {
+                    if(it.isSuccessful){
+                        for(dc in it.result!!.documents){
+                            currentProfile = dc.toObject(UserDTO::class.java)!!
+                            binding.fragmentAccountTextviewNickname.text = currentProfile.nickName
+                        }
+                    }
+                    else{
+                        Toast.makeText(requireContext(), "Current File Data not Find!!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+        }
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
             binding.fragmentaccount = this
+
+            initProfile()
 
             binding.apply {
                 fragmentAccountImageviewProfile.setOnClickListener {
@@ -77,6 +100,8 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
                         }.show()
                     update()
                 }
+
+                //binding.fragmentAccountTextviewNickname.text = currentProfile.nickName
 
                 // NickName Change Event 처리
                 fragment_account_textview_nickname.setOnClickListener {

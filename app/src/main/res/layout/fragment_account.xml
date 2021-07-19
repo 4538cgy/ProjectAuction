@@ -48,7 +48,6 @@
                 android:id="@+id/fragment_account_textview_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="닉네임"
                 app:layout_constraintLeft_toRightOf="@+id/fragment_account_imageview_profile"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
