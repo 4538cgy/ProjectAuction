@@ -35,9 +35,9 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
             it?.let {
                 if (!it.isEmpty) {
                     auctionData.clear()
-                    var data = it.toObjects(ProductAuctionDTO::class.java)
-                    auctionData.addAll(data)
-                    binding.fragmentAuctionRecyclerview.adapter!!.notifyDataSetChanged()
+                    //var data = it.toObjects(ProductAuctionDTO::class.java)
+                    //auctionData.addAll(data)
+                    //binding.fragmentAuctionRecyclerview.adapter!!.notifyDataSetChanged()
                 }
             }?.run {
 

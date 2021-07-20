@@ -2,6 +2,7 @@ package com.example.project_auction.view.fragment.lobby.account
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -13,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.example.project_auction.R
@@ -23,9 +25,6 @@ import com.example.project_auction.view.activity.history.AuctionHistoryActivity
 import com.example.project_auction.view.activity.history.AuctionJoinHistoryActivity
 import com.example.project_auction.view.activity.history.AuctionSuccessHistoryActivity
 import com.example.project_auction.view.activity.setting.SettingActivity
-import com.google.firebase.firestore.auth.User
-import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.fragment_account.*
 import java.io.File
 import java.io.IOException
@@ -33,20 +32,27 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-
 class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_account) {
 
         private val profileCallback =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it ->
                 if (it != null) {
                     if (it.data != null) {
                         photoUri = it.data!!.data.toString()
-                        Glide.with(binding.root.context)
-                            .load(it.data!!.data)
-                            .circleCrop()
-                            .into(binding.fragmentAccountImageviewProfile)
-
-                        loginSignViewModel.profilePhotoUri.postValue(it.data!!.data.toString())
+                        if (photoUri == "null"){
+                            photoUri = Uri.parse(it.data?.extras?.get("data").toString()).toString()
+                            Glide.with(binding.root.context)
+                                .load(photoUri)
+                                .circleCrop()
+                                .into(binding.fragmentAccountImageviewProfile)
+                            loginSignViewModel.profilePhotoUri.postValue(it.data!!.data.toString())
+                        } else {
+                            Glide.with(binding.root.context)
+                                .load(it.data!!.data)
+                                .circleCrop()
+                                .into(binding.fragmentAccountImageviewProfile)
+                            loginSignViewModel.profilePhotoUri.postValue(it.data!!.data.toString())
+                        }
                     } else if (it.resultCode == Activity.RESULT_OK) {
                         val file = File(currentPhotoPath)
                         Glide.with(binding.root.context)
@@ -87,14 +93,13 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
 
             binding.apply {
                 fragmentAccountImageviewProfile.setOnClickListener {
-                    settingPermission()
                     var selectImage = arrayOf("앨범에서 선택", "사진 촬영")
                     val builder = AlertDialog.Builder(requireContext())
                         .setTitle("프로필 사진")
                         .setItems(selectImage) { dialog, which ->
                             when (which) {
                                 0 -> openGallery()
-                                1 -> startCapture()
+                                1 -> checkPermission()
                             }
 
                         }.show()
@@ -175,30 +180,25 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
         }
 
         //권한 설정
-        fun settingPermission() {
-            var permis = object : PermissionListener {
-                //            어떠한 형식을 상속받는 익명 클래스의 객체를 생성하기 위해 다음과 같이 작성
-                override fun onPermissionGranted() {
-                    Toast.makeText(requireContext(), "권한 허가", Toast.LENGTH_SHORT)
-                        .show()
+        fun checkPermission() {
+            val cameraPermission = ContextCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.CAMERA
+            )
+
+            if(cameraPermission != PackageManager.PERMISSION_GRANTED) {
+                // 권한이 없는 경우 permission 권한을 띄우는 알람창을 띄운다.
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.CAMERA), 1000)
+            } else {
+                // 권한이 있는 경우
+                Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { intent ->
+                    intent.resolveActivity(requireContext().packageManager)?.also {
+                        profileCallback.launch(intent)
+                    }
                 }
 
-                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
-                    Toast.makeText(requireContext(), "권한 거부", Toast.LENGTH_SHORT)
-                        .show()
-                    ActivityCompat.finishAffinity(activity!!) // 권한 거부시 앱 종료
-                }
+                //startCapture()
             }
-
-            TedPermission.with(requireContext())
-                .setPermissionListener(permis)
-                .setRationaleMessage("카메라 사진 권한 필요")
-                .setDeniedMessage("카메라 권한 요청 거부")
-                .setPermissions(
-                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    android.Manifest.permission.CAMERA
-                )
-                .check()
         }
 
         // 사진 촬영 후 저장
