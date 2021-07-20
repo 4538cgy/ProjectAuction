@@ -43,7 +43,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
                             .circleCrop()
                             .into(binding.fragmentAccountImageviewProfile)
 
-                        loginSignViewModel.profilePhotoUri.postValue(it.data!!.data.toString())
+                        loginSignViewModel.profilePhotoUri.postValue(it.data!!.data)
                     } else if (it.resultCode == Activity.RESULT_OK) {
                         val file = File(currentPhotoPath)
                         Glide.with(binding.root.context)

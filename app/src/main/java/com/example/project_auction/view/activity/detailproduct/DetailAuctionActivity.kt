@@ -4,6 +4,9 @@ import android.icu.util.TimeUnit
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.view.View
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.project_auction.R
@@ -16,6 +19,9 @@ import com.example.project_auction.data.UserDTO
 import com.example.project_auction.databinding.ActivityDetailAuctionBinding
 import com.example.project_auction.util.http.HttpApi
 import com.example.project_auction.util.time.TimeUtil
+import com.example.project_auction.view.bottomsheet.BottomSheetBidding
+import com.example.project_auction.view.bottomsheet.BottomSheetSetCloseProduct
+import kotlinx.android.synthetic.main.activity_detail_auction.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -28,9 +34,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layout.activity_detail_auction) {
+class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layout.activity_detail_auction), BottomSheetBidding.BottomSheetButtonClickListener {
 
     lateinit var data : ProductAuctionDTO
+    lateinit var dataId : String
     lateinit var countDownTimer: CountDownTimer
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,9 +45,37 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
         binding.activitydetailauction = this
 
         data = intent.getSerializableExtra("productData") as ProductAuctionDTO
+        dataId = intent.getStringExtra("productId").toString()
 
 
-        binding.apply { 
+        auctionViewModel.joiningState.observe(this, Observer {
+            if (it == "TS_USER_SUCCESS") {
+                binding.activityDetailAuctionButtonJoin.text = "경매 참여중"
+                binding.activityDetailAuctionButtonJoin.isEnabled = false
+                binding.activityDetailAuctionButtonBidding.visibility = View.VISIBLE
+            }
+        })
+
+
+
+        binding.apply {
+
+            activityDetailAuctionConstFrontground.visibility = View.VISIBLE
+            //입찰 버튼
+            activityDetailAuctionButtonBidding.setOnClickListener {
+                val bottomSheetBidding = BottomSheetBidding()
+
+                var bundle = Bundle()
+                bundle.putString("currentCost",data.currentCost)
+
+                bottomSheetBidding.apply {
+                    arguments = bundle
+                    show(supportFragmentManager,"lol")
+                }
+
+            }
+
+
             //뒤로가기
             activityDetailAuctionImagebuttonClose.setOnClickListener { 
                 finish()
@@ -72,13 +107,16 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
             setCountDown()
             //경매 참여 버튼
             activityDetailAuctionButtonJoin.setOnClickListener {
-
+                onAuctionJoin()
             }
             //현재 참여자
             activityDetailAuctionTextviewJoiners.text = "현재 참여자 : " + data.joinCount.toString() + "명"
 
-            //옵션 버튼튼
         }
+    }
+
+    private fun onAuctionJoin(){
+        auctionViewModel.onJoinAuction(auth.uid!!, dataId)
     }
 
     override fun onDestroy() {
@@ -88,16 +126,29 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
 
     private fun setCountDown(){
 
+        binding.activityDetailAuctionTextviewClosetime.text = "데이터 불러오는 중"
+
         CoroutineScope(Dispatchers.Main).launch {
             getTimestamp(0).collect {
                 val time = data.closeTimestamp!! - it.data!!.nowTime!!.toLong()
                 countDownTimer = object : CountDownTimer(time, 1000){
                     override fun onTick(millisUntilFinished: Long) {
-                        binding.activityDetailAuctionTextviewClosetime.text = "경매 종료까지 : " + (millisUntilFinished/1000).toString()
+                        binding.activityDetailAuctionTextviewClosetime.text = "경매 종료까지 : " + TimeUtil().formatCloseTimeString(millisUntilFinished/1000).toString()
+                        //경매 참여중인지 체크
+                        if (data.joiners.containsKey(auth.currentUser!!.uid)){
+                            binding.activityDetailAuctionButtonJoin.text = "경매 참여중"
+                            binding.activityDetailAuctionButtonJoin.isEnabled = false
+                            binding.activityDetailAuctionButtonBidding.visibility = View.VISIBLE
+                            binding.activityDetailAuctionConstFrontground.visibility = View.GONE
+                        }
                     }
 
                     override fun onFinish() {
-                        println("경매가 종료되었습니다.")
+                        binding.activityDetailAuctionTextviewClosetime.text = "종료된 경매입니다."
+                        binding.activityDetailAuctionButtonJoin.text = "참여 불가"
+                        binding.activityDetailAuctionButtonJoin.isEnabled = false
+                        binding.activityDetailAuctionButtonBidding.visibility = View.GONE
+                        binding.activityDetailAuctionConstFrontground.visibility = View.GONE
                     }
 
                 }.start()
@@ -105,6 +156,16 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
         }
 
 
+
+    }
+
+    override fun onBottomSheetButtonClick(text: String) {
+
+        //Current Cost 변경 DB 접근로직
+        updateCurrentCost()
+    }
+
+    fun updateCurrentCost(){
 
     }
 

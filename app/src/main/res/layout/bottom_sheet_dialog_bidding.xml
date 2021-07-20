@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="bottomsheetdialogbidding"
+            type="com.example.project_auction.view.bottomsheet.BottomSheetBidding" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="24dp"
+        >
+
+
+
+        <TextView
+            android:id="@+id/bottom_sheet_dialog_bidding_textview_cost_segment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:layout_marginHorizontal="32dp"
+            android:text="최소 입찰 단위 : 500원"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_sheet_dialog_bidding_textview_current_cost"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <TextView
+            android:id="@+id/bottom_sheet_dialog_bidding_textview_current_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="현재 입찰가 : 100000"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_sheet_dialog_bidding_button_bidding"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginVertical="8dp"
+            android:layout_marginHorizontal="32dp"
+            />
+
+        <ImageButton
+            android:id="@+id/bottom_sheet_dialog_bidding_imagebutton_minus"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintBottom_toBottomOf="@+id/bottom_sheet_dialog_bidding_textview_want_cost"
+            app:layout_constraintTop_toTopOf="@+id/bottom_sheet_dialog_bidding_textview_want_cost"
+            app:layout_constraintRight_toLeftOf="@+id/bottom_sheet_dialog_bidding_textview_want_cost"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:background="@drawable/background_round_yellow_24dp"
+            android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+            />
+
+        <TextView
+            android:id="@+id/bottom_sheet_dialog_bidding_textview_want_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="희망 입찰 금액\n1000원"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"
+            app:layout_constraintLeft_toLeftOf="@+id/bottom_sheet_dialog_bidding_button_bidding"
+            app:layout_constraintRight_toRightOf="@+id/bottom_sheet_dialog_bidding_button_bidding"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_sheet_dialog_bidding_textview_cost_segment"
+            />
+
+        <ImageButton
+            app:layout_constraintTop_toTopOf="@+id/bottom_sheet_dialog_bidding_textview_want_cost"
+            app:layout_constraintBottom_toBottomOf="@+id/bottom_sheet_dialog_bidding_textview_want_cost"
+            app:layout_constraintLeft_toRightOf="@+id/bottom_sheet_dialog_bidding_textview_want_cost"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/bottom_sheet_dialog_bidding_imagebutton_plus"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/background_round_yellow_24dp"
+            android:src="@drawable/ic_baseline_keyboard_arrow_up_24"
+            />
+
+        <Button
+            android:id="@+id/bottom_sheet_dialog_bidding_button_bidding"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginVertical="12dp"
+            android:background="@drawable/background_round_yellow_24dp"
+            android:text="입찰 확정"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <ImageButton
+            android:id="@+id/bottom_sheet_dialog_bidding_imagebutton_close"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_sheet_dialog_bidding_view_line"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginBottom="12dp"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_close_24"
+            />
+
+        <TextView
+            app:layout_constraintTop_toTopOf="@+id/bottom_sheet_dialog_bidding_imagebutton_close"
+            app:layout_constraintBottom_toBottomOf="@+id/bottom_sheet_dialog_bidding_imagebutton_close"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="입찰"
+            />
+
+        <View
+            android:id="@+id/bottom_sheet_dialog_bidding_view_line"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_sheet_dialog_bidding_textview_want_cost"
+            android:layout_marginBottom="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorGray"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="4dp"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

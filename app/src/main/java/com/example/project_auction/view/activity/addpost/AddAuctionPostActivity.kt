@@ -1,6 +1,7 @@
 package com.example.project_auction.view.activity.addpost
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -23,6 +24,7 @@ import com.example.project_auction.util.time.TimeUtil
 import com.example.project_auction.view.bottomsheet.BottomSheetCategory
 import com.example.project_auction.view.bottomsheet.BottomSheetSetCloseProduct
 import com.google.android.gms.auth.api.Auth
+import com.google.firebase.database.collection.LLRBNode
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import kotlinx.coroutines.CoroutineScope
@@ -38,7 +40,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.DecimalFormat
 
-class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.layout.activity_add_auction_post),BottomSheetCategory.BottomSheetButtonClickListener , BottomSheetSetCloseProduct.BottomSheetSetCloseProductButtonClickListener{
+class AddAuctionPostActivity :
+    BaseActivity<ActivityAddAuctionPostBinding>(R.layout.activity_add_auction_post),
+    BottomSheetCategory.BottomSheetButtonClickListener,
+    BottomSheetSetCloseProduct.BottomSheetSetCloseProductButtonClickListener {
 
     private var photoList = arrayListOf<String>()
     private var photoUploadCount = 0
@@ -51,32 +56,33 @@ class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.lay
 
     private var mainScope = CoroutineScope(Dispatchers.Main)
 
-    private val addPhotoCallback = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+    private val addPhotoCallback =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 
-        if (it.resultCode == RESULT_OK){
-            if (it.data!!.clipData != null) {
+            if (it.resultCode == RESULT_OK) {
+                if (it.data!!.clipData != null) {
 
-                println("데이터 있음")
+                    println("데이터 있음")
 
-                val count = it.data!!.clipData!!.itemCount
-                var currentItem = 0
-                while (currentItem < count) {
-                    val imageUri =
-                        it.data!!.clipData!!.getItemAt(currentItem).uri
-                    photoList.add(imageUri.toString())
-                    //do something with the image (save it to some directory or whatever you need to do with it here)
-                    currentItem += 1
+                    val count = it.data!!.clipData!!.itemCount
+                    var currentItem = 0
+                    while (currentItem < count) {
+                        val imageUri =
+                            it.data!!.clipData!!.getItemAt(currentItem).uri
+                        photoList.add(imageUri.toString())
+                        //do something with the image (save it to some directory or whatever you need to do with it here)
+                        currentItem += 1
+                    }
+                } else {
+
+                    println("데이터 있음 단일")
+                    val fullPhotoUri: Uri = it.data!!.data!!
+                    photoList.add(fullPhotoUri.toString())
                 }
-            } else {
-
-                println("데이터 있음 단일")
-                val fullPhotoUri: Uri = it.data!!.data!!
-                photoList.add(fullPhotoUri.toString())
+                binding.activityAddAuctionPostRecyclerviewPhotolist.adapter!!.notifyDataSetChanged()
             }
-            binding.activityAddAuctionPostRecyclerviewPhotolist.adapter!!.notifyDataSetChanged()
-        }
 
-    }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,40 +92,68 @@ class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.lay
 
         binding.apply {
 
-            activityAddAuctionPostRecyclerviewPhotolist.adapter = PhotoAdapter(binding.root.context,photoList,true)
-            activityAddAuctionPostRecyclerviewPhotolist.layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.HORIZONTAL,false)
+            activityAddAuctionPostRecyclerviewPhotolist.adapter =
+                PhotoAdapter(binding.root.context, photoList, true)
+            activityAddAuctionPostRecyclerviewPhotolist.layoutManager =
+                LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
 
 
             activityAddAuctionPostImagebuttonClose.setOnClickListener {
                 finish()
             }
-            
+
+
             //상품명
             activityAddAuctionPostEdittextTitle.addTextChangedListener {
-                activityAddAuctionPostTextviewTitle.text = it!!.length.toString() + "/24"
+                activityAddAuctionPostTextviewTitleTextCount.text = it!!.length.toString() + "/24"
+                if (it.length > 20){
+                    activityAddAuctionPostTextviewTitleTextCount.setTextColor(Color.RED)
+                }else{
+                    activityAddAuctionPostTextviewTitleTextCount.setTextColor(Color.GRAY)
+                }
             }
+
 
             //상품 설명
             activityAddAuctionPostEdittextProductIntro.addTextChangedListener {
-                activityAddAuctionPostTextviewProductIntroCount.text = it!!.length.toString() + "/400"
+                activityAddAuctionPostTextviewProductIntroCount.text =
+                    it!!.length.toString() + "/400"
+
+                if (it.length > 390){
+                    activityAddAuctionPostTextviewTitleTextCount.setTextColor(Color.RED)
+                }else{
+                    activityAddAuctionPostTextviewTitleTextCount.setTextColor(Color.GRAY)
+                }
             }
 
             //시작가
-             textWatcherStartCost = object : TextWatcher{
+            textWatcherStartCost = object : TextWatcher {
                 override fun beforeTextChanged(
                     s: CharSequence?,
                     start: Int,
                     count: Int,
                     after: Int
-                ) { }
+                ) {
+                }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if (!TextUtils.isEmpty(s.toString()) && !s.toString().equals(thousandFormatStartCostResult)){
-                        thousandFormatStartCostResult = thousandFormat.format(s.toString().replace(",".toRegex(),"").toLong())
-                        activityAddAuctionPostEdittextStartCost.removeTextChangedListener(textWatcherStartCost)
-                        activityAddAuctionPostEdittextStartCost.setText(thousandFormatStartCostResult)
-                        activityAddAuctionPostEdittextStartCost.setSelection(thousandFormatStartCostResult.length)
-                        activityAddAuctionPostEdittextStartCost.addTextChangedListener(textWatcherStartCost)
+                    if (!TextUtils.isEmpty(s.toString()) && !s.toString()
+                            .equals(thousandFormatStartCostResult)
+                    ) {
+                        thousandFormatStartCostResult =
+                            thousandFormat.format(s.toString().replace(",".toRegex(), "").toLong())
+                        activityAddAuctionPostEdittextStartCost.removeTextChangedListener(
+                            textWatcherStartCost
+                        )
+                        activityAddAuctionPostEdittextStartCost.setText(
+                            thousandFormatStartCostResult
+                        )
+                        activityAddAuctionPostEdittextStartCost.setSelection(
+                            thousandFormatStartCostResult.length
+                        )
+                        activityAddAuctionPostEdittextStartCost.addTextChangedListener(
+                            textWatcherStartCost
+                        )
 
                     }
                 }
@@ -130,21 +164,33 @@ class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.lay
 
 
             //즉시 입찰가
-            textWatcherCloseCost = object : TextWatcher{
+            textWatcherCloseCost = object : TextWatcher {
                 override fun beforeTextChanged(
                     s: CharSequence?,
                     start: Int,
                     count: Int,
                     after: Int
-                ) { }
+                ) {
+                }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if (!TextUtils.isEmpty(s.toString()) && !s.toString().equals(thousandFormatCloseCostResult)){
-                        thousandFormatCloseCostResult = thousandFormat.format(s.toString().replace(",".toRegex(),"").toLong())
-                        activityAddAuctionPostEdittextCloseCost.removeTextChangedListener(textWatcherCloseCost)
-                        activityAddAuctionPostEdittextCloseCost.setText(thousandFormatCloseCostResult)
-                        activityAddAuctionPostEdittextCloseCost.setSelection(thousandFormatCloseCostResult.length)
-                        activityAddAuctionPostEdittextCloseCost.addTextChangedListener(textWatcherCloseCost)
+                    if (!TextUtils.isEmpty(s.toString()) && !s.toString()
+                            .equals(thousandFormatCloseCostResult)
+                    ) {
+                        thousandFormatCloseCostResult =
+                            thousandFormat.format(s.toString().replace(",".toRegex(), "").toLong())
+                        activityAddAuctionPostEdittextCloseCost.removeTextChangedListener(
+                            textWatcherCloseCost
+                        )
+                        activityAddAuctionPostEdittextCloseCost.setText(
+                            thousandFormatCloseCostResult
+                        )
+                        activityAddAuctionPostEdittextCloseCost.setSelection(
+                            thousandFormatCloseCostResult.length
+                        )
+                        activityAddAuctionPostEdittextCloseCost.addTextChangedListener(
+                            textWatcherCloseCost
+                        )
 
                     }
                 }
@@ -154,7 +200,6 @@ class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.lay
             }
             activityAddAuctionPostEdittextCloseCost.addTextChangedListener(textWatcherCloseCost)
             activityAddAuctionPostEdittextStartCost.addTextChangedListener(textWatcherStartCost)
-
 
 
             //사진 추가
@@ -172,31 +217,42 @@ class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.lay
             //경매 기간 설정
             activityAddAuctionPostTextviewCloseTime.setOnClickListener {
                 val bottomSheetSetCloseProduct = BottomSheetSetCloseProduct()
-                bottomSheetSetCloseProduct.show(supportFragmentManager,"lol")
+                bottomSheetSetCloseProduct.show(supportFragmentManager, "lol")
             }
 
-            binding.activityAddAuctionPostButtonUpload.setOnClickListener { 
+            binding.activityAddAuctionPostButtonUpload.setOnClickListener {
                 println("게시글 업로드")
                 binding.activityAddAuctionPostConstAllBar.visibility = View.GONE
                 binding.activityAddAuctionPostConstTopBar.visibility = View.GONE
                 binding.activityAddAuctionPostProgressbar.visibility = View.VISIBLE
                 binding.activityAddAuctionPostTextviewLoading.visibility = View.VISIBLE
-                binding.activityAddAuctionPostTextviewLoading.text = "사진을 업로드 중입니다. \n앱을 절대 종료하지마세요."
-                
+                binding.activityAddAuctionPostTextviewLoading.text =
+                    "사진을 업로드 중입니다. \n앱을 절대 종료하지마세요."
+
                 //게시글 완료 체크
                 if (photoList.size == 0) {
                     toast("사진을 추가해주세요.")
-                }else if (binding.activityAddAuctionPostTextviewCategory.text.toString() == "카테고리 선택"){
+                } else if (binding.activityAddAuctionPostTextviewCategory.text.toString() == "카테고리 선택") {
                     toast("카테고리를 선택해주세요")
-                }else if (binding.activityAddAuctionPostEdittextTitle.text.isEmpty()){
+                } else if (binding.activityAddAuctionPostEdittextTitle.text.isEmpty()) {
                     toast("상품명을 입력해주세요.")
-                }else if (binding.activityAddAuctionPostTextviewCloseTime.text.toString() == "경매 기간 설정"){
+                } else if (binding.activityAddAuctionPostTextviewCloseTime.text.toString() == "경매 기간 설정") {
                     toast("경매 기간을 입력해주세요.")
-                }else if (binding.activityAddAuctionPostEdittextStartCost.text.isEmpty()){
+                } else if (binding.activityAddAuctionPostEdittextStartCost.text.isEmpty()) {
                     toast("경매 시작가를 입력해주세요.")
-                }else if (binding.activityAddAuctionPostEdittextProductIntro.text.isEmpty()){
+                } else if (binding.activityAddAuctionPostEdittextProductIntro.text.isEmpty()) {
                     toast("상품 설명을 입력해주세요.")
-                }else{
+                } else if (binding.activityAddAuctionPostEdittextStartCost.text.toString()
+                        .replace(",", "").toRegex().toString().toLong() > 1000000000
+                ) {
+                    toast("상품 가액은 10억을 초과할 수 없습니다.")
+                } else if (binding.activityAddAuctionPostEdittextStartCost.text.toString()
+                        .replace(",", "").toRegex().toString().toLong()
+                    > binding.activityAddAuctionPostEdittextCloseCost.text.toString()
+                        .replace(",", "").toRegex().toString().toLong()
+                ) {
+                    toast("시작가는 즉시 입찰가 보다 작을 수 없습니다.")
+                } else {
                     contentUpload()
                 }
 
@@ -205,33 +261,34 @@ class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.lay
     }
 
 
-
-    fun contentUpload(){
-        if (photoUploadCount < photoList.size && photoList.size != 0){
+    fun contentUpload() {
+        if (photoUploadCount < photoList.size && photoList.size != 0) {
             uploadPhoto(photoList[photoUploadCount])
-        }else{
+        } else {
             uploadProudct()
         }
     }
 
-    fun setCategory(){
+    fun setCategory() {
         val bottomSheetCategory = BottomSheetCategory()
-        bottomSheetCategory.show(supportFragmentManager,"lol")
+        bottomSheetCategory.show(supportFragmentManager, "lol")
     }
 
-    fun uploadPhoto(uri : String){
+    fun uploadPhoto(uri: String) {
         var timestamp = TimeUtil().getTime()
         var imageFileName = "Auction_Product_IMAGE_" + timestamp + "_.png"
 
-        var storageRef = FirebaseStorage.getInstance().reference.child("product").child(imageFileName)
+        var storageRef =
+            FirebaseStorage.getInstance().reference.child("product").child(imageFileName)
 
-        storageRef.putFile(Uri.parse(uri))?.continueWithTask { task: com.google.android.gms.tasks.Task<UploadTask.TaskSnapshot> ->
+        storageRef.putFile(Uri.parse(uri))
+            ?.continueWithTask { task: com.google.android.gms.tasks.Task<UploadTask.TaskSnapshot> ->
 
-            return@continueWithTask storageRef.downloadUrl
-        }?.addOnSuccessListener { uri ->
+                return@continueWithTask storageRef.downloadUrl
+            }?.addOnSuccessListener { uri ->
 
 
-            photoUploadCount ++
+            photoUploadCount++
             photoDownloadUrlList.add(uri.toString())
 
             contentUpload()
@@ -240,7 +297,7 @@ class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.lay
 
     }
 
-    fun uploadProudct(){
+    fun uploadProudct() {
         binding.activityAddAuctionPostTextviewLoading.text = "게시글을 업로드 중입니다. \n앱을 절대 종료하지마세요."
         var product = ProductAuctionDTO()
         product.title = binding.activityAddAuctionPostEdittextTitle.text.toString()
@@ -248,7 +305,7 @@ class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.lay
         product.uid = auth.currentUser!!.uid
         if (binding.activityAddAuctionPostEdittextCloseCost.text.isNotEmpty()) {
             product.closeCost = binding.activityAddAuctionPostEdittextCloseCost.text.toString()
-        }else{
+        } else {
             product.closeCost = "0"
         }
         product.content = binding.activityAddAuctionPostEdittextProductIntro.text.toString()
@@ -262,7 +319,10 @@ class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.lay
 
 
         mainScope.launch {
-            getTimestamp(binding.activityAddAuctionPostTextviewCloseTime.text.toString().replace(("[^0-9]").toRegex(),"").toInt()).collect {
+            getTimestamp(
+                binding.activityAddAuctionPostTextviewCloseTime.text.toString()
+                    .replace(("[^0-9]").toRegex(), "").toInt()
+            ).collect {
                 product.timestamp = it.data!!.nowTime
                 product.closeTimestamp = it.data!!.afterTime
 
@@ -279,7 +339,7 @@ class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.lay
     }
 
     @ExperimentalCoroutinesApi
-    fun getTimestamp(days : Int) = callbackFlow<TimeRequestDTO.TimeResponse>{
+    fun getTimestamp(days: Int) = callbackFlow<TimeRequestDTO.TimeResponse> {
         var data = TimeRequestDTO.Time()
         data.day = days
 
@@ -302,16 +362,16 @@ class AddAuctionPostActivity : BaseActivity<ActivityAddAuctionPostBinding>(R.lay
 
         })
 
-        awaitClose {  }
+        awaitClose { }
     }
 
-    fun addPhoto(){
+    fun addPhoto() {
 
         toast("사진을 꾹 누르시면 여러장을 선택할 수 있습니다.")
 
         val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
             type = "image/*"
-            putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true)
+            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         }
 
         addPhotoCallback.launch(intent)

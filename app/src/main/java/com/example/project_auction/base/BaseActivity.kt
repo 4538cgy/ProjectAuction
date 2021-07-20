@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.example.project_auction.viewmodel.AddProductViewModel
+import com.example.project_auction.viewmodel.AuctionViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -18,6 +19,7 @@ abstract class BaseActivity<B : ViewDataBinding>(val layoutId: Int) : AppCompatA
     lateinit var binding: B
     lateinit var rootContext: Context
     val addProductViewModel: AddProductViewModel by viewModels()
+    val auctionViewModel : AuctionViewModel by viewModels()
     val db = FirebaseFirestore.getInstance()
     val auth = FirebaseAuth.getInstance()
     val storage = FirebaseStorage.getInstance()

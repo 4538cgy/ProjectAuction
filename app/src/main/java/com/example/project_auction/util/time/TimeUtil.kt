@@ -80,11 +80,15 @@ class TimeUtil {
 
         var HHmm = SimpleDateFormat("HH:mm",Locale.KOREAN)
         var ddHHmm = SimpleDateFormat("dd일 HH:mm", Locale.KOREAN)
+        var mmss = SimpleDateFormat("mm:ss", Locale.KOREAN)
         val timezone = TimeZone.getTimeZone("Asia/seoul")
         msg = if ((regTime-System.currentTimeMillis()) < 86400000){
             HHmm.timeZone = timezone
             return HHmm.format(regTime-System.currentTimeMillis())
-        }else{
+        }else if((regTime-System.currentTimeMillis())< 60000){
+            mmss.timeZone = timezone
+            return mmss.format(regTime-System.currentTimeMillis())
+        } else{
             ddHHmm.timeZone = timezone
             return ddHHmm.format(regTime-System.currentTimeMillis())
         }
