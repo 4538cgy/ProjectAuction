@@ -60,6 +60,7 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
 
         binding.apply {
 
+            activityDetailAuctionConstFrontground.visibility = View.VISIBLE
             //입찰 버튼
             activityDetailAuctionButtonBidding.setOnClickListener {
                 val bottomSheetBidding = BottomSheetBidding()
@@ -138,6 +139,7 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
                             binding.activityDetailAuctionButtonJoin.text = "경매 참여중"
                             binding.activityDetailAuctionButtonJoin.isEnabled = false
                             binding.activityDetailAuctionButtonBidding.visibility = View.VISIBLE
+                            binding.activityDetailAuctionConstFrontground.visibility = View.GONE
                         }
                     }
 
@@ -146,6 +148,7 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
                         binding.activityDetailAuctionButtonJoin.text = "참여 불가"
                         binding.activityDetailAuctionButtonJoin.isEnabled = false
                         binding.activityDetailAuctionButtonBidding.visibility = View.GONE
+                        binding.activityDetailAuctionConstFrontground.visibility = View.GONE
                     }
 
                 }.start()

@@ -141,6 +141,12 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
                 })
             }
 
+            fragmentAuctionBackground.setOnClickListener {
+                clickFab()
+                fragmentAuctionBackground.setBackgroundResource(R.color.colorTransparent)
+                fragmentAuctionBackground.visibility = View.GONE
+            }
+
             //옥션 버튼
             fragmentAuctionButtonAuction.setOnClickListener {
 
@@ -173,6 +179,7 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
             binding.fragmentAuctionTextviewWriteTrade.visibility = View.VISIBLE
             binding.fragmentAuctionTextviewWriteAuction.visibility = View.VISIBLE
             binding.fragmentAuctionBackground.setBackgroundResource(R.color.colorBlackTransparent)
+            binding.fragmentAuctionBackground.visibility = View.VISIBLE
             true
         } else {
             ObjectAnimator.ofFloat(binding.fragmentAuctionFabWriteTrade, "translationY", -0f)

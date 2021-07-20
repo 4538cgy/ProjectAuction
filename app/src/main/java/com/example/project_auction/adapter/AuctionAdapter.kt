@@ -88,7 +88,7 @@ class AuctionAdapter(
 
 
         //조회수(경매참여자수)
-        holder.binding.itemAuctionTextviewViewcount.text = dataList[position].joinCount.toString()
+        holder.binding.itemAuctionTextviewViewcount.text = "경매 참여자 : " +dataList[position].joinCount.toString()
     }
 
     override fun getItemCount(): Int {
