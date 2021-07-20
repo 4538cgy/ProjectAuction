@@ -50,9 +50,6 @@ class SignUpFirstFragment : BaseFragment<FragmentSignUpFirstBinding>(R.layout.fr
         profileCallback.launch(intent)
     }
 
-    fun updateView(){
-
-    }
 
 
 }

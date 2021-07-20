@@ -30,19 +30,6 @@ class SignUpSecondFragment : BaseFragment<FragmentSignUpSecondBinding>(R.layout.
             }
             fragmentSignUpSecondButtonNickCheck.setOnClickListener {
 
-                /*
-                var dataReference = db.collection("nickName").document("nickList")
-                db.runTransaction {
-                    var dataList = it.get(dataReference).toObject(NickNameDTO::class.java)
-
-                    dataList!!.nickNameList.put(binding.fragmentSignUpSecondEdittextNick.text.toString(),true)
-                    println("트랜잭션")
-                    it.set(dataReference,dataList)
-                    return@runTransaction
-                }
-
-                 */
-
                 db.collection("nickName").document("nickList").get().addOnSuccessListener {
                     if (it != null){
                         if (it.exists()){

@@ -18,14 +18,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class AuctionAdapter(val context: Context,val dataList : ArrayList<ProductAuctionDTO>, val dataIdList : ArrayList<String>) : RecyclerView.Adapter<AuctionViewHolder>() {
+class AuctionAdapter(
+    val context: Context,
+    val dataList: ArrayList<ProductAuctionDTO>,
+    val dataIdList: ArrayList<String>
+) : RecyclerView.Adapter<AuctionViewHolder>() {
 
     val coroutineScopeMain = CoroutineScope(Dispatchers.Main)
     val productRepository = ProductCollectionRepository()
     private val auth = FirebaseAuth.getInstance()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AuctionViewHolder {
-        val binding = ItemAuctionBinding.inflate(LayoutInflater.from(context),parent,false)
+        val binding = ItemAuctionBinding.inflate(LayoutInflater.from(context), parent, false)
         return AuctionViewHolder(binding)
     }
 
@@ -47,7 +51,8 @@ class AuctionAdapter(val context: Context,val dataList : ArrayList<ProductAuctio
         holder.binding.itemAuctionTextviewCategory.text = dataList[position].category
 
         //시작가
-        holder.binding.itemAuctionTextviewStartCost.text = "경매 시작가 " + dataList[position].startCost + "원"
+        holder.binding.itemAuctionTextviewStartCost.text =
+            "경매 시작가 " + dataList[position].startCost + "원"
 
         //좋아요 갯수
         //holder.binding.itemAuctionTextviewFavorite.text = dataList[position].favoriteCount.toString()
@@ -55,57 +60,66 @@ class AuctionAdapter(val context: Context,val dataList : ArrayList<ProductAuctio
         //상품 자체 클릭
         holder.itemView.setOnClickListener {
 
-            var intent = Intent(holder.binding.root.context,DetailAuctionActivity::class.java)
+            var intent = Intent(holder.binding.root.context, DetailAuctionActivity::class.java)
             intent.apply {
                 putExtra("productData", dataList[position])
+                putExtra("productId", dataIdList[position])
                 holder.binding.root.context.startActivity(this)
             }
 
 
         }
-        
+
         //좋아요 클릭
         holder.binding.itemAuctionImagebuttonFavorite.setOnClickListener {
-            favorite(dataIdList[position],holder)
+            favorite(dataIdList[position], holder)
         }
 
         //좋아요 체크
-        checkFavorite(dataIdList[position],holder)
+        checkFavorite(dataIdList[position], holder)
 
         //종료 시간
-        holder.binding.itemAuctionTextviewClosetime.text = TimeUtil().formatCloseTimeString(dataList[position].closeTimestamp!!.toLong())
+        if (((dataList[position].closeTimestamp!!.toLong()) - System.currentTimeMillis()) <= 0) {
+            holder.binding.itemAuctionTextviewClosetime.text = "경매 종료"
+        } else {
+            holder.binding.itemAuctionTextviewClosetime.text = TimeUtil().formatCloseTimeString((dataList[position].closeTimestamp!!.toLong() - System.currentTimeMillis()))
+        }
 
-        //조회수
-        holder.binding.itemAuctionTextviewViewcount.text = dataList[position].viewCount.toString()
+
+
+        //조회수(경매참여자수)
+        holder.binding.itemAuctionTextviewViewcount.text = dataList[position].joinCount.toString()
     }
 
     override fun getItemCount(): Int {
-        if (dataList != null){
+        if (dataList != null) {
             return dataList.size
-        }else{
+        } else {
             return 0
         }
     }
 
     //좋아요 액션
-    fun favorite(postId : String,holder: AuctionViewHolder){
+    fun favorite(postId: String, holder: AuctionViewHolder) {
 
         coroutineScopeMain.launch {
-            productRepository.updateFavorite(postId,auth.currentUser!!.uid).collect { 
-                if (it) {checkFavorite(postId,holder) } else println("실패")
+            productRepository.updateFavorite(postId, auth.currentUser!!.uid).collect {
+                if (it) {
+                    checkFavorite(postId, holder)
+                } else println("실패")
             }
         }
     }
 
     //좋아요 체크
-    fun checkFavorite(postId: String,holder: AuctionViewHolder){
+    fun checkFavorite(postId: String, holder: AuctionViewHolder) {
         coroutineScopeMain.launch {
-            productRepository.checkFavorite(postId,auth.currentUser!!.uid).collect {
+            productRepository.checkFavorite(postId, auth.currentUser!!.uid).collect {
 
-                if (it){
-                holder.binding.itemAuctionImagebuttonFavorite.setBackgroundResource(R.drawable.ic_baseline_favorite_24)
-                    }else{
-                        holder.binding.itemAuctionImagebuttonFavorite.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24)
+                if (it) {
+                    holder.binding.itemAuctionImagebuttonFavorite.setBackgroundResource(R.drawable.ic_baseline_favorite_24)
+                } else {
+                    holder.binding.itemAuctionImagebuttonFavorite.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24)
                 }
 
             }
@@ -115,8 +129,8 @@ class AuctionAdapter(val context: Context,val dataList : ArrayList<ProductAuctio
 
 }
 
-class AuctionViewHolder(val binding : ItemAuctionBinding) : RecyclerView.ViewHolder(binding.root){
-    fun onBind(data : ProductAuctionDTO){
+class AuctionViewHolder(val binding: ItemAuctionBinding) : RecyclerView.ViewHolder(binding.root) {
+    fun onBind(data: ProductAuctionDTO) {
         binding.itemauction = data
     }
 }
