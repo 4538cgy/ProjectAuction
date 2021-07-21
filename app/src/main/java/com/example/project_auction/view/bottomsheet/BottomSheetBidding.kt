@@ -60,7 +60,6 @@ class BottomSheetBidding : BottomSheetDialogFragment() {
             //가격 올리기
             bottomSheetDialogBiddingImagebuttonPlus.setOnClickListener {
                 currentCost += getMinBiddingCost()
-                println("으아아 올리기 $currentCost")
                 updateWantCostTextview()
             }
             //입찰 확정

@@ -17,6 +17,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 
 class AuctionAdapter(
     val context: Context,
@@ -52,7 +53,7 @@ class AuctionAdapter(
 
         //시작가
         holder.binding.itemAuctionTextviewStartCost.text =
-            "경매 시작가 " + dataList[position].startCost + "원"
+            "경매 시작가 " + DecimalFormat("#,###").format(dataList[position].startCost!!.toLong()) + "원"
 
         //좋아요 갯수
         //holder.binding.itemAuctionTextviewFavorite.text = dataList[position].favoriteCount.toString()
@@ -86,7 +87,7 @@ class AuctionAdapter(
         }
 
         //현재 경매가
-        holder.binding.itemAuctionTextviewCurrentCost.text = "현재 경매가 : " + dataList[position].currentCost.toString()
+        holder.binding.itemAuctionTextviewCurrentCost.text = "현재 경매가 : " + DecimalFormat("#,###").format(dataList[position].currentCost!!.toLong()) +"원"
 
 
 

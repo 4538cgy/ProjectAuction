@@ -19,6 +19,7 @@ import com.example.project_auction.data.ProductAuctionDTO
 import com.example.project_auction.data.TimeRequestDTO
 import com.example.project_auction.data.UserDTO
 import com.example.project_auction.databinding.ActivityDetailAuctionBinding
+import com.example.project_auction.extension.toast
 import com.example.project_auction.util.http.HttpApi
 import com.example.project_auction.util.time.TimeUtil
 import com.example.project_auction.view.bottomsheet.BottomSheetBidding
@@ -39,9 +40,10 @@ import java.text.DecimalFormat
 
 class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layout.activity_detail_auction), BottomSheetBidding.BottomSheetButtonClickListener {
 
-    lateinit var data : ProductAuctionDTO
+    private var data : ProductAuctionDTO ?= null
     lateinit var dataId : String
     lateinit var countDownTimer: CountDownTimer
+    var product = ProductAuctionDTO()
 
 
 
@@ -49,15 +51,16 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
         super.onCreate(savedInstanceState)
         binding.activitydetailauction = this
 
-        data = intent.getSerializableExtra("productData") as ProductAuctionDTO
         dataId = intent.getStringExtra("productId").toString()
 
+        getProductData(dataId)
 
         auctionViewModel.joiningState.observe(this, Observer {
             if (it == "TS_USER_SUCCESS") {
                 binding.activityDetailAuctionButtonJoin.text = "경매 참여중"
                 binding.activityDetailAuctionButtonJoin.isEnabled = false
                 binding.activityDetailAuctionButtonBidding.visibility = View.VISIBLE
+                getProductData(dataId)
             }
         })
 
@@ -71,7 +74,7 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
                 val bottomSheetBidding = BottomSheetBidding()
 
                 var bundle = Bundle()
-                bundle.putString("currentCost",data.currentCost)
+                bundle.putString("currentCost",data!!.currentCost)
 
                 bottomSheetBidding.apply {
                     arguments = bundle
@@ -85,40 +88,89 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
             activityDetailAuctionImagebuttonClose.setOnClickListener { 
                 finish()
             }
-            //상품 제목
-            activityDetailAuctionTextviewTitle.text = data.title
 
-            //카테고리
-            activityDetailAuctionTextviewCategory.text = data.category
-
-            //게시시간
-            activityDetailAuctionTextviewTime.text = TimeUtil().formatTimeString(data.timestamp!!.toLong()).toString()
-
-            //상품 설명
-            activityDetailAuctionTextviewExplain.text = data.content
-
-            //뷰페이저
-            activityDetailAuctionViewpager.adapter = LargeSizePhotoAdapter(binding.root.context,
-                data.photoList!!
-            )
-            //인티케이터
-            activityDetailAuctionIndicator.setViewPager(activityDetailAuctionViewpager)
-
-
-            //닉네임
-            getUserNickName()
-            //프로필 이미지
-            getProfileImage()
-            //경매 종료시간
-            setCountDown()
             //경매 참여 버튼
             activityDetailAuctionButtonJoin.setOnClickListener {
                 onAuctionJoin()
             }
-            //현재 참여자
-            activityDetailAuctionTextviewJoiners.text = "현재 참여자 : " + data.joinCount.toString() + "명"
+
 
         }
+    }
+
+
+    private fun getProductData(dataId : String){
+        println("데이터 변경")
+        db.collection("productAuction").document(dataId).addSnapshotListener { value, error ->
+
+            if (value != null){
+                if (value.exists()){
+                    data = value.toObject(ProductAuctionDTO::class.java)!!
+                    binding.activityDetailAuctionConstFrontground.visibility = View.GONE
+                    updateView()
+                    println("데이터 변경완료")
+                }
+            }
+        }
+    }
+
+    private fun updateView(){
+        binding.activityDetailAuctionTextviewCurrentCost.text = "현재 경매가 : " + DecimalFormat("#,###").format(data!!.currentCost!!.toLong()).toString() + "원"
+        binding.activityDetailAuctionTextviewJoiners.text = "현재 참여자 : " + data!!.joinCount.toString() + "명"
+
+        //현재 참여자
+        binding.activityDetailAuctionTextviewJoiners.text = "현재 참여자 : " + data!!.joinCount.toString() + "명"
+        //상품 제목
+        binding.activityDetailAuctionTextviewTitle.text = data!!.title
+
+        //현재 경매가
+        binding.activityDetailAuctionTextviewCurrentCost.text = "현재 경매가 : " + data!!.currentCost.toString() + "원"
+
+        //카테고리
+        binding.activityDetailAuctionTextviewCategory.text = data!!.category
+
+        //게시시간
+        binding.activityDetailAuctionTextviewTime.text = TimeUtil().formatTimeString(data!!.timestamp!!.toLong()).toString()
+
+        //상품 설명
+        binding.activityDetailAuctionTextviewExplain.text = data!!.content
+
+        //뷰페이저
+        binding.activityDetailAuctionViewpager.adapter = LargeSizePhotoAdapter(binding.root.context,
+            data!!.photoList!!
+        )
+        //인티케이터
+        binding.activityDetailAuctionIndicator.setViewPager( binding.activityDetailAuctionViewpager)
+
+
+        //닉네임
+        getUserNickName()
+        //프로필 이미지
+        getProfileImage()
+        //경매 종료시간
+        setCountDown()
+
+        db.collection("User").whereEqualTo("uid",data!!.bestBidder.toString())
+            .addSnapshotListener { value, error ->
+                value?.let {
+                    //none - null todo
+                    if (!it.isEmpty) {
+                        val datas = it.toObjects(UserDTO::class.java)
+                        datas.forEach { userData ->
+                            if (userData.uid.equals(auth.currentUser!!.uid)) {
+                                binding.activityDetailAuctionTextviewBestBidder.text = "최고 입찰자 : " + userData.nickName.toString()
+
+                                return@addSnapshotListener
+                            }
+                        }
+                    }
+                }?.run {
+                    //null todo
+                }
+
+                return@addSnapshotListener
+            }
+
     }
 
     private fun onAuctionJoin(){
@@ -139,12 +191,12 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
 
         CoroutineScope(Dispatchers.Main).launch {
             getTimestamp(0).collect {
-                val time = data.closeTimestamp!! - it.data!!.nowTime!!.toLong()
+                val time = data!!.closeTimestamp!! - it.data!!.nowTime!!.toLong()
                 countDownTimer = object : CountDownTimer(time, 1000){
                     override fun onTick(millisUntilFinished: Long) {
                         binding.activityDetailAuctionTextviewClosetime.text = "경매 종료까지 : " + TimeUtil().formatCloseTimeString(millisUntilFinished/1000).toString()
                         //경매 참여중인지 체크
-                        if (data.joiners.containsKey(auth.currentUser!!.uid)){
+                        if (data!!.joiners.containsKey(auth.currentUser!!.uid)){
                             binding.activityDetailAuctionButtonJoin.text = "경매 참여중"
                             binding.activityDetailAuctionButtonJoin.isEnabled = false
                             binding.activityDetailAuctionButtonBidding.visibility = View.VISIBLE
@@ -179,14 +231,29 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
         db.runTransaction {
             transaction ->
 
-            var product = transaction.get(databaseReference).toObject(ProductAuctionDTO::class.java)
-            product!!.currentCost = DecimalFormat("#,###").format(cost).toString()
+            product = transaction.get(databaseReference).toObject(ProductAuctionDTO::class.java)!!
+
+            if (product.currentCost!!.toLong() < cost.toLong()){
+                product.bestBidder = auth.currentUser!!.uid
+            }else{
+                runOnUiThread {
+                    toast("입찰가 보다 더 큰 금액의 우선 입찰자가 존재합니다.")
+                }
+                return@runTransaction
+            }
+
+            product!!.currentCost = ""+cost
+            println("으아아 ${product.currentCost.toString()}")
             transaction.set(databaseReference,product)
             return@runTransaction
         }.addOnCompleteListener {
             println("현재 입찰가 수정완료")
         }.addOnFailureListener {
             println("현재 입찰가 수정실패 사유 : ${it.toString()}")
+        }.addOnSuccessListener {
+            //입찰 눌렸으면 데이터 수정
+            binding.activityDetailAuctionConstFrontground.visibility = View.VISIBLE
+            getProductData(dataId)
         }
     }
 

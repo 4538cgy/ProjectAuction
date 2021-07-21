@@ -222,12 +222,7 @@ class AddAuctionPostActivity :
 
             binding.activityAddAuctionPostButtonUpload.setOnClickListener {
                 println("게시글 업로드")
-                binding.activityAddAuctionPostConstAllBar.visibility = View.GONE
-                binding.activityAddAuctionPostConstTopBar.visibility = View.GONE
-                binding.activityAddAuctionPostProgressbar.visibility = View.VISIBLE
-                binding.activityAddAuctionPostTextviewLoading.visibility = View.VISIBLE
-                binding.activityAddAuctionPostTextviewLoading.text =
-                    "사진을 업로드 중입니다. \n앱을 절대 종료하지마세요."
+
 
                 //게시글 완료 체크
                 if (photoList.size == 0) {
@@ -253,6 +248,12 @@ class AddAuctionPostActivity :
                 ) {
                     toast("시작가는 즉시 입찰가 보다 작을 수 없습니다.")
                 } else {
+                    binding.activityAddAuctionPostConstAllBar.visibility = View.GONE
+                    binding.activityAddAuctionPostConstTopBar.visibility = View.GONE
+                    binding.activityAddAuctionPostProgressbar.visibility = View.VISIBLE
+                    binding.activityAddAuctionPostTextviewLoading.visibility = View.VISIBLE
+                    binding.activityAddAuctionPostTextviewLoading.text =
+                        "사진을 업로드 중입니다. \n앱을 절대 종료하지마세요."
                     contentUpload()
                 }
 
@@ -304,18 +305,18 @@ class AddAuctionPostActivity :
         product.category = binding.activityAddAuctionPostTextviewCategory.text.toString()
         product.uid = auth.currentUser!!.uid
         if (binding.activityAddAuctionPostEdittextCloseCost.text.isNotEmpty()) {
-            product.closeCost = binding.activityAddAuctionPostEdittextCloseCost.text.toString()
+            product.closeCost = binding.activityAddAuctionPostEdittextCloseCost.text.toString().replace(",","").toRegex().toString()
         } else {
             product.closeCost = "0"
         }
         product.content = binding.activityAddAuctionPostEdittextProductIntro.text.toString()
         product.delete = false
-        product.startCost = binding.activityAddAuctionPostEdittextStartCost.text.toString()
+        product.startCost = binding.activityAddAuctionPostEdittextStartCost.text.toString().replace(",","").toRegex().toString()
         product.favoriteCount = 0
         //product.timestamp = System.currentTimeMillis()
         product.viewCount = 0
         product.photoList = photoDownloadUrlList
-        product.currentCost = binding.activityAddAuctionPostEdittextStartCost.text.toString()
+        product.currentCost = binding.activityAddAuctionPostEdittextStartCost.text.toString().replace(",","").toRegex().toString()
 
 
         mainScope.launch {

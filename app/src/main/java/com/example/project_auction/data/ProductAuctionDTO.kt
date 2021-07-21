@@ -17,6 +17,7 @@ class ProductAuctionDTO (
     var delete : Boolean = false,
     var viewCount : Long = 0,
     var joinCount : Long = 0,
+    var bestBidder : String ? = null,
     //Map<uid,true or false>
     var joiners : MutableMap<String,Boolean> = HashMap(),
     // Map<uid,true or false>
