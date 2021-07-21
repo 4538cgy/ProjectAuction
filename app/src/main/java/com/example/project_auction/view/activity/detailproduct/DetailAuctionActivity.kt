@@ -1,5 +1,6 @@
 package com.example.project_auction.view.activity.detailproduct
 
+import android.content.Intent
 import android.icu.util.TimeUnit
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -33,6 +34,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.DecimalFormat
 
 class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layout.activity_detail_auction), BottomSheetBidding.BottomSheetButtonClickListener {
 
@@ -139,8 +141,9 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
                             binding.activityDetailAuctionButtonJoin.text = "경매 참여중"
                             binding.activityDetailAuctionButtonJoin.isEnabled = false
                             binding.activityDetailAuctionButtonBidding.visibility = View.VISIBLE
-                            binding.activityDetailAuctionConstFrontground.visibility = View.GONE
+
                         }
+                        binding.activityDetailAuctionConstFrontground.visibility = View.GONE
                     }
 
                     override fun onFinish() {
@@ -160,13 +163,24 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
     }
 
     override fun onBottomSheetButtonClick(text: String) {
-
         //Current Cost 변경 DB 접근로직
-        updateCurrentCost()
+        updateCurrentCost(text)
     }
 
-    fun updateCurrentCost(){
+    fun updateCurrentCost(cost : String){
+        val databaseReference = db.collection("productAuction").document(dataId)
+        db.runTransaction {
+            transaction ->
 
+            var product = transaction.get(databaseReference).toObject(ProductAuctionDTO::class.java)
+            product!!.currentCost = DecimalFormat("#,###").format(cost).toString()
+            transaction.set(databaseReference,product)
+            return@runTransaction
+        }.addOnCompleteListener {
+            println("현재 입찰가 수정완료")
+        }.addOnFailureListener {
+            println("현재 입찰가 수정실패 사유 : ${it.toString()}")
+        }
     }
 
     @ExperimentalCoroutinesApi
@@ -196,9 +210,13 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
         awaitClose {  }
     }
 
+    override fun onPause() {
+        super.onPause()
 
+    }
 
     private fun getUserNickName(){
+        /*
         db.collection("User").whereEqualTo("uid",auth.currentUser!!.uid)
             .addSnapshotListener { value, error ->
                 value?.let {
@@ -219,6 +237,8 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
 
                 return@addSnapshotListener
             }
+
+         */
     }
 
     private fun getProfileImage(){

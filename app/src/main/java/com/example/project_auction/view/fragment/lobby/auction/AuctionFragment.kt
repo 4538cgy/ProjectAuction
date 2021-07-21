@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.algolia.search.saas.Client
 import com.example.project_auction.R
@@ -13,6 +14,7 @@ import com.example.project_auction.data.*
 import com.example.project_auction.databinding.FragmentAuctionBinding
 import com.example.project_auction.util.http.HttpApi
 import com.example.project_auction.view.activity.addpost.AddAuctionPostActivity
+import com.example.project_auction.view.bottomsheet.BottomSheetAuctionMenu
 import com.google.firebase.firestore.Query
 import retrofit2.Call
 import retrofit2.Callback
@@ -156,6 +158,12 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
             fragmentAuctionButtonTrade.setOnClickListener {
 
             }
+            
+            //더보기 버튼
+            fragmentAuctionImagebuttonMore.setOnClickListener { 
+                val auctionMenu = BottomSheetAuctionMenu()
+                auctionMenu.show(requireActivity().supportFragmentManager,"lol")
+            }
             fragmentAuctionRecyclerview.adapter = AuctionAdapter(binding.root.context,auctionData,auctionDataId)
             fragmentAuctionRecyclerview.layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.VERTICAL,false)
 
@@ -164,6 +172,15 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
                 fragmentAuctionSwipeRefreshLayout.isRefreshing = false
             }
         }
+
+        auctionViewModel.auctionCategory.observe(viewLifecycleOwner, Observer {
+            updateRecyclerDataByCategory(it)
+        })
+    }
+
+
+    fun updateRecyclerDataByCategory(category : String){
+        println(category)
     }
 
     fun clickFab() {
@@ -197,6 +214,8 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
             false
         }
     }
+
+
 
 
 }

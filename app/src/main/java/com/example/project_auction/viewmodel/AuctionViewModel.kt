@@ -13,13 +13,22 @@ class AuctionViewModel() : ViewModel() {
 
     private val auctionRepository = AuctionRepository()
 
+
+    var auctionCategory = MutableLiveData<String>()
     var joiningState = MutableLiveData<String>()
 
     fun onJoinAuction(uid : String, productId : String){
         viewModelScope.launch {
+
             auctionRepository.joinAuction(uid , productId).collect {
+
+                println("데이터 가져오기 성공 $it")
                 joiningState.postValue(it.toString())
+
+
             }
+
+
         }
     }
 }

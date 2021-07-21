@@ -54,9 +54,9 @@ class BottomSheetCategory : BottomSheetDialogFragment() {
 
         categoryList.add(BottomSheetRecyclerDTO(R.drawable.close_btn_img, "관상어"))
         categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수초"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "관상새우"))
         categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
         categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
         categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
