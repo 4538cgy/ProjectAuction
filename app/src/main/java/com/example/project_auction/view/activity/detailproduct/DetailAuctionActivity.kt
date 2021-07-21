@@ -5,6 +5,7 @@ import android.icu.util.TimeUnit
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.PersistableBundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -41,6 +42,10 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
     lateinit var data : ProductAuctionDTO
     lateinit var dataId : String
     lateinit var countDownTimer: CountDownTimer
+
+    override fun setContentView(view: View?) {
+        super.setContentView(view)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,6 +105,7 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
             )
             //인티케이터
             activityDetailAuctionIndicator.setViewPager(activityDetailAuctionViewpager)
+
 
             //닉네임
             getUserNickName()

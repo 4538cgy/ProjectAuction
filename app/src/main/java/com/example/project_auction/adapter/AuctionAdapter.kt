@@ -85,6 +85,9 @@ class AuctionAdapter(
             holder.binding.itemAuctionTextviewClosetime.text = TimeUtil().formatCloseTimeString((dataList[position].closeTimestamp!!.toLong() - System.currentTimeMillis()))
         }
 
+        //현재 경매가
+        holder.binding.itemAuctionTextviewCurrentCost.text = "현재 경매가 : " + dataList[position].currentCost.toString()
+
 
 
         //조회수(경매참여자수)

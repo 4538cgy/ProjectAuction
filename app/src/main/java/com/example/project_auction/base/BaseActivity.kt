@@ -2,7 +2,9 @@ package com.example.project_auction.base
 
 import android.content.Context
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.ProgressBar
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +33,12 @@ abstract class BaseActivity<B : ViewDataBinding>(val layoutId: Int) : AppCompatA
         binding.lifecycleOwner = this
         rootContext = binding.root.context
     }
+
+    override fun setContentView(view: View?) {
+        super.setContentView(view)
+    }
+
+
 
 
 }
