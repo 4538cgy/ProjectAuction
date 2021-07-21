@@ -43,9 +43,7 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
     lateinit var dataId : String
     lateinit var countDownTimer: CountDownTimer
 
-    override fun setContentView(view: View?) {
-        super.setContentView(view)
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -130,7 +128,10 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
     override fun onDestroy() {
         super.onDestroy()
         countDownTimer.cancel()
+        println("왜 종료되냐고 ")
     }
+
+
 
     private fun setCountDown(){
 
@@ -216,13 +217,10 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
         awaitClose {  }
     }
 
-    override fun onPause() {
-        super.onPause()
 
-    }
 
     private fun getUserNickName(){
-        /*
+
         db.collection("User").whereEqualTo("uid",auth.currentUser!!.uid)
             .addSnapshotListener { value, error ->
                 value?.let {
@@ -243,8 +241,6 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
 
                 return@addSnapshotListener
             }
-
-         */
     }
 
     private fun getProfileImage(){

@@ -234,18 +234,18 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     private fun moveMainPage(user: FirebaseUser?) {
         if (user != null) {
-
-            FirebaseFirestore.getInstance().collection("User").whereEqualTo("uid",auth.currentUser?.uid.toString())
-                    .addSnapshotListener { documentSnapshot, _ -> // Remove useless parameter
-                        if (documentSnapshot != null) {
-                            if (!documentSnapshot.isEmpty) { // Remove NonNull
-                                startActivity(Intent(this, LobbyActivity::class.java))
-                            } else {
-                                startActivity(Intent(this, SignUpActivity::class.java))
-                            }
-                            finish()
-                        }
+            var databaseReference = FirebaseFirestore.getInstance().collection("User").whereEqualTo("uid",auth.currentUser?.uid.toString())
+            databaseReference.get().addOnCompleteListener {
+                if (it != null){
+                    if (it.isSuccessful){
+                        startActivity(Intent(this, LobbyActivity::class.java))
+                    } else {
+                        startActivity(Intent(this, SignUpActivity::class.java))
                     }
+                    finish()
+                }
+            }
+
         }
     }
 }

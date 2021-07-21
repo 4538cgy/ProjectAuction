@@ -147,6 +147,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
         userData.building = viewModel.buildingAddress.value.toString()
         userData.detailAddress = viewModel.detailAddress.value.toString()
         userData.uid = auth.currentUser!!.uid
+        userData.joinAuctionCount = 0
 
         db.collection("User").document().set(userData)
             .addOnSuccessListener {

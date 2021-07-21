@@ -75,7 +75,7 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
             query.apply {
                 setAttributesToRetrieve("title","content","timestamp")
             }
-
+        /*
         index.searchAsync(query
         ) { p0, p1 ->
 
@@ -94,6 +94,8 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
 
             println("p1 = ${p1.toString()}")
         }
+
+         */
 
 
 
