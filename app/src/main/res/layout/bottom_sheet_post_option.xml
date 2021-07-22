@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="bottomsheetpostoption"
+            type="com.example.project_auction.view.bottomsheet.BottomSheetPostOption" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:paddingTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <ImageButton
+            android:id="@+id/bottom_sheet_post_option_imagebutton_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_close_24"
+            android:background="@android:color/transparent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="12dp"
+            />
+
+        <TextView
+            app:layout_constraintTop_toTopOf="@+id/bottom_sheet_post_option_imagebutton_close"
+            app:layout_constraintBottom_toBottomOf="@+id/bottom_sheet_post_option_imagebutton_close"
+            app:layout_constraintLeft_toRightOf="@+id/bottom_sheet_post_option_imagebutton_close"
+            android:layout_marginLeft="12dp"
+            android:id="@+id/bottom_sheet_post_option_textview_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:text="옵션 선택"
+            />
+
+        <TextView
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_post_option_imagebutton_close"
+            android:layout_margin="12dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textColor="@color/colorBlack"
+            android:textSize="18dp"
+            android:id="@+id/bottom_sheet_post_option_textview_trade_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="거래 방법"
+            />
+
+        <RadioGroup
+            android:id="@+id/bottom_sheet_post_option_radio_group_trade_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/bottom_sheet_post_option_textview_trade_option"
+            app:layout_constraintBottom_toBottomOf="@+id/bottom_sheet_post_option_textview_trade_option"
+            app:layout_constraintLeft_toRightOf="@+id/bottom_sheet_post_option_textview_trade_option"
+            android:orientation="horizontal"
+            >
+            <RadioButton
+                android:id="@+id/bottom_sheet_post_option_radiobutton_meet"
+                android:text="만나서 거래"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                />
+
+            <RadioButton
+                android:id="@+id/bottom_sheet_post_option_radiobutton_delivery"
+                android:text="택배 배송"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                />
+
+        </RadioGroup>
+
+
+        <View
+            android:id="@+id/bottom_sheet_post_option_view_line_1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="12dp"
+            android:background="@color/colorGray"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_post_option_textview_trade_option"
+            android:layout_marginTop="12dp"
+            />
+
+        <TextView
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_post_option_view_line_1"
+            android:layout_margin="12dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textColor="@color/colorBlack"
+            android:textSize="18dp"
+            android:id="@+id/bottom_sheet_post_option_textview_product_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="제품 상태"
+            />
+
+        <RadioGroup
+            android:id="@+id/bottom_sheet_post_option_radio_group_product_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/bottom_sheet_post_option_textview_product_state"
+            app:layout_constraintBottom_toBottomOf="@+id/bottom_sheet_post_option_textview_product_state"
+            app:layout_constraintLeft_toRightOf="@+id/bottom_sheet_post_option_textview_product_state"
+            android:orientation="horizontal"
+            >
+            <RadioButton
+                android:id="@+id/bottom_sheet_post_option_radiobutton_new"
+                android:text="새 상품"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                />
+
+            <RadioButton
+                android:id="@+id/bottom_sheet_post_option_radiobutton_old"
+                android:text="중고"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                />
+
+        </RadioGroup>
+
+        <View
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_post_option_textview_product_state"
+            android:id="@+id/bottom_sheet_post_option_view_line_2"
+            android:layout_width="match_parent"
+            android:layout_marginTop="12dp"
+            android:layout_marginHorizontal="12dp"
+            android:layout_height="1dp"
+            android:background="@color/colorGray"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+
+        <TextView
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_post_option_view_line_2"
+            android:layout_margin="12dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textColor="@color/colorBlack"
+            android:textSize="18dp"
+            android:id="@+id/bottom_sheet_post_option_textview_trans"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="교환 여부"
+            />
+
+        <RadioGroup
+            android:id="@+id/bottom_sheet_post_option_radio_group_trans"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/bottom_sheet_post_option_textview_trans"
+            app:layout_constraintBottom_toBottomOf="@+id/bottom_sheet_post_option_textview_trans"
+            app:layout_constraintLeft_toRightOf="@+id/bottom_sheet_post_option_textview_trans"
+            android:orientation="horizontal"
+            >
+            <RadioButton
+                android:id="@+id/bottom_sheet_post_option_radiobutton_trans_able"
+                android:text="교환 가능"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                />
+
+            <RadioButton
+                android:id="@+id/bottom_sheet_post_option_radiobutton_tans_noable"
+                android:text="교환 불가능"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                />
+
+        </RadioGroup>
+
+        <Button
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_post_option_textview_trans"
+            android:layout_marginTop="20dp"
+            android:id="@+id/bottom_sheet_post_option_button_complete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginBottom="24dp"
+            android:text="옵션 선택 완료"
+            android:background="@drawable/background_round_yellow_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

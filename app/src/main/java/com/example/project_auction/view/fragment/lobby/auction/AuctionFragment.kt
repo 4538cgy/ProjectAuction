@@ -14,6 +14,7 @@ import com.example.project_auction.data.*
 import com.example.project_auction.databinding.FragmentAuctionBinding
 import com.example.project_auction.util.http.HttpApi
 import com.example.project_auction.view.activity.addpost.AddAuctionPostActivity
+import com.example.project_auction.view.activity.addpost.AddTradePostActivity
 import com.example.project_auction.view.bottomsheet.BottomSheetAuctionMenu
 import com.google.firebase.firestore.Query
 import retrofit2.Call
@@ -114,10 +115,10 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
             fragmentAuctionFabWriteTrade.setOnClickListener {
                 //거래 물품 등록
 
+                startActivity(Intent(binding.root.context,AddTradePostActivity::class.java))
 
 
-
-
+                /*
                 //게시글 조회 요청
                 var data2 = PostRequestDTO()
                 data2.uid = auth.currentUser!!.uid.toString()
@@ -143,6 +144,8 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
                     }
 
                 })
+                
+                 */
             }
 
             fragmentAuctionBackground.setOnClickListener {
