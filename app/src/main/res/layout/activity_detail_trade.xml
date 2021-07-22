@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.activity.detailproduct.DetailTradeActivity">
+
+    <data>
+
+        <variable
+            name="activitydetailtrade"
+            type="com.example.project_auction.view.activity.detailproduct.DetailTradeActivity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_detail_trade_const_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/activity_detail_trade_imagebutton_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:layout_margin="12dp"
+                android:src="@drawable/ic_baseline_close_24" />
+
+            <TextView
+                app:layout_constraintTop_toTopOf="@+id/activity_detail_trade_imagebutton_close"
+                app:layout_constraintBottom_toBottomOf="@+id/activity_detail_trade_imagebutton_close"
+                app:layout_constraintLeft_toRightOf="@+id/activity_detail_trade_imagebutton_close"
+                android:layout_marginLeft="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="거래 글"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

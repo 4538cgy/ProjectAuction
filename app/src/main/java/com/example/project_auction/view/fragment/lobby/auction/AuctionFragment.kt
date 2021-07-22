@@ -5,14 +5,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.algolia.search.saas.Client
 import com.example.project_auction.R
 import com.example.project_auction.adapter.AuctionAdapter
+import com.example.project_auction.adapter.TradeAdapter
 import com.example.project_auction.base.BaseFragment
 import com.example.project_auction.data.*
 import com.example.project_auction.databinding.FragmentAuctionBinding
 import com.example.project_auction.util.http.HttpApi
+import com.example.project_auction.util.itemdcorator.GridItemDecorator
 import com.example.project_auction.view.activity.addpost.AddAuctionPostActivity
 import com.example.project_auction.view.activity.addpost.AddTradePostActivity
 import com.example.project_auction.view.bottomsheet.BottomSheetAuctionMenu
@@ -27,12 +30,16 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
     private var viewState = "Auction" // default = Auction , [ Auction, Trade ]
     private var auctionData = arrayListOf<ProductAuctionDTO>()
     private var auctionDataId = arrayListOf<String>()
+    private var tradeData = arrayListOf<ProductTradeDTO>()
+    private var tradeDataId = arrayListOf<String>()
     private val client = Client("PRG26POP2U","8a97c353cba4db57d0853c46f9d5b0f1")
     private val index = client.getIndex("helloworld")
+    private var gridItemDecoratorCheck = false
 
     fun initRecyclerData(){
 
         if (viewState == "Auction") {
+            println("옥션 부착")
             val databaseReference =
                 db.collection("productAuction").orderBy("timestamp", Query.Direction.DESCENDING)
 
@@ -46,21 +53,55 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
                         it.forEach { queryDocumentSnapshot ->
                             auctionDataId.add(queryDocumentSnapshot.id)
                         }
+
+                        println("옥션 부착2")
+                        binding.fragmentAuctionRecyclerview.adapter = null
+                        binding.fragmentAuctionRecyclerview.adapter = AuctionAdapter(binding.root.context,auctionData,auctionDataId)
+                        binding.fragmentAuctionRecyclerview.layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.VERTICAL,false)
                         binding.fragmentAuctionRecyclerview.adapter!!.notifyDataSetChanged()
                     }
                 }?.run {
 
                 }
             }
+
+            binding.fragmentAuctionButtonTrade.setBackgroundResource(R.drawable.background_round_gray_24dp)
+            binding.fragmentAuctionButtonAuction.setBackgroundResource(R.drawable.background_round_yellow_24dp)
+
         }else if (viewState == "Trade"){
-            val databaseReference = db.collection("productTrade").orderBy("timestamp",Query.Direction.DESCENDING)
+            println("거래 부착")
+            val databaseReference = db.collection("ProductTrade").orderBy("timestamp",Query.Direction.DESCENDING)
 
             databaseReference.get().addOnSuccessListener {
                 it.let {
+                    if (!it.isEmpty){
+                        tradeData.clear()
+                        tradeDataId.clear()
+                        var data = it.toObjects(ProductTradeDTO::class.java)
+                        tradeData.addAll(data)
+                        it.forEach { queryDocumentSnapshot ->
+                            tradeDataId.add(queryDocumentSnapshot.id)
+                        }
 
+                        println("거래 부착2")
+                        binding.fragmentAuctionRecyclerview.adapter = null
+                        binding.fragmentAuctionRecyclerview.adapter = TradeAdapter(binding.root.context,tradeData,tradeDataId)
+                        if (!gridItemDecoratorCheck) {
+                            binding.fragmentAuctionRecyclerview.addItemDecoration(
+                                GridItemDecorator(
+                                    20
+                                )
+                            )
+                            gridItemDecoratorCheck = true
+                        }
+                        binding.fragmentAuctionRecyclerview.layoutManager = GridLayoutManager(binding.root.context,3)
+                        binding.fragmentAuctionRecyclerview.adapter!!.notifyDataSetChanged()
+                    }
                 }?.run{
 
                 }
+                binding.fragmentAuctionButtonTrade.setBackgroundResource(R.drawable.background_round_yellow_24dp)
+                binding.fragmentAuctionButtonAuction.setBackgroundResource(R.drawable.background_round_gray_24dp)
             }
         }
     }
@@ -156,12 +197,16 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
 
             //옥션 버튼
             fragmentAuctionButtonAuction.setOnClickListener {
-
+                println("옥션으로 변경")
+                viewState = "Auction"
+                initRecyclerData()
             }
 
             //거래 버튼
             fragmentAuctionButtonTrade.setOnClickListener {
-
+                println("거래로 변경")
+                viewState = "Trade"
+                initRecyclerData()
             }
             
             //더보기 버튼
@@ -169,8 +214,6 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
                 val auctionMenu = BottomSheetAuctionMenu()
                 auctionMenu.show(requireActivity().supportFragmentManager,"lol")
             }
-            fragmentAuctionRecyclerview.adapter = AuctionAdapter(binding.root.context,auctionData,auctionDataId)
-            fragmentAuctionRecyclerview.layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.VERTICAL,false)
 
             fragmentAuctionSwipeRefreshLayout.setOnRefreshListener {
                 initRecyclerData()

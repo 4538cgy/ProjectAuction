@@ -8,22 +8,27 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_auction.R
 import com.example.project_auction.adapter.PhotoAdapter
 import com.example.project_auction.base.BaseActivity
+import com.example.project_auction.data.ProductTradeDTO
 import com.example.project_auction.data.UserDTO
 import com.example.project_auction.databinding.ActivityAddAuctionPostBinding
 import com.example.project_auction.databinding.ActivityAddTradePostBinding
 import com.example.project_auction.extension.toast
+import com.example.project_auction.util.time.TimeUtil
 import com.example.project_auction.view.bottomsheet.BottomSheetCategory
 import com.example.project_auction.view.bottomsheet.BottomSheetPostOption
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
 import java.text.DecimalFormat
 
 class AddTradePostActivity :
-    BaseActivity<ActivityAddTradePostBinding>(R.layout.activity_add_trade_post),BottomSheetPostOption.BottomSheetSetCloseProductButtonClickListener {
+    BaseActivity<ActivityAddTradePostBinding>(R.layout.activity_add_trade_post),BottomSheetPostOption.BottomSheetSetCloseProductButtonClickListener, BottomSheetCategory.BottomSheetButtonClickListener {
 
 
     private var photoList = arrayListOf<String>()
@@ -125,8 +130,27 @@ class AddTradePostActivity :
             }
             
             //상품 등록
-            activityAddTradePostButtonUpload.setOnClickListener { 
-                uploadContent()
+            activityAddTradePostButtonUpload.setOnClickListener {
+
+                if (photoList.isEmpty()){
+                    toast("사진을 1장 이상 추가해주세요.")
+                }else if (activityAddTradePostEdittextTitle.text.isEmpty()){
+                    toast("상품명을 기입해주세요.")
+                }else if (activityAddTradePostTextviewCategory.text == "카테고리")
+                {
+                    toast("카테고리를 입력해주세요.")
+                }else if (activityAddTradePostEdittextCost.text.isEmpty()){
+                    toast("상품 가격을 입력해주세요.")
+                }else if (activityAddTradePostEdittextExplain.text.isEmpty()){
+                    toast("상품 설명을 입력해주세요.")
+                }else if (meetState == null || newState == null || transCheck == null){
+                    toast("세부 사항을 입력해주세요.")
+                }else{
+                    activityAddTradePostConstFront.visibility = View.VISIBLE
+                    activityAddTradePostButtonUpload.visibility = View.GONE
+                    uploadContent()
+                }
+
             }
 
             //상품 가격 , 처리
@@ -163,12 +187,61 @@ class AddTradePostActivity :
     //상품 등록 로직
     fun uploadContent(){
 
-
+        if (photoUploadCount < photoList.size && photoList.size != 0) {
+            uploadPhoto(photoList[photoUploadCount])
+        } else {
+            uploadProudct()
+        }
 
     }
 
-    fun uploadPhoto(){
+    //사진 등록
+    fun uploadPhoto(uri : String){
+        var timestamp = TimeUtil().getTime()
+        var imageFileName = "Trade_Product_IMAGE_" + timestamp + "_.png"
 
+        var storageRef =
+            FirebaseStorage.getInstance().reference.child("product_trade").child(imageFileName)
+
+        storageRef.putFile(Uri.parse(uri))
+            ?.continueWithTask { task: com.google.android.gms.tasks.Task<UploadTask.TaskSnapshot> ->
+
+                return@continueWithTask storageRef.downloadUrl
+            }?.addOnSuccessListener { uri ->
+
+
+                photoUploadCount++
+                photoDownloadUrlList.add(uri.toString())
+
+                uploadProudct()
+
+            }
+    }
+
+
+    //상품 등록
+    fun uploadProudct(){
+        var productTradeData = ProductTradeDTO()
+        productTradeData.uid = auth.currentUser!!.uid
+        productTradeData.photoList = photoDownloadUrlList
+        productTradeData.title = binding.activityAddTradePostEdittextTitle.text.toString()
+        productTradeData.timestamp = System.currentTimeMillis()
+        productTradeData.cost = binding.activityAddTradePostEdittextCost.text.toString()
+        productTradeData.content = binding.activityAddTradePostEdittextExplain.text.toString()
+        productTradeData.category = binding.activityAddTradePostTextviewCategory.text.toString()
+        productTradeData.delete = false
+        productTradeData.viewCount = 0
+        productTradeData.favoriteCount = 0
+        productTradeData.tradeMethod = meetState
+        productTradeData.productState = newState
+        productTradeData.exchangeState = transCheck
+        
+        db.collection("ProductTrade").document().set(productTradeData).addOnCompleteListener { 
+            println("성공")
+            finish()
+        }.addOnFailureListener { 
+            println("실패")
+        }
     }
 
 
@@ -214,5 +287,9 @@ class AddTradePostActivity :
         transCheck = transState
 
         binding.activityAddTradePostTextviewOption.text = "세부 사항 : $tradeOption / $productState / $transState"
+    }
+
+    override fun onBottomSheetButtonClick(text: String) {
+        binding.activityAddTradePostTextviewCategory.text = text.toString()
     }
 }

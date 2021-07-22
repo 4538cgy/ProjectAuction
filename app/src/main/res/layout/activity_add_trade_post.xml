@@ -61,8 +61,8 @@
 
                 <ImageButton
                     android:id="@+id/activity_add_trade_post_imagebutton_photo"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_margin="12dp"
                     android:background="@drawable/background_round_white_stroke_black_2dp"
                     android:src="@drawable/ic_baseline_add_photo_alternate_24"
@@ -135,6 +135,7 @@
                     android:hint="상품 가격"
                     android:maxLength="12"
                     android:paddingLeft="12dp"
+                    android:inputType="number"
                     android:textColorHint="@color/colorBlack"
                     android:textSize="16dp"
                     app:layout_constraintTop_toBottomOf="@+id/activity_add_trade_post_textview_category" />
@@ -233,6 +234,38 @@
             android:layout_margin="12dp"
             android:text="상품 등록"
             />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_add_trade_post_const_front"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"
+            >
+            <ProgressBar
+                android:id="@+id/activity_add_trade_post_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+            <TextView
+                app:layout_constraintTop_toBottomOf="@+id/activity_add_trade_post_progress"
+                app:layout_constraintLeft_toLeftOf="@+id/activity_add_trade_post_progress"
+                app:layout_constraintRight_toRightOf="@+id/activity_add_trade_post_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="게시글을 업로드 중 입니다.\n업로드가 완료될 때 까지 앱을 절대 종료하지마세요. "
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

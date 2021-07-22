@@ -17,7 +17,13 @@ data class ProductTradeDTO(
     var viewers : MutableMap<String,Boolean> = HashMap(),
     var favoriteCount : Long = 0,
     // Map<uid,true or false>
-    var favoriters : MutableMap<String,Boolean> = HashMap()
+    var favoriters : MutableMap<String,Boolean> = HashMap(),
+    //거래 방법 [ 직거래 / 택배거래 ]
+    var tradeMethod : String ? = null,
+    //신상품 여부 [ 신상품 / 중고상품 ]
+    var productState : String ? = null,
+    //교환 여부
+    var exchangeState : String ? = null
 
 ) : Serializable {
     data class ProductResponseDTO(

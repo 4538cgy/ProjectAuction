@@ -221,7 +221,6 @@ class AddAuctionPostActivity :
             }
 
             binding.activityAddAuctionPostButtonUpload.setOnClickListener {
-                println("게시글 업로드")
 
 
                 //게시글 완료 체크
@@ -280,7 +279,7 @@ class AddAuctionPostActivity :
         var imageFileName = "Auction_Product_IMAGE_" + timestamp + "_.png"
 
         var storageRef =
-            FirebaseStorage.getInstance().reference.child("product").child(imageFileName)
+            FirebaseStorage.getInstance().reference.child("product_auction").child(imageFileName)
 
         storageRef.putFile(Uri.parse(uri))
             ?.continueWithTask { task: com.google.android.gms.tasks.Task<UploadTask.TaskSnapshot> ->
