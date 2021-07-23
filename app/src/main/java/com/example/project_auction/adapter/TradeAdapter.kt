@@ -72,6 +72,10 @@ val dataIdList: ArrayList<String>
         //아이템 클릭
         holder.itemView.setOnClickListener {
             var intent = Intent(holder.binding.root.context,DetailTradeActivity::class.java)
+            intent.apply {
+                putExtra("tradeProduct",dataList[position])
+                putExtra("tradeProductId",dataIdList[position])
+            }
             holder.binding.root.context.startActivity(intent)
         }
     }
