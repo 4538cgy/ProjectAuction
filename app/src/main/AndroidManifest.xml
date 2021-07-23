@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.detailproduct.DetailTradeActivity"></activity>
+        <activity android:name="com.example.project_auction.view.activity.chat.TradeChatActivity"></activity>
+        <activity android:name=".view.activity.detailproduct.DetailTradeActivity" />
         <activity android:name=".view.activity.addpost.AddTradePostActivity" />
         <activity android:name=".view.activity.addpost.AddAuctionPostActivity" />
         <activity android:name=".view.activity.history.AuctionSuccessHistoryActivity" />

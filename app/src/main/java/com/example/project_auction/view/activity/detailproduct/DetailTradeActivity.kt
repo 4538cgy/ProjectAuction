@@ -1,5 +1,6 @@
 package com.example.project_auction.view.activity.detailproduct
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
@@ -12,6 +13,7 @@ import com.example.project_auction.databinding.ActivityDetailAuctionBinding
 import com.example.project_auction.databinding.ActivityDetailTradeBinding
 import com.example.project_auction.repository.ProductCollectionRepository
 import com.example.project_auction.util.time.TimeUtil
+import com.example.project_auction.view.activity.chat.TradeChatActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -74,6 +76,7 @@ class DetailTradeActivity : BaseActivity<ActivityDetailTradeBinding>(R.layout.ac
             //메세지 보내기
             activityDetailTradeButtonSendmessage.setOnClickListener {
                 //채팅창 열기
+                startActivity(Intent(binding.root.context,TradeChatActivity::class.java))
             }
             //찜했는지 체크
             checkFavorite()
