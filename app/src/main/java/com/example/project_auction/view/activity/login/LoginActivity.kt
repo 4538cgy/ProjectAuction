@@ -11,6 +11,7 @@ import com.example.project_auction.R
 import com.example.project_auction.base.BaseActivity
 import com.example.project_auction.data.KakaoDTO
 import com.example.project_auction.data.NaverDTO
+import com.example.project_auction.data.UserDTO
 import com.example.project_auction.databinding.ActivityLoginBinding
 import com.example.project_auction.util.http.HttpApi
 import com.example.project_auction.view.activity.lobby.LobbyActivity
@@ -38,7 +39,6 @@ import retrofit2.Response
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
 
     private val viewModel : LoginSignUpViewModel by viewModels()
-    private val auth = FirebaseAuth.getInstance()
     private var googleSignInClient : GoogleSignInClient ?= null
     private val GOOGLE_LOGIN_CODE = 9001
 
@@ -139,6 +139,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        moveMainPage(auth?.currentUser)
+    }
+
     fun naver(view : View){
         val mOAuthHandler = object : OAuthLoginHandler(){
             override fun run(success: Boolean) {
@@ -230,19 +235,20 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     private fun moveMainPage(user: FirebaseUser?) {
         if (user != null) {
-
-            FirebaseFirestore.getInstance().collection("User").document("UserData")
-                    .collection("userInfo").whereEqualTo("uid",auth.currentUser?.uid.toString())
-                    .addSnapshotListener { documentSnapshot, _ -> // Remove useless parameter
-                        if (documentSnapshot != null) {
-                            if (!documentSnapshot.isEmpty) { // Remove NonNull
-                                startActivity(Intent(this, LobbyActivity::class.java))
-                            } else {
-                                startActivity(Intent(this, SignUpActivity::class.java))
-                            }
-                            finish()
+            var databaseReference = FirebaseFirestore.getInstance().collection("User").whereEqualTo("uid",auth.currentUser?.uid.toString())
+            databaseReference.get().addOnCompleteListener {
+                if (it != null){
+                    if (it.isSuccessful){
+                        if (it.result.isEmpty){
+                            startActivity(Intent(this, SignUpActivity::class.java))
+                        }else{
+                            startActivity(Intent(this,LobbyActivity::class.java))
                         }
                     }
+                    finish()
+                }
+            }
+
         }
     }
 }

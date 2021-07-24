@@ -1,11 +1,12 @@
 package com.example.project_auction.viewmodel
 
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class LoginSignUpViewModel(): ViewModel() {
 
-    var profilePhotoUri = MutableLiveData<String>()
+    var profilePhotoUri = MutableLiveData<Uri>()
     var nickNameNextButtonState = MutableLiveData<Boolean>()
     var addressCheck = MutableLiveData<Boolean>()
     var nickName = MutableLiveData<String>()
@@ -17,4 +18,6 @@ class LoginSignUpViewModel(): ViewModel() {
     var address = MutableLiveData<String>()
     //상세주소
     var detailAddress = MutableLiveData<String>()
+
+
 }

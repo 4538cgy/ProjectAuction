@@ -2,7 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.project_auction">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Camera & Storage 권한 -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +18,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".util.address.SearchAddressActivity"></activity>
+        <activity android:name="com.example.project_auction.view.activity.chat.TradeChatActivity"></activity>
+        <activity android:name=".view.activity.detailproduct.DetailTradeActivity" />
+        <activity android:name=".view.activity.addpost.AddTradePostActivity" />
+        <activity android:name=".view.activity.addpost.AddAuctionPostActivity" />
+        <activity android:name=".view.activity.history.AuctionSuccessHistoryActivity" />
+        <activity android:name=".view.activity.history.AuctionJoinHistoryActivity" />
+        <activity android:name=".view.activity.history.AuctionHistoryActivity" />
+        <activity android:name=".view.activity.photo.PhotoViewActivity" />
+        <activity android:name=".view.activity.detailproduct.DetailAuctionActivity" />
+        <activity android:name=".view.activity.addpost.AddAuctionPostActivity" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.project_auction.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <activity android:name=".util.address.SearchAddressActivity" />
         <activity android:name=".view.activity.lobby.LobbyActivity" />
         <activity android:name=".view.activity.signup.SignUpLobbyActivity" />
         <activity android:name=".view.activity.login.LoginActivity" />

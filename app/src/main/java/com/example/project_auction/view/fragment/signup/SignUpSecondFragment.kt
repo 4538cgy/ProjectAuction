@@ -19,7 +19,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 class SignUpSecondFragment : BaseFragment<FragmentSignUpSecondBinding>(R.layout.fragment_sign_up_second) {
 
     private var nickCheck : Boolean = false
-    private val db = FirebaseFirestore.getInstance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,19 +29,6 @@ class SignUpSecondFragment : BaseFragment<FragmentSignUpSecondBinding>(R.layout.
                 updateView(it!!.length)
             }
             fragmentSignUpSecondButtonNickCheck.setOnClickListener {
-
-                /*
-                var dataReference = db.collection("nickName").document("nickList")
-                db.runTransaction {
-                    var dataList = it.get(dataReference).toObject(NickNameDTO::class.java)
-
-                    dataList!!.nickNameList.put(binding.fragmentSignUpSecondEdittextNick.text.toString(),true)
-                    println("트랜잭션")
-                    it.set(dataReference,dataList)
-                    return@runTransaction
-                }
-
-                 */
 
                 db.collection("nickName").document("nickList").get().addOnSuccessListener {
                     if (it != null){

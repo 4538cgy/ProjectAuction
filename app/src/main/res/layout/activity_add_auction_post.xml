@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.activity.addpost.AddAuctionPostActivity">
+
+    <data>
+
+        <variable
+            name="activityaddauctionpost"
+            type="com.example.project_auction.view.activity.addpost.AddAuctionPostActivity" />
+
+        <variable
+            name="addproductviewmodel"
+            type="com.example.project_auction.viewmodel.AddProductViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_add_auction_post_const_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/activity_add_auction_post_imagebutton_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_close_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/activity_add_auction_post_textview_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="경매 물품 등록"
+                android:textColor="@color/colorBlack"
+                app:layout_constraintBottom_toBottomOf="@+id/activity_add_auction_post_imagebutton_close"
+                app:layout_constraintLeft_toRightOf="@+id/activity_add_auction_post_imagebutton_close"
+                app:layout_constraintTop_toTopOf="@+id/activity_add_auction_post_imagebutton_close" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_add_auction_post_const_top_bar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_add_auction_post_const_all_bar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/activity_add_auction_post_button_photo_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:background="@drawable/background_round_white_stroke_black_2dp"
+                    android:drawableLeft="@drawable/ic_baseline_add_photo_alternate_24"
+                    android:paddingHorizontal="12dp"
+                    android:text="사진 추가 0/10"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/activity_add_auction_post_recyclerview_photolist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_add_auction_post_button_photo_add" />
+
+                <TextView
+                    android:id="@+id/activity_add_auction_post_textview_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/background_round_white_stroke_black_2dp"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="12dp"
+                    android:text="카테고리 선택"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14dp"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_add_auction_post_recyclerview_photolist" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp"
+                    android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    app:layout_constraintBottom_toBottomOf="@+id/activity_add_auction_post_textview_category"
+                    app:layout_constraintRight_toRightOf="@+id/activity_add_auction_post_textview_category"
+                    app:layout_constraintTop_toTopOf="@+id/activity_add_auction_post_textview_category" />
+
+                <EditText
+                    android:id="@+id/activity_add_auction_post_edittext_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/background_round_white_stroke_black_2dp"
+                    android:hint="상품 명"
+                    android:maxLength="24"
+                    android:paddingLeft="12dp"
+                    android:textColorHint="@color/colorBlack"
+                    android:textSize="14dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_add_auction_post_textview_category" />
+
+                <TextView
+                    android:id="@+id/activity_add_auction_post_textview_title_text_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0/24"
+                    app:layout_constraintRight_toRightOf="@+id/activity_add_auction_post_edittext_title"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_add_auction_post_edittext_title" />
+
+                <TextView
+                    android:id="@+id/activity_add_auction_post_textview_close_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/background_round_white_stroke_black_2dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="12dp"
+                    android:text="경매 기간 설정"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_add_auction_post_textview_title_text_count" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/activity_add_auction_post_textinputlayout_start_cost"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/background_round_white_stroke_black_2dp"
+                    android:textColorHint="@color/colorBlack"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_add_auction_post_textview_close_time">
+
+                    <EditText
+                        android:id="@+id/activity_add_auction_post_edittext_start_cost"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="경매 시작가"
+                        android:inputType="number"
+                        android:maxLength="18"
+                        android:paddingLeft="12dp"
+                        android:textSize="14dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/activity_add_auction_post_textinputlayout_last_cost"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/background_round_white_stroke_black_2dp"
+                    android:textColorHint="@color/colorBlack"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_add_auction_post_textinputlayout_start_cost">
+
+                    <EditText
+                        android:id="@+id/activity_add_auction_post_edittext_close_cost"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="즉시 입찰가 (선택)"
+                        android:inputType="number"
+                        android:maxLength="18"
+                        android:paddingLeft="12dp"
+                        android:textSize="14dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/activity_add_auction_post_textview_product_intro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:text="상품 설명"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_add_auction_post_textinputlayout_last_cost" />
+
+                <EditText
+                    android:id="@+id/activity_add_auction_post_edittext_product_intro"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/background_round_white_stroke_black_2dp"
+                    android:gravity="top"
+                    android:hint="상품 설명을 입력해주세요."
+                    android:maxLength="400"
+                    android:padding="12dp"
+                    android:textColorHint="@color/colorBlack"
+                    android:textSize="14dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_add_auction_post_textview_product_intro" />
+
+                <TextView
+                    android:id="@+id/activity_add_auction_post_textview_product_intro_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0/400"
+                    app:layout_constraintRight_toRightOf="@+id/activity_add_auction_post_edittext_product_intro"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_add_auction_post_edittext_product_intro" />
+
+                <View
+                    android:id="@+id/activity_add_auction_post_view_notice"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/background_round_gray_stroke_black_4dp"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_add_auction_post_textview_product_intro_count" />
+
+                <TextView
+                    android:id="@+id/activity_add_auction_post_textview_notice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:text="안내 사항"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/activity_add_auction_post_view_notice"
+                    app:layout_constraintTop_toTopOf="@+id/activity_add_auction_post_view_notice" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:text="1. 상품 등록시 바로 경매가 시작됩니다. \n 2. 등록된 경매는 수정이 불가능합니다. \n 3. 입찰자가 존재할 경우 게시글의 삭제가 불가능합니다."
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_add_auction_post_textview_notice" />
+
+
+                <Button
+                    android:id="@+id/activity_add_auction_post_button_upload"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/background_round_yellow_24dp"
+                    android:text="물품 등록"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_add_auction_post_view_notice" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </ScrollView>
+
+        <ProgressBar
+            android:id="@+id/activity_add_auction_post_progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/activity_add_auction_post_textview_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Loading..."
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="@+id/activity_add_auction_post_progressbar"
+            app:layout_constraintRight_toRightOf="@+id/activity_add_auction_post_progressbar"
+            app:layout_constraintTop_toBottomOf="@+id/activity_add_auction_post_progressbar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

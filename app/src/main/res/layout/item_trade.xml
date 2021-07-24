@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="itemtrade"
+            type="com.example.project_auction.data.ProductTradeDTO" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginTop="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/item_trade_imageview_photo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="10dp"
+            android:background="@drawable/background_round_imageview_10dp"
+            />
+
+        <ImageButton
+            android:id="@+id/item_trade_imagebutton_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_favorite_border_white_24"
+            android:background="@android:color/transparent"
+            app:layout_constraintRight_toRightOf="@+id/item_trade_imageview_photo"
+            app:layout_constraintBottom_toBottomOf="@+id/item_trade_imageview_photo"
+            android:layout_margin="8dp"
+            />
+
+        <TextView
+            android:layout_marginLeft="12dp"
+            android:id="@+id/item_trade_textview_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:singleLine="true"
+            android:text="제목"
+            android:textColor="@color/colorBlack"
+            app:layout_constraintLeft_toLeftOf="@+id/item_trade_imageview_photo"
+            app:layout_constraintTop_toBottomOf="@+id/item_trade_imageview_photo" />
+
+        <TextView
+            android:layout_marginLeft="12dp"
+            android:id="@+id/item_trade_textview_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="1000"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="@+id/item_trade_imageview_photo"
+            app:layout_constraintTop_toBottomOf="@+id/item_trade_textview_title" />
+
+        <TextView
+            android:layout_marginLeft="12dp"
+            android:id="@+id/item_trade_textview_favorite_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_baseline_favorite_border_12"
+            android:gravity="center"
+            android:text="0"
+            app:layout_constraintLeft_toLeftOf="@+id/item_trade_imageview_photo"
+            app:layout_constraintTop_toBottomOf="@+id/item_trade_textview_cost" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
