@@ -3,6 +3,7 @@ package com.example.project_auction.adapter
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -17,6 +18,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 
 class AuctionAdapter(
     val context: Context,
@@ -52,7 +54,7 @@ class AuctionAdapter(
 
         //시작가
         holder.binding.itemAuctionTextviewStartCost.text =
-            "경매 시작가 " + dataList[position].startCost + "원"
+            "경매 시작가 " + DecimalFormat("#,###").format(dataList[position].startCost!!.toLong()) + "원"
 
         //좋아요 갯수
         //holder.binding.itemAuctionTextviewFavorite.text = dataList[position].favoriteCount.toString()
@@ -81,11 +83,13 @@ class AuctionAdapter(
         //종료 시간
         if (((dataList[position].closeTimestamp!!.toLong()) - System.currentTimeMillis()) <= 0) {
             holder.binding.itemAuctionTextviewClosetime.text = "경매 종료"
+            holder.binding.itemAuctionConstFront.visibility = View.VISIBLE
         } else {
             holder.binding.itemAuctionTextviewClosetime.text = TimeUtil().formatCloseTimeString((dataList[position].closeTimestamp!!.toLong() - System.currentTimeMillis()))
         }
 
-
+        //현재 경매가
+        holder.binding.itemAuctionTextviewCurrentCost.text = "현재 경매가 : " + DecimalFormat("#,###").format(dataList[position].currentCost!!.toLong()) +"원"
 
         //조회수(경매참여자수)
         holder.binding.itemAuctionTextviewViewcount.text = "경매 참여자 : " +dataList[position].joinCount.toString()

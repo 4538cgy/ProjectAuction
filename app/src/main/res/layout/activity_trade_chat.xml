@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.activity.chat.TradeChatActivity">
+
+    <data>
+
+        <variable
+            name="activitytradechat"
+            type="com.example.project_auction.view.activity.chat.TradeChatActivity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_trade_chat_const_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/activity_trade_chat_imagebutton_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_close_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/activity_trade_chat_textview_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="닉네임"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/activity_trade_chat_imagebutton_close"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            app:layout_constraintTop_toBottomOf="@+id/activity_trade_chat_const_top_bar"
+            android:id="@+id/activity_trade_chat_const_info_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/background_round_white_stroke_black_2dp"
+            android:layout_margin="12dp"
+            >
+
+            <TextView
+                android:id="@+id/activity_trade_chat_textview_product_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="판매 종료"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textColor="@color/colorBlack"
+                android:layout_margin="12dp"
+                />
+
+            <TextView
+                app:layout_constraintLeft_toRightOf="@+id/activity_trade_chat_textview_product_state"
+                app:layout_constraintTop_toTopOf="@+id/activity_trade_chat_textview_product_state"
+                app:layout_constraintBottom_toBottomOf="@+id/activity_trade_chat_textview_product_state"
+                android:id="@+id/activity_trade_chat_textview_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="제목"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activity_trade_chat_recycler"
+            app:layout_constraintTop_toBottomOf="@+id/activity_trade_chat_const_info_bar"
+            app:layout_constraintBottom_toTopOf="@+id/activity_trade_chat_const_bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_trade_chat_const_bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:background="@color/colorLightGray"
+            >
+            <ImageButton
+                android:id="@+id/activity_trade_chat_imagebutton_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_add_circle_outline_32"
+                android:background="@android:color/transparent"
+                android:layout_margin="6dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <EditText
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/activity_trade_chat_imagebutton_add"
+                app:layout_constraintRight_toLeftOf="@+id/activity_trade_chat_imagebutton_send"
+                android:id="@+id/activity_trade_chat_edittext_chat"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/background_round_white_24dp"
+                android:layout_margin="8dp"
+                android:hint="메세지를 입력해주세요."
+                android:paddingLeft="12dp"
+                />
+
+            <ImageButton
+                android:id="@+id/activity_trade_chat_imagebutton_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_send_black_32"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@android:color/transparent"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

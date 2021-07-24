@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.activity.addpost.AddTradePostActivity">
+
+    <data>
+
+        <variable
+            name="activityaddtradepost"
+            type="com.example.project_auction.view.activity.addpost.AddTradePostActivity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_add_trade_post_const_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/activity_add_trade_post_imagebutton_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_close_24"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="거래 글 등록"
+                android:textColor="@color/colorBlack"
+                app:layout_constraintBottom_toBottomOf="@+id/activity_add_trade_post_imagebutton_close"
+                app:layout_constraintLeft_toRightOf="@+id/activity_add_trade_post_imagebutton_close"
+                app:layout_constraintTop_toTopOf="@+id/activity_add_trade_post_imagebutton_close" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/activity_add_trade_post_button_upload"
+            app:layout_constraintTop_toBottomOf="@+id/activity_add_trade_post_const_top_bar"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="12dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/activity_add_trade_post_imagebutton_photo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/background_round_white_stroke_black_2dp"
+                    android:src="@drawable/ic_baseline_add_photo_alternate_24"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/activity_add_trade_post_recycler"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="12dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/activity_add_trade_post_imagebutton_photo"
+                    app:layout_constraintLeft_toRightOf="@+id/activity_add_trade_post_imagebutton_photo"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/activity_add_trade_post_imagebutton_photo" />
+
+
+                <EditText
+                    android:id="@+id/activity_add_trade_post_edittext_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/background_round_white_stroke_black_2dp"
+                    android:hint="상품명"
+                    android:paddingLeft="12dp"
+                    android:maxLength="24"
+                    android:textColorHint="@color/colorBlack"
+                    android:textSize="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_add_trade_post_recycler" />
+
+                <TextView
+                    android:id="@+id/activity_Add_trade_post_textview_title_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0/24"
+                    app:layout_constraintRight_toRightOf="@+id/activity_add_trade_post_edittext_title"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_add_trade_post_edittext_title" />
+
+                <TextView
+                    android:id="@+id/activity_add_trade_post_textview_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/background_round_white_stroke_black_2dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="12dp"
+                    android:text="카테고리"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_Add_trade_post_textview_title_count" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    app:layout_constraintBottom_toBottomOf="@+id/activity_add_trade_post_textview_category"
+                    app:layout_constraintRight_toRightOf="@+id/activity_add_trade_post_textview_category"
+                    app:layout_constraintTop_toTopOf="@+id/activity_add_trade_post_textview_category" />
+
+                <EditText
+                    android:id="@+id/activity_Add_trade_post_edittext_cost"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/background_round_white_stroke_black_2dp"
+                    android:hint="상품 가격"
+                    android:maxLength="12"
+                    android:paddingLeft="12dp"
+                    android:inputType="number"
+                    android:textColorHint="@color/colorBlack"
+                    android:textSize="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_add_trade_post_textview_category" />
+
+                <TextView
+                    android:id="@+id/activity_add_trade_post_textview_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/background_round_white_stroke_black_2dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="12dp"
+                    android:text="주소"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_Add_trade_post_edittext_cost" />
+
+                <EditText
+                    android:id="@+id/activity_add_trade_post_edittext_explain"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/background_round_white_stroke_black_2dp"
+                    android:gravity="top"
+                    android:hint="상품 설명"
+                    android:maxLength="800"
+                    android:padding="12dp"
+                    android:textColorHint="@color/colorBlack"
+                    android:textSize="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_add_trade_post_textview_address" />
+
+                <TextView
+                    android:id="@+id/activity_add_trade_post_textview_explain_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0/800"
+                    app:layout_constraintRight_toRightOf="@+id/activity_add_trade_post_edittext_explain"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_add_trade_post_edittext_explain" />
+
+                <TextView
+                    app:layout_constraintTop_toBottomOf="@+id/activity_add_trade_post_textview_explain_count"
+                    android:id="@+id/activity_add_trade_post_textview_option"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:text="세부 사항"
+                    android:background="@drawable/background_round_white_stroke_black_2dp"
+                    android:layout_margin="12dp"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorBlack"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="12dp"
+                    />
+
+                <View
+                    android:id="@+id/activity_add_trade_post_view_notice"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/background_round_gray_stroke_black_4dp"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_add_trade_post_textview_option" />
+
+                <TextView
+                    android:id="@+id/activity_add_trade_post_textview_notice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:text="안내 사항"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/activity_add_trade_post_view_notice"
+                    app:layout_constraintTop_toTopOf="@+id/activity_add_trade_post_view_notice" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:text="1. 거래 불가 제품은 임의로 삭제 될 수 있습니다.. \n 2. 등록된 상품은 수정이 불가능합니다."
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_add_trade_post_textview_notice" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/activity_add_trade_post_button_upload"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:background="@drawable/background_round_yellow_24dp"
+            android:layout_margin="12dp"
+            android:text="상품 등록"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_add_trade_post_const_front"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"
+            >
+            <ProgressBar
+                android:id="@+id/activity_add_trade_post_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+            <TextView
+                app:layout_constraintTop_toBottomOf="@+id/activity_add_trade_post_progress"
+                app:layout_constraintLeft_toLeftOf="@+id/activity_add_trade_post_progress"
+                app:layout_constraintRight_toRightOf="@+id/activity_add_trade_post_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="게시글을 업로드 중 입니다.\n업로드가 완료될 때 까지 앱을 절대 종료하지마세요. "
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

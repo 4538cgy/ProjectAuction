@@ -18,15 +18,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".view.activity.addpost.AddAuctionPostActivity"></activity>
-        <activity android:name=".view.activity.history.AuctionSuccessHistoryActivity"></activity>
+        <activity android:name="com.example.project_auction.view.activity.chat.TradeChatActivity"></activity>
+        <activity android:name=".view.activity.detailproduct.DetailTradeActivity" />
+        <activity android:name=".view.activity.addpost.AddTradePostActivity" />
+        <activity android:name=".view.activity.addpost.AddAuctionPostActivity" />
+        <activity android:name=".view.activity.history.AuctionSuccessHistoryActivity" />
         <activity android:name=".view.activity.history.AuctionJoinHistoryActivity" />
         <activity android:name=".view.activity.history.AuctionHistoryActivity" />
-        <activity android:name=".view.activity.photo.PhotoViewActivity"></activity>
+        <activity android:name=".view.activity.photo.PhotoViewActivity" />
         <activity android:name=".view.activity.detailproduct.DetailAuctionActivity" />
         <activity android:name=".view.activity.addpost.AddAuctionPostActivity" />
-
 
         <provider
             android:name="androidx.core.content.FileProvider"

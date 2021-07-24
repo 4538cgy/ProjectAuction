@@ -9,7 +9,7 @@ data class UserDTO(
     var nickName: String? = null,
     var timestamp: Long? = null,
     //AuctionProduct Key , true/false
-    var joinAuction : MutableMap<String,Boolean> ? = null,
+    var joinAuction : MutableMap<String,Boolean> ? = hashMapOf(),
     var joinAuctionCount : Long ? = null
 
 )
