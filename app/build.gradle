@@ -4,6 +4,8 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-android-extensions'
     id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+
 }
 
 android {
@@ -88,6 +90,9 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.3.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
+    //crashlytics
+    implementation 'com.google.firebase:firebase-crashlytics'
+
     //firebaseAuth
     implementation 'com.google.firebase:firebase-auth'
 
@@ -134,6 +139,8 @@ dependencies {
 
     //circle indicator
     implementation 'me.relex:circleindicator:1.2.2'
+
+    //crash
 
     //gson
     implementation 'com.google.code.gson:gson:2.8.6'

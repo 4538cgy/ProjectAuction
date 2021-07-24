@@ -55,6 +55,7 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
 
         getProductData(dataId)
 
+
         auctionViewModel.joiningState.observe(this, Observer {
             if (it == "TS_USER_SUCCESS") {
                 binding.activityDetailAuctionButtonJoin.text = "경매 참여중"
