@@ -296,7 +296,7 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
                     if (!it.isEmpty) {
                         val datas = it.toObjects(UserDTO::class.java)
                         datas.forEach { userData ->
-                            if (userData.uid.equals(auth.currentUser!!.uid)) {
+                            if (userData.uid.equals(uid)) {
                                 binding.activityDetailAuctionTextviewNickname.text = userData.nickName.toString()
 
                                 return@addSnapshotListener
