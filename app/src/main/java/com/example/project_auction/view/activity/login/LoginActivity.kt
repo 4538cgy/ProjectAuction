@@ -11,6 +11,7 @@ import com.example.project_auction.R
 import com.example.project_auction.base.BaseActivity
 import com.example.project_auction.data.KakaoDTO
 import com.example.project_auction.data.NaverDTO
+import com.example.project_auction.data.UserDTO
 import com.example.project_auction.databinding.ActivityLoginBinding
 import com.example.project_auction.util.http.HttpApi
 import com.example.project_auction.view.activity.lobby.LobbyActivity
@@ -238,9 +239,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             databaseReference.get().addOnCompleteListener {
                 if (it != null){
                     if (it.isSuccessful){
-                        startActivity(Intent(this, LobbyActivity::class.java))
-                    } else {
-                        startActivity(Intent(this, SignUpActivity::class.java))
+                        if (it.result.isEmpty){
+                            startActivity(Intent(this, SignUpActivity::class.java))
+                        }else{
+                            startActivity(Intent(this,LobbyActivity::class.java))
+                        }
                     }
                     finish()
                 }

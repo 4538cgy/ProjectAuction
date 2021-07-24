@@ -1,7 +1,6 @@
 package com.example.project_auction.view.activity.detailproduct
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
 import com.example.project_auction.R
@@ -9,7 +8,6 @@ import com.example.project_auction.adapter.LargeSizePhotoAdapter
 import com.example.project_auction.base.BaseActivity
 import com.example.project_auction.data.ProductTradeDTO
 import com.example.project_auction.data.UserDTO
-import com.example.project_auction.databinding.ActivityDetailAuctionBinding
 import com.example.project_auction.databinding.ActivityDetailTradeBinding
 import com.example.project_auction.repository.ProductCollectionRepository
 import com.example.project_auction.util.time.TimeUtil
@@ -22,17 +20,17 @@ import java.text.DecimalFormat
 
 class DetailTradeActivity : BaseActivity<ActivityDetailTradeBinding>(R.layout.activity_detail_trade){
 
-    lateinit var data : ProductTradeDTO
-    lateinit var dataId : String
+    lateinit var productData : ProductTradeDTO
+    lateinit var productDataId : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.activitydetailtrade = this
 
-        data = intent.getSerializableExtra("tradeProduct") as ProductTradeDTO
-        dataId = intent.getStringExtra("tradeProductId").toString()
+        productData = intent.getSerializableExtra("tradeProduct") as ProductTradeDTO
+        productDataId = intent.getStringExtra("tradeProductId").toString()
 
-        println("아아아 ${data.toString()} , 아아앜 ${dataId}")
+        println("아아아 ${productData.toString()} , 아아앜 ${productDataId}")
 
         binding.apply {
             //뒤로가기
@@ -42,41 +40,49 @@ class DetailTradeActivity : BaseActivity<ActivityDetailTradeBinding>(R.layout.ac
 
             //뷰페이저
             activityDetailTradeViewpager2.adapter = LargeSizePhotoAdapter(binding.root.context,
-                data!!.photoList!!
+                productData!!.photoList!!
             )
             //인티케이터
             activityDetailTradeIndicator.setViewPager( binding.activityDetailTradeViewpager2)
 
             //제목
-            activityDetailTradeTextviewTitle.text = data.title.toString()
+            activityDetailTradeTextviewTitle.text = productData.title.toString()
 
             //카테고리
-            activityDetailTradeTextviewCategory.text = data.category.toString()
+            activityDetailTradeTextviewCategory.text = productData.category.toString()
             //프로필 이미지
-            getProfileImage()
+            getProfileImage(productData.uid!!)
             //닉네임
-            getUserNickName()
+            getUserNickName(productData.uid!!)
             //가격
-            activityDetailTradeTextviewCost.text = "가격 " +DecimalFormat("#,###").format(data.cost?.replace(",","")!!.toLong()).toString() + "원"
+            activityDetailTradeTextviewCost.text = "가격 " +DecimalFormat("#,###").format(productData.cost?.replace(",","")!!.toLong()).toString() + "원"
             //좋아요 갯수
-            activityDetailTradeTextviewFavoriteCount.text = data.favoriteCount.toString()
+            activityDetailTradeTextviewFavoriteCount.text = productData.favoriteCount.toString()
             //옵션 - 중고여부
-            activityDetailTradeTextviewNeworold.text =data.productState.toString()
+            activityDetailTradeTextviewNeworold.text =productData.productState.toString()
             //옵션 - 교환 가능 여부
-            activityDetailTradeTextviewExchange.text = data.exchangeState.toString()
+            activityDetailTradeTextviewExchange.text = productData.exchangeState.toString()
             //옵션 - 거래 방법
-            activityDetailTradeDelivery.text = data.tradeMethod.toString()
+            activityDetailTradeDelivery.text = productData.tradeMethod.toString()
             //내용
-            activityDetailTradeTextviewExplain.text = data.content.toString()
+            activityDetailTradeTextviewExplain.text = productData.content.toString()
             //XXX님의 다른 판매글
 
             //시간
-            activityDetailTradeTextviewTimestamp.text = TimeUtil().formatTimeString(data.timestamp!!.toLong())
+            activityDetailTradeTextviewTimestamp.text = TimeUtil().formatTimeString(productData.timestamp!!.toLong())
 
             //메세지 보내기
             activityDetailTradeButtonSendmessage.setOnClickListener {
                 //채팅창 열기
-                startActivity(Intent(binding.root.context,TradeChatActivity::class.java))
+
+                var intent = Intent(binding.root.context,TradeChatActivity::class.java)
+                intent.apply {
+                    putExtra("productData",productData)
+                    putExtra("productDataId",productDataId)
+                    putExtra("destinationUid",productData.uid)
+                    startActivity(intent)
+                }
+
             }
             //찜했는지 체크
             checkFavorite()
@@ -84,7 +90,7 @@ class DetailTradeActivity : BaseActivity<ActivityDetailTradeBinding>(R.layout.ac
             //찜하기
             activityDetailTradeButtonFavorite.setOnClickListener {
                 CoroutineScope(Dispatchers.Main).launch {
-                    ProductCollectionRepository().updateFavoriteTrade(dataId,auth.currentUser!!.uid).collect {
+                    ProductCollectionRepository().updateFavoriteTrade(productDataId,auth.currentUser!!.uid).collect {
                         checkFavorite()
                     }
                 }
@@ -95,7 +101,7 @@ class DetailTradeActivity : BaseActivity<ActivityDetailTradeBinding>(R.layout.ac
 
     private fun checkFavorite(){
         CoroutineScope(Dispatchers.Main).launch {
-            ProductCollectionRepository().checkFavoriteTrade(dataId,auth.currentUser!!.uid).collect {
+            ProductCollectionRepository().checkFavoriteTrade(productDataId,auth.currentUser!!.uid).collect {
                 if (it){
                     //노랑색
                     binding.activityDetailTradeButtonFavorite.apply {
@@ -114,8 +120,8 @@ class DetailTradeActivity : BaseActivity<ActivityDetailTradeBinding>(R.layout.ac
         }
     }
 
-    private fun getProfileImage(){
-        db.collection("UserProfileImages").document(auth.currentUser!!.uid).get().addOnCompleteListener {
+    private fun getProfileImage(uid : String){
+        db.collection("UserProfileImages").document(uid).get().addOnCompleteListener {
             it?.let {
                 //none null todo
                 if (it.isSuccessful){
@@ -138,9 +144,9 @@ class DetailTradeActivity : BaseActivity<ActivityDetailTradeBinding>(R.layout.ac
         }
     }
 
-    private fun getUserNickName(){
+    private fun getUserNickName(uid: String){
 
-        db.collection("User").whereEqualTo("uid",auth.currentUser!!.uid)
+        db.collection("User").whereEqualTo("uid",uid)
             .addSnapshotListener { value, error ->
                 value?.let {
                     //none - null todo

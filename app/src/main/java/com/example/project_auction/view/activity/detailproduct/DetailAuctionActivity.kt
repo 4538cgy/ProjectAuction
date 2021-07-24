@@ -145,9 +145,9 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
 
 
         //닉네임
-        getUserNickName()
+        getUserNickName(data!!.uid.toString())
         //프로필 이미지
-        getProfileImage()
+        getProfileImage(data!!.uid.toString())
         //경매 종료시간
         setCountDown()
 
@@ -287,9 +287,9 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
 
 
 
-    private fun getUserNickName(){
+    private fun getUserNickName(uid: String){
 
-        db.collection("User").whereEqualTo("uid",auth.currentUser!!.uid)
+        db.collection("User").whereEqualTo("uid",uid)
             .addSnapshotListener { value, error ->
                 value?.let {
                     //none - null todo
@@ -311,8 +311,8 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
             }
     }
 
-    private fun getProfileImage(){
-        db.collection("UserProfileImages").document(auth.currentUser!!.uid).get().addOnCompleteListener {
+    private fun getProfileImage(uid: String){
+        db.collection("UserProfileImages").document(uid).get().addOnCompleteListener {
             it?.let {
                 //none null todo
                 if (it.isSuccessful){
