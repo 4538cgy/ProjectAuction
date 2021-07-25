@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".view.fragment.lobby.account.AccountFragment">
 
     <data>
+
         <variable
             name="fragmentaccount"
             type="com.example.project_auction.view.fragment.lobby.account.AccountFragment" />
@@ -12,96 +13,288 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
-        <ImageButton
-            android:id="@+id/fragment_account_imagebutton_setting"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_baseline_settings_24"
-            android:background="@android:color/transparent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/fragment_account_constraint_nickname_container"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="32dp"
-            >
-            <ImageView
-                android:id="@+id/fragment_account_imageview_profile"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginLeft="24dp"
-                />
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="-16dp"
+            tools:layout_editor_absoluteY="-301dp">
 
-            <TextView
-                android:id="@+id/fragment_account_textview_nickname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="닉네임"
-                app:layout_constraintLeft_toRightOf="@+id/fragment_account_imageview_profile"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginLeft="12dp"
-                />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+                <ImageButton
+                    android:id="@+id/fragment_account_imagebutton_setting"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_baseline_settings_24"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:text="프로필"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/fragment_account_constraint_nickname_container"
+                    app:layout_constraintLeft_toLeftOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/fragment_account_constraint_history_container"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_account_constraint_nickname_container"
-            >
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/fragment_account_constraint_nickname_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="62dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <Button
-                android:id="@+id/fragment_account_button_auction_history"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="경매 등록 내역"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/fragment_account_button_auction_join_history"
-                />
+                    <ImageView
+                        android:id="@+id/fragment_account_imageview_profile"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="24dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/fragment_account_button_auction_join_history"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="경매 참여 내역"
-                app:layout_constraintLeft_toRightOf="@+id/fragment_account_button_auction_history"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/fragment_account_button_auction_success_history"
-                />
-
-            <Button
-                android:id="@+id/fragment_account_button_auction_success_history"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="경매 낙찰 내역"
-                app:layout_constraintLeft_toRightOf="@+id/fragment_account_button_auction_join_history"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                    <TextView
+                        android:id="@+id/fragment_account_textview_nickname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:text="닉네임"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/fragment_account_imageview_profile"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/fragment_account_constraint_history_container_auction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_account_constraint_nickname_container">
+
+                    <TextView
+                        android:id="@+id/fragment_account_textview_title_auction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:text="경매"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/fragment_account_textview_auction_join"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="12dp"
+                        android:drawableLeft="@drawable/ic_baseline_shop_24"
+                        android:drawablePadding="12dp"
+                        android:text="경매 낙찰 내역"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_account_textview_title_auction" />
+
+                    <TextView
+                        android:id="@+id/fragment_account_textvie_auction_upload"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="12dp"
+                        android:drawableLeft="@drawable/ic_baseline_subject_24"
+                        android:drawablePadding="12dp"
+                        android:text="내 경매품 내역"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_account_textview_auction_join" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/fragment_account_constraint_history_container_trade"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_account_constraint_history_container_auction">
+
+                    <TextView
+                        android:id="@+id/fragment_account_textview_title_auction_trade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:text="거래"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/fragment_account_textview_trade_buy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="12dp"
+                        android:drawableLeft="@drawable/ic_baseline_shop_24"
+                        android:drawablePadding="12dp"
+                        android:text="구매 내역"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_account_textview_title_auction_trade" />
+
+                    <TextView
+                        android:id="@+id/fragment_account_textvie_trade_sell"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="12dp"
+                        android:drawableLeft="@drawable/ic_baseline_subject_24"
+                        android:drawablePadding="12dp"
+                        android:text="판매 내역"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_account_textview_trade_buy" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/fragment_account_constraint_history_container_benefit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_account_constraint_history_container_trade">
+
+                    <TextView
+                        android:id="@+id/fragment_account_textview_title_benefit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:text="혜택"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/fragment_account_textview_event"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="12dp"
+                        android:drawableLeft="@drawable/ic_baseline_shop_24"
+                        android:drawablePadding="12dp"
+                        android:text="이벤트"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_account_textview_title_benefit" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/fragment_account_constraint_history_container_option"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_account_constraint_history_container_benefit">
+
+                    <TextView
+                        android:id="@+id/fragment_account_textview_title_option"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:text="더보기"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/fragment_account_textview_option"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="12dp"
+                        android:drawableLeft="@drawable/ic_baseline_shop_24"
+                        android:drawablePadding="12dp"
+                        android:text="앱 설정"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_account_textview_title_option" />
+
+                    <TextView
+                        android:id="@+id/fragment_account_textview_account"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="12dp"
+                        android:drawableLeft="@drawable/ic_baseline_shop_24"
+                        android:drawablePadding="12dp"
+                        android:text="계정 설정"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_account_textview_option" />
+
+                    <TextView
+                        android:id="@+id/fragment_account_textview_notice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="12dp"
+                        android:drawableLeft="@drawable/ic_baseline_shop_24"
+                        android:drawablePadding="12dp"
+                        android:text="공지사항"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_account_textview_account" />
+
+                    <TextView
+                        android:id="@+id/fragment_account_textview_faq"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="12dp"
+                        android:drawableLeft="@drawable/ic_baseline_shop_24"
+                        android:drawablePadding="12dp"
+                        android:text="문의 하기"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_account_textview_notice" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -117,7 +117,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
                     }
                     update()
                 }
-
+                /*
                 fragmentAccountButtonAuctionHistory.setOnClickListener {
                     val intent = Intent(requireContext(), AuctionHistoryActivity::class.java)
                     startActivity(intent)
@@ -130,6 +130,8 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
                     val intent = Intent(requireContext(), AuctionSuccessHistoryActivity::class.java)
                     startActivity(intent)
                 }
+
+                 */
             }
 
         }
