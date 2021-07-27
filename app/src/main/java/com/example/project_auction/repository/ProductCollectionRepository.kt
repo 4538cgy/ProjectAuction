@@ -39,10 +39,8 @@ class ProductCollectionRepository {
         }.addOnFailureListener {
             this@callbackFlow.sendBlocking(false)
         }
-
         awaitClose { evenetListener }
     }
-
     @ExperimentalCoroutinesApi
     fun checkFavorite(postId: String, uid : String) = callbackFlow<Boolean> {
         val databaseReference = db.collection("productAuction").document(postId)
@@ -52,7 +50,6 @@ class ProductCollectionRepository {
               //non - null todo
                 if (it.exists()){
                     val data = it.toObject(ProductAuctionDTO::class.java)
-
                     if (data!!.viewers.containsKey(uid)){
                         //이미 좋아요 누름
                         this@callbackFlow.sendBlocking(true)
@@ -65,10 +62,8 @@ class ProductCollectionRepository {
                 // null todo
             }
         }
-
         awaitClose { eventListener }
     }
-
     @ExperimentalCoroutinesApi
     fun updateFavoriteTrade(postId : String,uid : String) = callbackFlow<Boolean> {
 
@@ -99,7 +94,6 @@ class ProductCollectionRepository {
 
         awaitClose { evenetListener }
     }
-
     @ExperimentalCoroutinesApi
     fun checkFavoriteTrade(postId: String, uid : String) = callbackFlow<Boolean> {
         val databaseReference = db.collection("ProductTrade").document(postId)
@@ -122,10 +116,8 @@ class ProductCollectionRepository {
                 // null todo
             }
         }
-
         awaitClose { eventListener }
     }
-
     @ExperimentalCoroutinesApi
     fun updateFavoriteTradePost(postId : String,uid : String) = callbackFlow<Boolean> {
 
@@ -156,7 +148,6 @@ class ProductCollectionRepository {
 
         awaitClose { evenetListener }
     }
-
     @ExperimentalCoroutinesApi
     fun checkFavoriteTradePost(postId: String, uid : String) = callbackFlow<Boolean> {
         val databaseReference = db.collection("ProductTrade").document(postId)
@@ -179,7 +170,6 @@ class ProductCollectionRepository {
                 // null todo
             }
         }
-
         awaitClose { eventListener }
     }
 }

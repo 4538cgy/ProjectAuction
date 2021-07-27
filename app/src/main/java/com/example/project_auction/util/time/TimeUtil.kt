@@ -4,13 +4,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class TimeUtil {
-
     fun getTime(): String {
 
         return SimpleDateFormat("yyyy년 MM월 dd일 a hh시 mm분 ss초").format(Date(System.currentTimeMillis())).toString()
 
     }
-
     /** 몇분전, 방금 전,  */
     private object TIME_MAXIMUM {
         const val SEC = 60
@@ -50,7 +48,6 @@ class TimeUtil {
             println("연 전")
             check = true
         }
-
         return check
     }
 
@@ -73,11 +70,8 @@ class TimeUtil {
         }
         return msg
     }
-
     fun formatCloseTimeString(regTime: Long): String? {
-
         var msg = ""
-
         var HHmm = SimpleDateFormat("HH:mm",Locale.KOREAN)
         var ddHHmm = SimpleDateFormat("dd일 HH:mm", Locale.KOREAN)
         var mmss = SimpleDateFormat("mm:ss", Locale.KOREAN)

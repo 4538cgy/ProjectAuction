@@ -21,8 +21,6 @@ class HttpApi {
 
         loginTokenInterface = retrofit.create(LoginToken::class.java)
     }
-
-
     fun test(testDTO: KakaoDTO) : Call<KakaoDTO.KakaoResponse>{
         return loginTokenInterface.test(testDTO)
     }
