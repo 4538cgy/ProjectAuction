@@ -23,13 +23,16 @@ import com.example.project_auction.view.fragment.lobby.account.AccountFragment
 import com.example.project_auction.view.fragment.lobby.alarm.AlarmFragment
 import com.example.project_auction.view.fragment.lobby.auction.AuctionFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.installations.FirebaseInstallations
 
 class LobbyActivity : BaseActivity<ActivityLobbyBinding>(R.layout.activity_lobby), BottomNavigationView.OnNavigationItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        getProfileImage()
+        registerPushToken()
 
+        getProfileImage()
 
 
         binding.apply {
@@ -114,5 +117,18 @@ class LobbyActivity : BaseActivity<ActivityLobbyBinding>(R.layout.activity_lobby
             ) { _, _ -> finishAffinity() } // Apply SAM
             setTitle("안내")
         }.show()
+    }
+
+    private fun registerPushToken(){
+        println("레지스터 등록")
+        val pushToken = FirebaseInstallations.getInstance().getToken(true).addOnCompleteListener {
+            val uid = auth.currentUser!!.uid
+            val map = mutableMapOf<String,Any>()
+            map.put("pushToken",it.result.token.toString())
+
+            db.collection("pushTokens").document(uid).set(map)
+        }
+
+
     }
 }
