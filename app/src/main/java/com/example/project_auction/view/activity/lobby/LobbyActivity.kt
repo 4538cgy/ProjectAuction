@@ -121,6 +121,7 @@ class LobbyActivity : BaseActivity<ActivityLobbyBinding>(R.layout.activity_lobby
 
     private fun registerPushToken(){
         println("레지스터 등록")
+        /*
         val pushToken = FirebaseInstallations.getInstance().getToken(true).addOnCompleteListener {
             val uid = auth.currentUser!!.uid
             val map = mutableMapOf<String,Any>()
@@ -129,6 +130,11 @@ class LobbyActivity : BaseActivity<ActivityLobbyBinding>(R.layout.activity_lobby
             db.collection("pushTokens").document(uid).set(map)
         }
 
+         */
+        val map = mutableMapOf<String,Any>()
+        map.put("pushToken", FirebaseInstanceId.getInstance().token.toString())
+
+        db.collection("pushTokens").document(auth.currentUser!!.uid).set(map)
 
     }
 }

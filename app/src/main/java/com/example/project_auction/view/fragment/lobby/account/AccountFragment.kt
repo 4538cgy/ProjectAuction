@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.example.project_auction.R
 import com.example.project_auction.base.BaseFragment
 import com.example.project_auction.databinding.FragmentAccountBinding
+import com.example.project_auction.util.fcm.FcmPush
 import com.example.project_auction.view.activity.history.AuctionHistoryActivity
 import com.example.project_auction.view.activity.history.AuctionJoinHistoryActivity
 import com.example.project_auction.view.activity.history.AuctionSuccessHistoryActivity
@@ -117,6 +118,11 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
                     true
                 }
                 update()
+            }
+
+            fragmentAccountTextviewAuctionJoin.setOnClickListener {
+                val message = "으아아아아"
+                FcmPush().sendMessage("ARXVndEFTnYmeC4sBj9VJCs4AIH2","으아아아아아아",message)
             }
             /*
             fragmentAccountButtonAuctionHistory.setOnClickListener {
