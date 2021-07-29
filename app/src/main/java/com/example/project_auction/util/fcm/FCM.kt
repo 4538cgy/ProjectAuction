@@ -61,6 +61,9 @@ class FCM : FirebaseMessagingService() {
         //서버로 바뀐 토큰 전송할 메소드 작성하는 부분
     }
     private fun sendNotification(body:String){
+        
+        //body 에서 들어온 데이터가 어느 부분의 알람인지 파악하고 해당 알람의 뷰로 이동
+        
         val intent = Intent(this,LoginActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(this, 0 , intent, PendingIntent.FLAG_ONE_SHOT)

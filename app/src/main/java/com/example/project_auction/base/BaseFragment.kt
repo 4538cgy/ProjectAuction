@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.project_auction.viewmodel.AuctionViewModel
 import com.example.project_auction.viewmodel.LoginSignUpViewModel
+import com.example.project_auction.viewmodel.ProfileViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -20,6 +21,7 @@ abstract class BaseFragment <B : ViewDataBinding> (val layoutId : Int) : Fragmen
     lateinit var rootContext : Context
     val loginSignViewModel : LoginSignUpViewModel by activityViewModels()
     val auctionViewModel : AuctionViewModel by activityViewModels()
+    val profileViewModel : ProfileViewModel by activityViewModels()
     val db = FirebaseFirestore.getInstance()
     val auth = FirebaseAuth.getInstance()
 
@@ -34,5 +36,10 @@ abstract class BaseFragment <B : ViewDataBinding> (val layoutId : Int) : Fragmen
         rootContext = binding.root.context
 
         return binding.root
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        profileViewModel.clearData()
     }
 }

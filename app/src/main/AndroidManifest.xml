@@ -27,7 +27,6 @@
         <activity android:name=".view.activity.history.AuctionHistoryActivity" />
         <activity android:name=".view.activity.photo.PhotoViewActivity" />
         <activity android:name=".view.activity.detailproduct.DetailAuctionActivity" />
-        <activity android:name=".view.activity.addpost.AddAuctionPostActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

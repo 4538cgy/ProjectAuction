@@ -3,7 +3,6 @@ package com.example.project_auction.view.activity.addpost
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -23,8 +22,6 @@ import com.example.project_auction.util.http.HttpApi
 import com.example.project_auction.util.time.TimeUtil
 import com.example.project_auction.view.bottomsheet.BottomSheetCategory
 import com.example.project_auction.view.bottomsheet.BottomSheetSetCloseProduct
-import com.google.android.gms.auth.api.Auth
-import com.google.firebase.database.collection.LLRBNode
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import kotlinx.coroutines.CoroutineScope
@@ -87,7 +84,6 @@ class AddAuctionPostActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.activityaddauctionpost = this
-        binding.addproductviewmodel = addProductViewModel
 
 
         binding.apply {

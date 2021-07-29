@@ -9,6 +9,9 @@
         <variable
             name="fragmentaccount"
             type="com.example.project_auction.view.fragment.lobby.account.AccountFragment" />
+        <variable
+            name="profileviewmodel"
+            type="com.example.project_auction.viewmodel.ProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
