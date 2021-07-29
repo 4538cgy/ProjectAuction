@@ -153,4 +153,6 @@ dependencies {
 
     //TedPermission
     implementation 'gun0912.ted:tedpermission:2.2.3'
+
+    implementation 'com.firebase:firebase-jobdispatcher:0.8.6'
 }
