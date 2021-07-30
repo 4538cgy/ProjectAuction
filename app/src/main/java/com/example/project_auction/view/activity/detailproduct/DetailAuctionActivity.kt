@@ -63,7 +63,7 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
                 binding.activityDetailAuctionButtonJoin.isEnabled = false
                 binding.activityDetailAuctionButtonBidding.visibility = View.VISIBLE
                 getProductData(dataId)
-                FcmPush().sendMessage(data!!.uid.toString(),"경매 참여 알람","경매품 : " + data!!.title + "에 신규 참여자가 있습니다.")
+                auctionViewModel.onJoinAlarm(data!!.uid.toString(), data!!.title.toString())
             }
         })
 
