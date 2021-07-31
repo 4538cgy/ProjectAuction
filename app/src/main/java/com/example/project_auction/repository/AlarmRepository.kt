@@ -19,7 +19,7 @@ class AlarmRepository {
     //알람 데이터 가져오기
     @ExperimentalCoroutinesApi
     fun loadAlarmData(uid : String) = callbackFlow<ArrayList<AlarmDTO>>{
-        val eventListener = db.collection("Alarm").whereEqualTo("uid",uid).get().addOnCompleteListener {
+        val eventListener = db.collection("Alarm").whereEqualTo("targetUid",uid).get().addOnCompleteListener {
             it?.let {
                 if (it.isSuccessful){
                     val datas = arrayListOf<AlarmDTO>()

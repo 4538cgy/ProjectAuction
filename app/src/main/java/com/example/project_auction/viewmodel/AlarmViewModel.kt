@@ -15,6 +15,7 @@ class AlarmViewModel : ViewModel() {
     fun loadAlarmDatas(uid : String){
         viewModelScope.launch {
             alarmRepository.loadAlarmData(uid).collect {
+                println("알람 데이터 ${it.toString()}")
                 alarmDatas.postValue(it)
             }
         }

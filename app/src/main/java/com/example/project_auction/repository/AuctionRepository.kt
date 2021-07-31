@@ -3,12 +3,16 @@ package com.example.project_auction.repository
 import com.example.project_auction.data.ProductAuctionDTO
 import com.example.project_auction.data.ProductTradeDTO
 import com.example.project_auction.data.UserDTO
+import com.example.project_auction.util.http.HttpApi
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.callbackFlow
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class AuctionRepository {
 
@@ -21,16 +25,53 @@ class AuctionRepository {
 
     //경매글 가져오기 map(document key,document value)
     @ExperimentalCoroutinesApi
-    fun loadAuctionData() = callbackFlow<Map<String,ProductAuctionDTO>> {
+    fun loadAuctionData(page : Int, orderBy : Int, uid : String , sortKey : String ) = callbackFlow<ProductAuctionDTO.ProductResponseDTO?> {
+        val eventListener = HttpApi().getAuctionProduct2(page,orderBy,uid,sortKey).enqueue(object : Callback<ProductAuctionDTO.ProductResponseDTO>{
+            override fun onResponse(
+                call: Call<ProductAuctionDTO.ProductResponseDTO>,
+                response: Response<ProductAuctionDTO.ProductResponseDTO>
+            ) {
 
+                if (response.body() != null) {
+                    this@callbackFlow.sendBlocking(response.body()!!)
+                }else{
+                    this@callbackFlow.sendBlocking(null)
+                }
+            }
 
+            override fun onFailure(call: Call<ProductAuctionDTO.ProductResponseDTO>, t: Throwable) {
+
+            }
+
+        })
+
+        awaitClose { eventListener }
     }
 
     //거래글 가져오기 map(document key, document value
     @ExperimentalCoroutinesApi
-    fun loadTradeData() = callbackFlow<Map<String,ProductTradeDTO>>{
+    fun loadTradeData(page: Int , orderBy: Int , uid: String , sortKey: String , endFlag : Boolean) = callbackFlow<ProductTradeDTO.ProductResponseDTO?>{
+
+        val eventListener = HttpApi().getTradeProduct(page , orderBy , uid , sortKey, endFlag).enqueue(object : Callback<ProductTradeDTO.ProductResponseDTO>{
+            override fun onResponse(
+                call: Call<ProductTradeDTO.ProductResponseDTO>,
+                response: Response<ProductTradeDTO.ProductResponseDTO>
+            ) {
+                if (response.body() != null) {
+                    this@callbackFlow.sendBlocking(response.body()!!)
+                }else{
+                    this@callbackFlow.sendBlocking(null)
+                }
+            }
+
+            override fun onFailure(call: Call<ProductTradeDTO.ProductResponseDTO>, t: Throwable) {
+
+            }
+
+        })
 
 
+        awaitClose { eventListener }
 
     }
 

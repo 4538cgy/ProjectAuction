@@ -18,6 +18,15 @@ interface LoginToken {
     fun test3(@Body dto : TimeRequestDTO.Time) : Call<TimeRequestDTO.TimeResponse>
 
     @Headers("Accept: application/json")
-    @GET("/AcutionRead")
+    @GET("/acutionRead")
     fun getAuctionProduct(@Query("page") page : Int , @Query("orderBy") orderBy : Int , @Query("uid") uid : String , @Query("sortKey") sortkey : String) : Call<ProductAuctionDTO.ProductResponseDTO>
+
+    @Headers("Accept: application/json")
+    @GET("/tradeRead")
+    fun getTradeProduct(@Query("page") page : Int , @Query("orderBy") orderBy: Int, @Query("uid") uid : String , @Query("sortKey") sortkey: String , @Query("endFlag") endFlag : Boolean) : Call<ProductTradeDTO.ProductResponseDTO>
+
+    @Headers("Accept: application/json")
+    @GET("/acutionRead2")
+    fun getAuctionProduct2(@Query("page") page : Int , @Query("orderBy") orderBy : Int , @Query("uid") uid : String , @Query("sortKey") sortkey : String) : Call<ProductAuctionDTO.ProductResponseDTO>
+
 }

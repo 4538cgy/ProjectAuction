@@ -35,6 +35,14 @@ class AuctionAdapter(
         return AuctionViewHolder(binding)
     }
 
+    override fun getItemId(position: Int): Long {
+        return super.getItemId(position)
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return super.getItemViewType(position)
+    }
+
     override fun onBindViewHolder(holder: AuctionViewHolder, position: Int) {
         holder.onBind(dataList[position])
 

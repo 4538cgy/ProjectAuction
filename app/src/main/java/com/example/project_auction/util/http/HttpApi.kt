@@ -38,4 +38,14 @@ class HttpApi {
     {
         return loginTokenInterface.getAuctionProduct(page,orderBy,uid,sortKey)
     }
+
+    fun getTradeProduct(page : Int , orderBy: Int , uid : String, sortKey: String , endFlag : Boolean) : Call<ProductTradeDTO.ProductResponseDTO>
+    {
+        return loginTokenInterface.getTradeProduct(page,orderBy,uid,sortKey,endFlag)
+    }
+
+    fun getAuctionProduct2(page : Int , orderBy : Int , uid : String , sortKey : String) : Call<ProductAuctionDTO.ProductResponseDTO>
+    {
+        return loginTokenInterface.getAuctionProduct2(page,orderBy,uid,sortKey)
+    }
 }

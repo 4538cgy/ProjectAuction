@@ -29,23 +29,23 @@ class AuctionViewModel() : ViewModel() {
     var joiningState = MutableLiveData<String>()
 
     //경매글
-    var auctionData = MutableLiveData<Map<String,ProductAuctionDTO>>()
+    var auctionData = MutableLiveData<ProductAuctionDTO.ProductResponseDTO?>()
     //거래글
-    var tradeData = MutableLiveData<Map<String,ProductTradeDTO>>()
+    var tradeData = MutableLiveData<ProductTradeDTO.ProductResponseDTO?>()
 
     //경매글 가져오기
-    fun loadAuctionData(){
+    fun loadAuctionData(page : Int , orderBy : Int , uid : String , sortKey : String){
         viewModelScope.launch {
-            auctionRepository.loadAuctionData().collect {
+            auctionRepository.loadAuctionData(page,orderBy,uid,sortKey).collect {
                 auctionData.postValue(it)
             }
         }
     }
 
     //거래글 가져오기
-    fun loadTradeData(){
+    fun loadTradeData(page : Int , orderBy: Int , uid : String, sortKey: String , endFlag : Boolean){
         viewModelScope.launch {
-            auctionRepository.loadTradeData().collect {
+            auctionRepository.loadTradeData(page , orderBy , uid , sortKey , endFlag).collect {
                 tradeData.postValue(it)
             }
         }
