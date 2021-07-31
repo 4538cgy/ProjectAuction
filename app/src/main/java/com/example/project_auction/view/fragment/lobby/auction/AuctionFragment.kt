@@ -41,94 +41,36 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
     private val index = client.getIndex("helloworld")
     private var gridItemDecoratorCheck = false
 
-    private var page = 1
-
-
-
+    private var pageAuction = 1
+    private var pageTrade = 1
 
     fun initRecyclerData(){
         if(viewState == "Auction") {
             binding.fragmentAuctionRecyclerview.adapter = AuctionAdapter(binding.root.context, auctionData, auctionDataId)
             binding.fragmentAuctionRecyclerview.layoutManager = LinearLayoutManager(binding.root.context, LinearLayoutManager.VERTICAL, false)
             (binding.fragmentAuctionRecyclerview.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
-        }else if (viewState == "Trade"){
-            binding.fragmentAuctionRecyclerview.adapter = TradeAdapter(binding.root.context,tradeData,tradeDataId)
-            binding.fragmentAuctionRecyclerview.layoutManager = LinearLayoutManager(binding.root.context, LinearLayoutManager.VERTICAL, false)
-            (binding.fragmentAuctionRecyclerview.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
-        }
-        /*
-        if (viewState == "Auction") {
-            println("옥션 부착")
-            val databaseReference =
-                db.collection("productAuction").orderBy("timestamp", Query.Direction.DESCENDING)
-
-            databaseReference.get().addOnSuccessListener {
-                it?.let {
-                    if (!it.isEmpty) {
-                        auctionData.clear()
-                        auctionDataId.clear()
-                        var data = it.toObjects(ProductAuctionDTO::class.java)
-                        auctionData.addAll(data)
-                        it.forEach { queryDocumentSnapshot ->
-                            auctionDataId.add(queryDocumentSnapshot.id)
-                        }
-
-                        println("옥션 부착2")
-                        binding.fragmentAuctionRecyclerview.adapter = null
-                        binding.fragmentAuctionRecyclerview.adapter = AuctionAdapter(binding.root.context,auctionData,auctionDataId)
-                        binding.fragmentAuctionRecyclerview.layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.VERTICAL,false)
-                        binding.fragmentAuctionRecyclerview.adapter!!.notifyDataSetChanged()
-                    }
-                }?.run {
-
-                }
-            }
-
             binding.fragmentAuctionButtonTrade.setBackgroundResource(R.drawable.background_round_gray_24dp)
             binding.fragmentAuctionButtonAuction.setBackgroundResource(R.drawable.background_round_yellow_24dp)
-
+            auctionViewModel.loadAuctionData(1,-1,auth.currentUser!!.uid,"timestamp")
+            pageAuction = 1
         }else if (viewState == "Trade"){
-            println("거래 부착")
-            val databaseReference = db.collection("ProductTrade").orderBy("timestamp",Query.Direction.DESCENDING)
-
-            databaseReference.get().addOnSuccessListener {
-                it.let {
-                    if (!it.isEmpty){
-                        tradeData.clear()
-                        tradeDataId.clear()
-                        var data = it.toObjects(ProductTradeDTO::class.java)
-                        tradeData.addAll(data)
-                        it.forEach { queryDocumentSnapshot ->
-                            tradeDataId.add(queryDocumentSnapshot.id)
-                        }
-
-                        println("거래 부착2")
-                        binding.fragmentAuctionRecyclerview.adapter = null
-                        binding.fragmentAuctionRecyclerview.adapter = TradeAdapter(binding.root.context,tradeData,tradeDataId)
-                        if (!gridItemDecoratorCheck) {
-                            binding.fragmentAuctionRecyclerview.addItemDecoration(
-                                GridItemDecorator(
-                                    20
-                                )
-                            )
-                            gridItemDecoratorCheck = true
-                        }
-                        binding.fragmentAuctionRecyclerview.layoutManager = GridLayoutManager(binding.root.context,3)
-                        binding.fragmentAuctionRecyclerview.adapter!!.notifyDataSetChanged()
-                    }
-                }?.run{
-
-                }
-                binding.fragmentAuctionButtonTrade.setBackgroundResource(R.drawable.background_round_yellow_24dp)
-                binding.fragmentAuctionButtonAuction.setBackgroundResource(R.drawable.background_round_gray_24dp)
+            binding.fragmentAuctionRecyclerview.adapter = TradeAdapter(binding.root.context,tradeData,tradeDataId)
+            binding.fragmentAuctionRecyclerview.layoutManager = GridLayoutManager(binding.root.context,3)
+            if (!gridItemDecoratorCheck) {
+                binding.fragmentAuctionRecyclerview.addItemDecoration(
+                    GridItemDecorator(
+                        20
+                    )
+                )
+                gridItemDecoratorCheck = true
             }
+            (binding.fragmentAuctionRecyclerview.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+            binding.fragmentAuctionButtonTrade.setBackgroundResource(R.drawable.background_round_yellow_24dp)
+            binding.fragmentAuctionButtonAuction.setBackgroundResource(R.drawable.background_round_gray_24dp)
+            auctionViewModel.loadTradeData(pageTrade, 1, auth.currentUser!!.uid,"timestamp",false)
+            pageTrade = 1
         }
-
-         */
     }
-
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.fragmentauction = this
@@ -160,14 +102,21 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
         auctionViewModel.tradeData.observe(viewLifecycleOwner, object  : Observer<ProductTradeDTO.ProductResponseDTO?>{
             override fun onChanged(t: ProductTradeDTO.ProductResponseDTO?) {
                 if (t != null){
-
+                    tradeData.clear()
+                    tradeDataId.clear()
+                    t.data.forEach {
+                        tradeData.add(it)
+                    }
+                    t.dataId.forEach {
+                        tradeDataId.add(it)
+                    }
+                    pageTrade ++
+                    binding.fragmentAuctionRecyclerview.adapter!!.notifyDataSetChanged()
                 }else{
-                    println("데이터의 마지막입니다.")
+                    //데이터 마지막 표시
                 }
             }
         })
-
-        auctionViewModel.loadAuctionData(1,-1,auth.currentUser!!.uid,"timestamp")
         auctionViewModel.auctionData.observe(viewLifecycleOwner, object: Observer<ProductAuctionDTO.ProductResponseDTO?>{
             override fun onChanged(t: ProductAuctionDTO.ProductResponseDTO?) {
                 if (t != null) {
@@ -176,26 +125,16 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
                     t!!.data.forEach {
                         auctionData.add(it)
                     }
-
-                    println("데이터 삽입전 ${t.dataId.toString()}")
-
-
                     t!!.dataId.forEach {
                         auctionDataId.add(it)
                     }
-                    page ++
-                    println("데이터 삽입후 ${auctionDataId.toString()}")
+                    pageAuction ++
                     binding.fragmentAuctionRecyclerview.adapter!!.notifyDataSetChanged()
                 }else{
-                        println("데이터의 마지막 입니다.")
+                    //데이터 마지막 표시
                 }
-
             }
         })
-
-
-
-
         var query = com.algolia.search.saas.Query("테스트")
             query.apply {
                 setAttributesToRetrieve("title","content","timestamp")
@@ -221,9 +160,6 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
         }
 
          */
-
-
-
         binding.apply {
 
             //플로팅 버튼
@@ -234,9 +170,9 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
             //게시글 더 가져오기 버튼
             fragmentAuctionButtonLoadMore.setOnClickListener {
                 if (viewState == "Auction") {
-                    auctionViewModel.loadAuctionData(page, -1, auth.currentUser!!.uid, "timestamp")
+                    auctionViewModel.loadAuctionData(pageAuction, -1, auth.currentUser!!.uid, "timestamp")
                 }else if(viewState == "Trade"){
-                    auctionviewmodel.loadTradeData(page, -1, auth.currentUser!!.uid,"timestamp",true)
+                    auctionViewModel.loadTradeData(pageTrade, -1, auth.currentUser!!.uid,"timestamp",false)
                 }
             }
 
@@ -324,8 +260,4 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
             false
         }
     }
-
-
-
-
 }
