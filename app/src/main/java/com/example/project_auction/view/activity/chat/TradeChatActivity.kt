@@ -14,6 +14,7 @@ import com.example.project_auction.data.ProductTradeDTO
 import com.example.project_auction.data.UserDTO
 import com.example.project_auction.databinding.ActivityTradeChatBinding
 import com.example.project_auction.extension.toast
+import com.example.project_auction.util.fcm.FcmPush
 
 class TradeChatActivity : BaseActivity<ActivityTradeChatBinding>(R.layout.activity_trade_chat) {
 
@@ -40,6 +41,7 @@ class TradeChatActivity : BaseActivity<ActivityTradeChatBinding>(R.layout.activi
             activityTradeChatImagebuttonSend.setOnClickListener {
                 sendMessage()
                 activityTradeChatEdittextChat.setText("")
+                FcmPush().sendMessage(destinationUid!!,"거래 채팅 알림","거래물품 : "+productData.title+"에 새로운 채팅 메세지가 있습니다.")
             }
             //뒤로가기
             activityTradeChatImagebuttonClose.setOnClickListener {
@@ -93,6 +95,8 @@ class TradeChatActivity : BaseActivity<ActivityTradeChatBinding>(R.layout.activi
             }
         }
     }
+
+
 
     private fun createChatRoom() {
         var chatData = ChatDTO()

@@ -20,6 +20,7 @@ import com.example.project_auction.data.TimeRequestDTO
 import com.example.project_auction.data.UserDTO
 import com.example.project_auction.databinding.ActivityDetailAuctionBinding
 import com.example.project_auction.extension.toast
+import com.example.project_auction.util.fcm.FcmPush
 import com.example.project_auction.util.http.HttpApi
 import com.example.project_auction.util.time.TimeUtil
 import com.example.project_auction.view.bottomsheet.BottomSheetBidding
@@ -53,8 +54,9 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
 
         dataId = intent.getStringExtra("productId").toString()
 
-        getProductData(dataId)
 
+        getProductData(dataId)
+        //경매 참여 옵저빙
 
         auctionViewModel.joiningState.observe(this, Observer {
             if (it == "TS_USER_SUCCESS") {
@@ -62,6 +64,7 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
                 binding.activityDetailAuctionButtonJoin.isEnabled = false
                 binding.activityDetailAuctionButtonBidding.visibility = View.VISIBLE
                 getProductData(dataId)
+                auctionViewModel.onJoinAlarm(data!!.uid.toString(), data!!.title.toString())
             }
         })
 
@@ -114,6 +117,9 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
             }
         }
     }
+
+
+
 
     private fun updateView(){
         binding.activityDetailAuctionTextviewCurrentCost.text = "현재 경매가 : " + DecimalFormat("#,###").format(data!!.currentCost!!.toLong()).toString() + "원"

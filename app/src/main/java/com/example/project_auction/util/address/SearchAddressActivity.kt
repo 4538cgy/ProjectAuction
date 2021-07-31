@@ -22,7 +22,6 @@ class SearchAddressActivity :
         binding.activitysearchaddress = this
         init_webView()
     }
-
     fun init_webView() {
         binding.activitySearchAddressWebview.apply {
 
@@ -53,12 +52,10 @@ class SearchAddressActivity :
         }
 
     }
-
     inner class AndroidBridge {
         @JavascriptInterface
         fun setAddress(arg1: String?, arg2: String?, arg3: String?) {
             handler.post {
-
 
                 //주소 전달
                 val intent = Intent()
@@ -66,8 +63,6 @@ class SearchAddressActivity :
                 intent.putExtra("address_arg2", arg2)
                 intent.putExtra("address_arg3", arg3)
                 setResult(Activity.RESULT_OK, intent)
-
-                //activity_search_address_textview.setText(String.format("(%s) %s %s", arg1, arg2, arg3))
 
                 // WebView를 초기화 하지않으면 재사용할 수 없음
                 init_webView()
