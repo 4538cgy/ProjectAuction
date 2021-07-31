@@ -38,6 +38,9 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
 
     fun initRecyclerData(){
 
+        binding.fragmentAuctionRecyclerview.adapter = AuctionAdapter(binding.root.context,auctionData,auctionDataId)
+        binding.fragmentAuctionRecyclerview.layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.VERTICAL,false)
+        /*
         if (viewState == "Auction") {
             println("옥션 부착")
             val databaseReference =
@@ -104,6 +107,8 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
                 binding.fragmentAuctionButtonAuction.setBackgroundResource(R.drawable.background_round_gray_24dp)
             }
         }
+
+         */
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

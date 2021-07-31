@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.example.project_auction.viewmodel.AlarmViewModel
 import com.example.project_auction.viewmodel.AuctionViewModel
 import com.example.project_auction.viewmodel.LoginSignUpViewModel
 import com.example.project_auction.viewmodel.ProfileViewModel
@@ -22,6 +23,7 @@ abstract class BaseFragment <B : ViewDataBinding> (val layoutId : Int) : Fragmen
     val loginSignViewModel : LoginSignUpViewModel by activityViewModels()
     val auctionViewModel : AuctionViewModel by activityViewModels()
     val profileViewModel : ProfileViewModel by activityViewModels()
+    val alarmViewModel : AlarmViewModel by activityViewModels()
     val db = FirebaseFirestore.getInstance()
     val auth = FirebaseAuth.getInstance()
 

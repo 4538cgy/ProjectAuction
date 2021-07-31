@@ -12,6 +12,10 @@ class ProductCollectionRepository {
 
     private val db = FirebaseFirestore.getInstance()
 
+    companion object{
+        val productCollectionRepository = ProductCollectionRepository()
+    }
+
     @ExperimentalCoroutinesApi
     fun updateFavorite(postId : String,uid : String) = callbackFlow<Boolean> {
 

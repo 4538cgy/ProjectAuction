@@ -11,6 +11,7 @@ import com.example.project_auction.R
 import com.example.project_auction.data.ProductAuctionDTO
 import com.example.project_auction.databinding.ItemAuctionBinding
 import com.example.project_auction.repository.ProductCollectionRepository
+import com.example.project_auction.repository.ProductCollectionRepository.Companion.productCollectionRepository
 import com.example.project_auction.util.time.TimeUtil
 import com.example.project_auction.view.activity.detailproduct.DetailAuctionActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -27,7 +28,6 @@ class AuctionAdapter(
 ) : RecyclerView.Adapter<AuctionViewHolder>() {
 
     val coroutineScopeMain = CoroutineScope(Dispatchers.Main)
-    val productRepository = ProductCollectionRepository()
     private val auth = FirebaseAuth.getInstance()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AuctionViewHolder {
@@ -107,7 +107,7 @@ class AuctionAdapter(
     fun favorite(postId: String, holder: AuctionViewHolder) {
 
         coroutineScopeMain.launch {
-            productRepository.updateFavorite(postId, auth.currentUser!!.uid).collect {
+            productCollectionRepository.updateFavorite(postId, auth.currentUser!!.uid).collect {
                 if (it) {
                     checkFavorite(postId, holder)
                 } else println("실패")
@@ -118,7 +118,7 @@ class AuctionAdapter(
     //좋아요 체크
     fun checkFavorite(postId: String, holder: AuctionViewHolder) {
         coroutineScopeMain.launch {
-            productRepository.checkFavorite(postId, auth.currentUser!!.uid).collect {
+            productCollectionRepository.checkFavorite(postId, auth.currentUser!!.uid).collect {
 
                 if (it) {
                     holder.binding.itemAuctionImagebuttonFavorite.setBackgroundResource(R.drawable.ic_baseline_favorite_24)

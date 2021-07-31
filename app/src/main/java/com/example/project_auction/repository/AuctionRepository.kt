@@ -1,6 +1,7 @@
 package com.example.project_auction.repository
 
 import com.example.project_auction.data.ProductAuctionDTO
+import com.example.project_auction.data.ProductTradeDTO
 import com.example.project_auction.data.UserDTO
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -13,6 +14,25 @@ class AuctionRepository {
 
     val db = FirebaseFirestore.getInstance()
     val auth = FirebaseAuth.getInstance()
+
+    companion object{
+        val auctionRepository = AuctionRepository()
+    }
+
+    //경매글 가져오기 map(document key,document value)
+    @ExperimentalCoroutinesApi
+    fun loadAuctionData() = callbackFlow<Map<String,ProductAuctionDTO>> {
+
+
+    }
+
+    //거래글 가져오기 map(document key, document value
+    @ExperimentalCoroutinesApi
+    fun loadTradeData() = callbackFlow<Map<String,ProductTradeDTO>>{
+
+
+
+    }
 
     //경매 참여
     @ExperimentalCoroutinesApi

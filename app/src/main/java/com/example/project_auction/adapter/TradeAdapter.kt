@@ -27,7 +27,6 @@ val dataIdList: ArrayList<String>
 ) : RecyclerView.Adapter<TradeViewHolder>() {
 
     val coroutineScopeMain = CoroutineScope(Dispatchers.Main)
-    val productRepository = ProductCollectionRepository()
     private val auth = FirebaseAuth.getInstance()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TradeViewHolder {
@@ -92,7 +91,7 @@ val dataIdList: ArrayList<String>
     fun favorite(postId: String, holder: TradeViewHolder) {
 
         coroutineScopeMain.launch {
-            productRepository.updateFavoriteTradePost(postId, auth.currentUser!!.uid).collect {
+            ProductCollectionRepository.productCollectionRepository.updateFavoriteTradePost(postId, auth.currentUser!!.uid).collect {
                 if (it) {
                     checkFavorite(postId, holder)
                 } else println("실패")
@@ -103,7 +102,7 @@ val dataIdList: ArrayList<String>
     //좋아요 체크
     fun checkFavorite(postId: String, holder: TradeViewHolder) {
         coroutineScopeMain.launch {
-            productRepository.checkFavoriteTradePost(postId, auth.currentUser!!.uid).collect {
+            ProductCollectionRepository.productCollectionRepository.checkFavoriteTradePost(postId, auth.currentUser!!.uid).collect {
 
                 if (it) {
                     holder.binding.itemTradeImagebuttonFavorite.setBackgroundResource(R.drawable.ic_baseline_favorite_white_24)
