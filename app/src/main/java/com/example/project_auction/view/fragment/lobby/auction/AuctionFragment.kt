@@ -123,6 +123,7 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
                     }
                 }
             })
+
         auctionViewModel.auctionData.observe(viewLifecycleOwner, object: Observer<ProductAuctionDTO.ProductResponseDTO?>{
             override fun onChanged(t: ProductAuctionDTO.ProductResponseDTO?) {
                 if (t != null) {
@@ -137,7 +138,7 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
                     pageAuction ++
                     binding.fragmentAuctionRecyclerview.adapter!!.notifyDataSetChanged()
                     binding.fragmentAuctionButtonLoadMore.text = "게시글 더 가져오기"
-                    
+
                 }else{
                     //데이터 마지막 표시
                     binding.fragmentAuctionButtonLoadMore.text = "마지막 게시글 입니다."

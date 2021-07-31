@@ -26,7 +26,7 @@ class AuctionRepository {
     //경매글 가져오기 map(document key,document value)
     @ExperimentalCoroutinesApi
     fun loadAuctionData(page : Int, orderBy : Int, uid : String , sortKey : String ) = callbackFlow<ProductAuctionDTO.ProductResponseDTO?> {
-        val eventListener = HttpApi().getAuctionProduct2(page,orderBy,uid,sortKey).enqueue(object : Callback<ProductAuctionDTO.ProductResponseDTO>{
+        val eventListener = HttpApi().getAuctionProduct(page,orderBy,uid,sortKey).enqueue(object : Callback<ProductAuctionDTO.ProductResponseDTO>{
             override fun onResponse(
                 call: Call<ProductAuctionDTO.ProductResponseDTO>,
                 response: Response<ProductAuctionDTO.ProductResponseDTO>
