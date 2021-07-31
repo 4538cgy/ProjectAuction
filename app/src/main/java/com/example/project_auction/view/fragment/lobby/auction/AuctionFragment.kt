@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,6 +20,7 @@ import com.example.project_auction.adapter.TradeAdapter
 import com.example.project_auction.base.BaseFragment
 import com.example.project_auction.data.*
 import com.example.project_auction.databinding.FragmentAuctionBinding
+import com.example.project_auction.extension.toast
 import com.example.project_auction.util.http.HttpApi
 import com.example.project_auction.util.itemdcorator.GridItemDecorator
 import com.example.project_auction.view.activity.addpost.AddAuctionPostActivity
@@ -99,24 +101,28 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
         auctionViewModel.auctionData.value = null
         auctionViewModel.tradeData.value = null
 
-        auctionViewModel.tradeData.observe(viewLifecycleOwner, object  : Observer<ProductTradeDTO.ProductResponseDTO?>{
-            override fun onChanged(t: ProductTradeDTO.ProductResponseDTO?) {
-                if (t != null){
-                    tradeData.clear()
-                    tradeDataId.clear()
-                    t.data.forEach {
-                        tradeData.add(it)
+        auctionViewModel.tradeData.observe(
+            viewLifecycleOwner,
+            object : Observer<ProductTradeDTO.ProductResponseDTO?> {
+                override fun onChanged(t: ProductTradeDTO.ProductResponseDTO?) {
+                    if (t != null) {
+                        tradeData.clear()
+                        tradeDataId.clear()
+                        t.data.forEach {
+                            tradeData.add(it)
+                        }
+                        t.dataId.forEach {
+                            tradeDataId.add(it)
+                        }
+                        pageTrade++
+                        binding.fragmentAuctionRecyclerview.adapter!!.notifyDataSetChanged()
+                        binding.fragmentAuctionButtonLoadMore.text = "게시글 더 가져오기"
+                    } else {
+                        //데이터 마지막 표시
+                        binding.fragmentAuctionButtonLoadMore.text = "마지막 게시글 입니다."
                     }
-                    t.dataId.forEach {
-                        tradeDataId.add(it)
-                    }
-                    pageTrade ++
-                    binding.fragmentAuctionRecyclerview.adapter!!.notifyDataSetChanged()
-                }else{
-                    //데이터 마지막 표시
                 }
-            }
-        })
+            })
         auctionViewModel.auctionData.observe(viewLifecycleOwner, object: Observer<ProductAuctionDTO.ProductResponseDTO?>{
             override fun onChanged(t: ProductAuctionDTO.ProductResponseDTO?) {
                 if (t != null) {
@@ -130,8 +136,11 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
                     }
                     pageAuction ++
                     binding.fragmentAuctionRecyclerview.adapter!!.notifyDataSetChanged()
+                    binding.fragmentAuctionButtonLoadMore.text = "게시글 더 가져오기"
+                    
                 }else{
                     //데이터 마지막 표시
+                    binding.fragmentAuctionButtonLoadMore.text = "마지막 게시글 입니다."
                 }
             }
         })

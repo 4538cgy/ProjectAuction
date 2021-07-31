@@ -176,9 +176,13 @@
             <Button
                 android:id="@+id/fragment_auction_button_load_more"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_width="match_parent"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:text="게시글 더 가져오기"
+                android:background="@drawable/background_round_white_stroke_black_2dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginBottom="12dp"
                 android:visibility="gone"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
