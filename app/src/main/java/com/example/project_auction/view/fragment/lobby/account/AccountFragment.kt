@@ -1,34 +1,15 @@
 package com.example.project_auction.view.fragment.lobby.account
 
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
-import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.View
-import android.widget.EditText
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
-import androidx.core.content.FileProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.project_auction.R
+import com.example.project_auction.adapter.SettingAdapter
 import com.example.project_auction.base.BaseFragment
+import com.example.project_auction.data.SettingItem
+import com.example.project_auction.data.SettingType
 import com.example.project_auction.databinding.FragmentAccountBinding
-import com.example.project_auction.util.fcm.FcmPush
-import com.example.project_auction.view.activity.history.AuctionHistoryActivity
-import com.example.project_auction.view.activity.history.AuctionJoinHistoryActivity
-import com.example.project_auction.view.activity.history.AuctionSuccessHistoryActivity
-import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.TedPermission
-import kotlinx.android.synthetic.main.fragment_account.*
-import java.io.File
-import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_account) {
@@ -40,10 +21,24 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
 
         binding.apply {
 
-            fragmentAccountTextviewAuctionJoin.setOnClickListener {
-                val message = "으아아아아"
-                FcmPush().sendMessage("u27csIcJR4RH82waiVG9txHn2FI3","으아아아아아아",message)
+            fragmentAccountRecyclerSetting.adapter = SettingAdapter(
+                arrayListOf(
+                    SettingItem(SettingType.TITLE, R.drawable.ic_baseline_add_24, "제목",true),
+                    SettingItem(SettingType.BUY_LIST, R.drawable.ic_baseline_add_24, "로그아웃"),
+                    SettingItem(SettingType.TITLE, R.drawable.ic_baseline_add_24, "제목",true),
+                    SettingItem(SettingType.BUY_LIST, R.drawable.ic_baseline_add_24, "로그아웃"),
+                    SettingItem(SettingType.TITLE, R.drawable.ic_baseline_add_24, "제목",true),
+                    SettingItem(SettingType.BUY_LIST, R.drawable.ic_baseline_add_24, "로그아웃"),
+                    SettingItem(SettingType.TITLE, R.drawable.ic_baseline_add_24, "제목",true),
+                    SettingItem(SettingType.BUY_LIST, R.drawable.ic_baseline_add_24, "로그아웃"),
+                    SettingItem(SettingType.TITLE, R.drawable.ic_baseline_add_24, "제목",true),
+                    SettingItem(SettingType.BUY_LIST, R.drawable.ic_baseline_add_24, "로그아웃")
+
+                )
+            ).setOnSettingItemClickListener {
+
             }
+            fragmentAccountRecyclerSetting.layoutManager = LinearLayoutManager(root.context,LinearLayoutManager.VERTICAL,false)
         }
 
         //닉네임 옵저빙

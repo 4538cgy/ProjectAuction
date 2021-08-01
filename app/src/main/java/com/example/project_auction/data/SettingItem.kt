@@ -1,12 +1,13 @@
 package com.example.project_auction.data
 
-import android.graphics.drawable.Drawable
+import androidx.annotation.DrawableRes
 
 data class SettingItem(
-    val type : Int,
-    val icon : Drawable ? = null,
-    val title : String ? = null,
-    val line : Boolean = false
+    val type: Int,
+    @DrawableRes
+    val icon: Int ?= null,
+    val title: String ? = null,
+    val line: Boolean = false
 )
 
 class SettingType{
