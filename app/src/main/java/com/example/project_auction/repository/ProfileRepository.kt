@@ -114,4 +114,37 @@ class ProfileRepository {
 
         awaitClose { eventListener }
     }
+
+    @ExperimentalCoroutinesApi
+    fun updateNickName(uid : String, nickname : String) = callbackFlow<Boolean> {
+        val eventListener = db.collection("User").whereEqualTo("uid",uid).get().addOnSuccessListener {
+            it?.let {
+                if (!it.isEmpty){
+                    it.documents.forEach {
+                        if (it["uid"] == uid){
+                            var data = it.toObject(UserDTO::class.java)
+
+                            val transactionRoot = db.collection("User").document(it.id)
+
+                            db.runTransaction {
+                                transaction ->
+
+                                data!!.nickName = nickname
+
+                                transaction.set(transactionRoot,data)
+                                this@callbackFlow.sendBlocking(true)
+                                return@runTransaction
+
+                            }
+                            return@forEach
+                        }
+                    }
+                }
+            }?.run {
+
+            }
+        }
+
+        awaitClose { eventListener }
+    }
 }

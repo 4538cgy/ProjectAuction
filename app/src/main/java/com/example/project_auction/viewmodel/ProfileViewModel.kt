@@ -16,6 +16,8 @@ class ProfileViewModel : ViewModel() {
     var profileUploadCheck = MutableLiveData<Boolean>()
     var userDataSetUploadCheck = MutableLiveData<Boolean>()
 
+    var updateUserNicknameCheck = MutableLiveData<Boolean>()
+
     //유저 닉네임 얻어오기
     fun getUserNickName(uid : String){
         viewModelScope.launch {
@@ -49,6 +51,15 @@ class ProfileViewModel : ViewModel() {
         viewModelScope.launch {
             profileRepository.uploadUserDataSet(uid , userDTO).collect {
                 userDataSetUploadCheck.postValue(it)
+            }
+        }
+    }
+
+    //유저 닉네임 변경
+    fun updateUserNickName(uid : String, nickName : String){
+        viewModelScope.launch {
+            profileRepository.updateNickName(uid , nickName).collect {
+                updateUserNicknameCheck.postValue(it)
             }
         }
     }

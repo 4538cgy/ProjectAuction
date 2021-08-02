@@ -1,9 +1,11 @@
 package com.example.project_auction.view.activity.profile
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
@@ -24,7 +26,7 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(R.layout.ac
                     .circleCrop()
                     .into(binding.activityEditProfileImageviewPhoto)
 
-                loginSignViewModel.profilePhotoUri.postValue(it.data!!.data)
+                profileViewModel.profileImage.postValue(it.data!!.data)
             }
         }
     }
@@ -44,7 +46,9 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(R.layout.ac
 
             //저장
             activityEditProfileButtonComplete.setOnClickListener {
-                
+                updateProfile()
+                activityEditProfileContainerLoading.visibility = View.VISIBLE
+                activityEditProfileButtonComplete.visibility = View.GONE
             }
 
             //이미지 뷰 클릭
@@ -73,12 +77,35 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(R.layout.ac
         profileViewModel.nickName.observe(this@EditProfileActivity, Observer {
             binding.activityEditProfileEdittextNick.setText(it.toString())
         })
+
+
+        //프로필 이미지 업로드 확인
+        profileViewModel.profileUploadCheck.observe(this , Observer {
+            if (it) updateNickname()
+        })
+
+        //닉네임까지 변경됬는지 확인
+        profileViewModel.updateUserNicknameCheck.observe(this, Observer {
+            if (it) {
+                finish()
+                binding.activityEditProfileContainerLoading.visibility = View.GONE
+                binding.activityEditProfileButtonComplete.visibility = View.VISIBLE
+            }
+        })
     }
 
     fun openGallery(){
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = MediaStore.Images.Media.CONTENT_TYPE
         profileCallback.launch(intent)
+    }
+
+    fun updateProfile(){
+        profileViewModel.uploadProfileImage(auth.currentUser!!.uid, Uri.parse(profileViewModel.profileImage.value.toString()) )
+    }
+
+    fun updateNickname(){
+        profileViewModel.updateUserNickName(auth.currentUser!!.uid,binding.activityEditProfileEdittextNick.text.toString())
     }
 
 }
