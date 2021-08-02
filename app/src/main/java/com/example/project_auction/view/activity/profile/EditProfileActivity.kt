@@ -1,5 +1,7 @@
 package com.example.project_auction.view.activity.profile
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.example.project_auction.R
 import com.example.project_auction.base.BaseActivity
 import com.example.project_auction.databinding.ActivityEditProfileBinding
+import com.example.project_auction.extension.toast
 
 class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(R.layout.activity_edit_profile) {
 
@@ -26,7 +29,8 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(R.layout.ac
                     .circleCrop()
                     .into(binding.activityEditProfileImageviewPhoto)
 
-                profileViewModel.profileImage.postValue(it.data!!.data)
+
+                profileViewModel.updateProfileImage.postValue(it.data!!.data)
             }
         }
     }
@@ -59,9 +63,47 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(R.layout.ac
             //텍스트 수 체크
             activityEditProfileEdittextNick.addTextChangedListener {
                 activityEditProfileTextviewNickCount.text = it!!.length.toString() + "/12"
+                if (it!!.length > 2){
+                    activityEditProfileButtonVerifyNick.visibility = View.VISIBLE
+                }else{
+                    activityEditProfileButtonVerifyNick.visibility = View.GONE
+                }
             }
 
+            //닉네임 중복 체크
+            activityEditProfileButtonVerifyNick.setOnClickListener {
+                nickCheck(activityEditProfileEdittextNick.text.toString())
+            }
+
+
+
         }
+
+        //닉네임 중복 체크 관찰
+        profileViewModel.duplicateCheck.observe(this, Observer {
+
+            println("으아아아아아 $it")
+            if (it) {
+                toast("해당 닉네임이 이미 사용 중 입니다.")
+            }else{
+                var builder = AlertDialog.Builder(binding.root.context)
+                builder.apply {
+                    setMessage("닉네임이 존재하지 않습니다. 해당 닉네임으로 진행하시겠습니까?")
+                    setPositiveButton("예" , DialogInterface.OnClickListener { dialog, which ->
+                        binding.activityEditProfileButtonComplete.apply {
+                            setBackgroundResource(R.drawable.background_round_yellow_24dp)
+                            isEnabled = true
+                        }
+                        binding.activityEditProfileEdittextNick.isEnabled = false
+                    })
+                    setNegativeButton("아니요" , DialogInterface.OnClickListener { dialog, which ->
+
+                    })
+                    setTitle("안내")
+                    show()
+                }
+            }
+        })
 
         //프로필 이미지
         profileViewModel.getProfileImage(auth.currentUser!!.uid)
@@ -94,6 +136,10 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(R.layout.ac
         })
     }
 
+    fun nickCheck(nickName : String){
+        profileViewModel.nickNameDuplicatedCheck(nickName)
+    }
+
     fun openGallery(){
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = MediaStore.Images.Media.CONTENT_TYPE
@@ -101,7 +147,13 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(R.layout.ac
     }
 
     fun updateProfile(){
-        profileViewModel.uploadProfileImage(auth.currentUser!!.uid, Uri.parse(profileViewModel.profileImage.value.toString()) )
+
+        if (profileViewModel.updateProfileImage.value != null)
+        profileViewModel.uploadProfileImage(auth.currentUser!!.uid, Uri.parse(profileViewModel.updateProfileImage.value.toString()) )
+        else{
+            updateNickname()
+        }
+
     }
 
     fun updateNickname(){

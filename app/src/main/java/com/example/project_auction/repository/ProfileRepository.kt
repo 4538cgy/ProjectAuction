@@ -1,7 +1,10 @@
 package com.example.project_auction.repository
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.project_auction.data.NickNameDTO
 import com.example.project_auction.data.UserDTO
@@ -14,6 +17,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.callbackFlow
+import java.util.ArrayList
 
 class ProfileRepository {
 
@@ -115,31 +119,13 @@ class ProfileRepository {
         awaitClose { eventListener }
     }
 
+    
+    //닉네임 업데이트
     @ExperimentalCoroutinesApi
     fun updateNickName(uid : String, nickname : String) = callbackFlow<Boolean> {
         val eventListener = db.collection("User").whereEqualTo("uid",uid).get().addOnSuccessListener {
             it?.let {
-                if (!it.isEmpty){
-                    it.documents.forEach {
-                        if (it["uid"] == uid){
-                            var data = it.toObject(UserDTO::class.java)
 
-                            val transactionRoot = db.collection("User").document(it.id)
-
-                            db.runTransaction {
-                                transaction ->
-
-                                data!!.nickName = nickname
-
-                                transaction.set(transactionRoot,data)
-                                this@callbackFlow.sendBlocking(true)
-                                return@runTransaction
-
-                            }
-                            return@forEach
-                        }
-                    }
-                }
             }?.run {
 
             }
@@ -147,4 +133,24 @@ class ProfileRepository {
 
         awaitClose { eventListener }
     }
+
+    //닉네임 중복 검사
+    @ExperimentalCoroutinesApi
+    fun nickDuplicateCheck(nickName : String) = callbackFlow<Boolean> {
+        val eventListener = db.collection("nickName").document("nickList").get().addOnSuccessListener {
+            if (it != null){
+                if (it.exists()){
+                    var nickList = it.toObject(NickNameDTO::class.java)
+
+                    if (nickList!!.nickNameList.containsKey(nickName)){
+                        this@callbackFlow.sendBlocking(true)
+                    }else{
+                        this@callbackFlow.sendBlocking(false)
+                    }
+                }
+            }
+        }
+        awaitClose { eventListener }
+    }
+
 }

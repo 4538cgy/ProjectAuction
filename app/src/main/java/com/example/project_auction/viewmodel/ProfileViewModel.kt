@@ -13,10 +13,14 @@ class ProfileViewModel : ViewModel() {
     var profileImage = MutableLiveData<Uri?>()
     var nickName = MutableLiveData<String?>()
 
+    var updateProfileImage = MutableLiveData<Uri?>()
+
     var profileUploadCheck = MutableLiveData<Boolean>()
     var userDataSetUploadCheck = MutableLiveData<Boolean>()
 
     var updateUserNicknameCheck = MutableLiveData<Boolean>()
+
+    var duplicateCheck = MutableLiveData<Boolean>()
 
     //유저 닉네임 얻어오기
     fun getUserNickName(uid : String){
@@ -60,6 +64,15 @@ class ProfileViewModel : ViewModel() {
         viewModelScope.launch {
             profileRepository.updateNickName(uid , nickName).collect {
                 updateUserNicknameCheck.postValue(it)
+            }
+        }
+    }
+
+    //닉네임 중복 검사
+    fun nickNameDuplicatedCheck(nickName : String) {
+        viewModelScope.launch {
+            profileRepository.nickDuplicateCheck(nickName).collect {
+                duplicateCheck.postValue(it)
             }
         }
     }
