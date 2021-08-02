@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.activity.profile.EditProfileActivity">
+
+    <data>
+
+        <variable
+            name="activityeditprofile"
+            type="com.example.project_auction.view.activity.profile.EditProfileActivity" />
+        <variable
+            name="profileviewmodel"
+            type="com.example.project_auction.viewmodel.ProfileViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/activity_edit_profile_imagebutton_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_baseline_close_24"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            app:layout_constraintTop_toTopOf="@+id/activity_edit_profile_imagebutton_close"
+            app:layout_constraintBottom_toBottomOf="@+id/activity_edit_profile_imagebutton_close"
+            app:layout_constraintLeft_toRightOf="@+id/activity_edit_profile_imagebutton_close"
+            android:layout_marginLeft="12dp"
+            android:id="@+id/activity_edit_profile_textview_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="프로필 편집"
+            android:textColor="@color/colorBlack"
+            android:textSize="16dp"
+            />
+
+        <ImageView
+            android:id="@+id/activity_edit_profile_imageview_photo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="120dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/background_circle_white_stroke_black"
+            android:src="@drawable/ic_baseline_add_24"
+            />
+
+        <EditText
+            android:id="@+id/activity_edit_profile_edittext_nick"
+            app:layout_constraintTop_toBottomOf="@+id/activity_edit_profile_imageview_photo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="40dp"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textColor="@color/colorBlack"
+            android:text="NickName"
+            android:maxLength="12"
+            android:background="@drawable/background_round_white_stroke_black_2dp"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="8dp"
+            />
+
+        <TextView
+            app:layout_constraintTop_toBottomOf="@+id/activity_edit_profile_edittext_nick"
+            app:layout_constraintRight_toRightOf="@+id/activity_edit_profile_edittext_nick"
+            android:id="@+id/activity_edit_profile_textview_nick_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0/12"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/activity_edit_profile_button_complete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:background="@drawable/background_round_yellow_24dp"
+            android:text="완료"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:layout_margin="12dp"
+            />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

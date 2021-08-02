@@ -1,5 +1,6 @@
 package com.example.project_auction.view.fragment.lobby.account
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +11,7 @@ import com.example.project_auction.base.BaseFragment
 import com.example.project_auction.data.SettingItem
 import com.example.project_auction.data.SettingType
 import com.example.project_auction.databinding.FragmentAccountBinding
+import com.example.project_auction.view.activity.profile.EditProfileActivity
 
 
 class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_account) {
@@ -74,7 +76,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
 
             fragmentAccountConstraintNicknameContainer.setOnClickListener {
                 //프로필 변경 todo
-
+                startActivity(Intent(binding.root.context,EditProfileActivity::class.java))
             }
         }
 
