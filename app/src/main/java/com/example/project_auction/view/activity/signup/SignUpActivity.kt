@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -15,6 +16,7 @@ import com.example.project_auction.base.BaseActivity
 import com.example.project_auction.data.NickNameDTO
 import com.example.project_auction.data.UserDTO
 import com.example.project_auction.databinding.ActivitySignUpBinding
+import com.example.project_auction.extension.toast
 import com.example.project_auction.view.activity.lobby.LobbyActivity
 import com.example.project_auction.view.fragment.signup.SignUpFirstFragment
 import com.example.project_auction.view.fragment.signup.SignUpSecondFragment
@@ -69,12 +71,30 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
 
 
         }
+
+        //유저 데이터셋이 업로도 됬는지 관찰 하고 true면 화면 이동
+        profileViewModel.userDataSetUploadCheck.observe(this, Observer {
+            if (it) {
+                startActivity(Intent(binding.root.context, LobbyActivity::class.java))
+                finish()
+            }else{
+                toast("회원 정보 등록 실패")
+            }
+        })
+        //프로필 이미지 업로드 되는지 관찰 하고 true면 데이터셋 업로드
+        profileViewModel.profileUploadCheck.observe(this, Observer {
+            if (it) userDataSave() else toast("유저 등록에 실패하였습니다.")
+        })
+
+        //프로필 photo Uri 변경 관찰
         viewModel.profilePhotoUri.observe(this, Observer {
             binding.activitySignUpButtonNext.isEnabled = true
             if (it != null) {
                 binding.activitySignUpButtonNext.setBackgroundResource(R.drawable.background_round_yellow_24dp)
             }
         })
+
+        //닉네임 Next button 상태 관찰
         viewModel.nickNameNextButtonState.observe(this, Observer {
             binding.activitySignUpButtonNext.isEnabled = it
             if (it) {
@@ -84,6 +104,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
             }
         })
 
+        //주소 입력했는지 관찰
         viewModel.addressCheck.observe(this, Observer {
             binding.activitySignUpButtonNext.isEnabled = it
             signUpFinishState = it
@@ -121,7 +142,9 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
 
     fun uploadProfileData() {
 
+        profileViewModel.uploadProfileImage(auth.currentUser!!.uid, Uri.parse(viewModel.profilePhotoUri.value.toString()))
 
+        /*
         var storageRef =
             storage.reference.child("UserProfileImages").child(auth.currentUser!!.uid!!)
         storageRef.putFile(Uri.parse(viewModel.profilePhotoUri.value.toString()))
@@ -135,6 +158,8 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
                         userDataSave()
                     }
             }
+
+         */
     }
 
     fun userDataSave() {
@@ -149,6 +174,8 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
         userData.uid = auth.currentUser!!.uid
         userData.joinAuctionCount = 0
 
+        profileViewModel.uploadUserDataSet(auth.currentUser!!.uid,userData)
+        /*
         db.collection("User").document().set(userData)
             .addOnSuccessListener {
                 var dataReference = db.collection("nickName").document("nickList")
@@ -164,6 +191,8 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
                     finish()
                 }
             }
+
+         */
     }
 
 
