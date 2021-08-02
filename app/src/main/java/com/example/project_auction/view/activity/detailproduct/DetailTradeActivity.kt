@@ -153,7 +153,7 @@ class DetailTradeActivity : BaseActivity<ActivityDetailTradeBinding>(R.layout.ac
                     if (!it.isEmpty) {
                         val datas = it.toObjects(UserDTO::class.java)
                         datas.forEach { userData ->
-                            if (userData.uid.equals(auth.currentUser!!.uid)) {
+                            if (userData.uid.equals(uid)) {
                                 binding.activityDetailTradeTextviewNickname.text = userData.nickName.toString()
 
                                 return@addSnapshotListener

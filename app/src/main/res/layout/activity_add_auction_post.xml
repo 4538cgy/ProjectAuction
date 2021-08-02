@@ -10,9 +10,6 @@
             name="activityaddauctionpost"
             type="com.example.project_auction.view.activity.addpost.AddAuctionPostActivity" />
 
-        <variable
-            name="addproductviewmodel"
-            type="com.example.project_auction.viewmodel.AddProductViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

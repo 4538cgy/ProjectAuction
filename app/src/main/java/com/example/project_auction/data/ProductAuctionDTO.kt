@@ -29,6 +29,8 @@ class ProductAuctionDTO (
 ) : Serializable {
     data class ProductResponseDTO(
         @SerializedName("data")
-        var data : ArrayList<ProductAuctionDTO> = arrayListOf()
+        var data : ArrayList<ProductAuctionDTO> = arrayListOf(),
+        @SerializedName("dataId")
+        var dataId : ArrayList<String> = arrayListOf()
     )
 }

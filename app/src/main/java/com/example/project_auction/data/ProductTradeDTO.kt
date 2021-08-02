@@ -28,6 +28,8 @@ data class ProductTradeDTO(
 ) : Serializable {
     data class ProductResponseDTO(
         @SerializedName("data")
-        var data : ArrayList<ProductTradeDTO> = arrayListOf()
+        var data : ArrayList<ProductTradeDTO> = arrayListOf(),
+        @SerializedName("dataId")
+        var dataId : ArrayList<String> = arrayListOf()
     )
 }
