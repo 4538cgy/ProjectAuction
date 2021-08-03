@@ -82,31 +82,15 @@
             />
 
         <Button
-            app:layout_constraintTop_toBottomOf="@+id/activity_edit_profile_textview_nick_count"
-            app:layout_constraintLeft_toLeftOf="@+id/activity_edit_profile_edittext_nick"
-            app:layout_constraintRight_toRightOf="@+id/activity_edit_profile_edittext_nick"
-            android:background="@drawable/background_round_white_24dp"
-            android:id="@+id/activity_edit_profile_button_verify_nick"
-            android:paddingHorizontal="24dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="닉네임 중복 체크"
-            android:elevation="8dp"
-            android:visibility="gone"
-
-            />
-
-        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/activity_edit_profile_button_complete"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:background="@drawable/background_round_gray_24dp"
+            android:background="@drawable/background_round_yellow_24dp"
             android:text="완료"
             android:textSize="18dp"
-            android:enabled="false"
             android:textStyle="bold"
             android:layout_margin="12dp"
             />
