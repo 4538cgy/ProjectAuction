@@ -40,7 +40,7 @@ class AuctionAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return super.getItemViewType(position)
+        return position
     }
 
     override fun onBindViewHolder(holder: AuctionViewHolder, position: Int) {
