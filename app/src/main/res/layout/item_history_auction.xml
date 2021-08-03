@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="itemhistoryauction"
+            type="com.example.project_auction.data.ProductAuctionDTO" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <ImageView
+            android:id="@+id/item_history_auction_imageview_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="24dp"
+            android:background="@drawable/background_round_gray_stroke_black_4dp"
+            />
+
+        <TextView
+            app:layout_constraintTop_toTopOf="@+id/item_history_auction_imageview_image"
+            app:layout_constraintLeft_toRightOf="@+id/item_history_auction_imageview_image"
+            android:layout_marginLeft="24dp"
+            android:text="상품 제목"
+            android:textSize="18dp"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            android:id="@+id/item_history_auction_textview_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/item_history_auction_textview_current_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/item_history_auction_textview_title"
+            app:layout_constraintLeft_toLeftOf="@+id/item_history_auction_textview_title"
+            android:layout_marginTop="8dp"
+            android:text="가격"
+            />
+
+        <TextView
+            android:id="@+id/item_history_auction_textview_timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/item_history_auction_textview_current_cost"
+            app:layout_constraintBottom_toBottomOf="@+id/item_history_auction_textview_current_cost"
+            app:layout_constraintLeft_toRightOf="@+id/item_history_auction_textview_current_cost"
+            android:layout_marginLeft="8dp"
+            android:text="시간"
+            />
+
+        <TextView
+            android:id="@+id/item_history_auction_textview_current_join_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="경매 참여자 5명"
+            android:layout_margin="12dp"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

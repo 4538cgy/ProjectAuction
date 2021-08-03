@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.account.AccountSettingActivity"></activity>
+        <activity android:name=".view.activity.history.HistoryAuctionActivity"></activity>
+        <activity android:name=".view.activity.account.AccountSettingActivity" />
         <activity android:name=".view.activity.profile.EditProfileActivity" />
         <activity android:name=".view.activity.chat.TradeChatActivity" />
         <activity android:name=".view.activity.detailproduct.DetailTradeActivity" />

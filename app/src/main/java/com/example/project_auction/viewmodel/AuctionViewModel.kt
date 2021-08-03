@@ -32,6 +32,8 @@ class AuctionViewModel() : ViewModel() {
     var auctionData = MutableLiveData<ProductAuctionDTO.ProductResponseDTO?>()
     //거래글
     var tradeData = MutableLiveData<ProductTradeDTO.ProductResponseDTO?>()
+    //내 경매글
+    var myAuctionData = MutableLiveData<Map<String,ProductAuctionDTO>?>()
 
     //경매글 가져오기
     fun loadAuctionData(page : Int , orderBy : Int , uid : String , sortKey : String){
@@ -81,5 +83,14 @@ class AuctionViewModel() : ViewModel() {
             }
         }
 
+    }
+
+    //내 경매품 내역 가져오기
+    fun getMyAuctionData(uid : String) {
+        viewModelScope.launch {
+            auctionRepository.getMyAuctionProduct(uid).collect {
+                myAuctionData.postValue(it)
+            }
+        }
     }
 }

@@ -72,6 +72,7 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
 
         binding.apply {
 
+
             activityDetailAuctionConstFrontground.visibility = View.VISIBLE
             //입찰 버튼
             activityDetailAuctionButtonBidding.setOnClickListener {
@@ -221,6 +222,13 @@ class DetailAuctionActivity : BaseActivity<ActivityDetailAuctionBinding>(R.layou
                     }
 
                 }.start()
+
+                if (data!!.uid == auth.currentUser!!.uid){
+                    binding.activityDetailAuctionButtonBidding.isEnabled = false
+                    binding.activityDetailAuctionButtonBidding.text = "참여 불가"
+                    binding.activityDetailAuctionTextviewClosetime.text = "나의 경매품 입니다."
+                    
+                }
             }
         }
 
