@@ -60,9 +60,9 @@ class ProfileViewModel : ViewModel() {
     }
 
     //유저 닉네임 변경
-    fun updateUserNickName(uid : String, nickName : String){
+    fun updateUserNickName(uid : String,oldNickName: String , nickName : String){
         viewModelScope.launch {
-            profileRepository.updateNickName(uid , nickName).collect {
+            profileRepository.updateNickName(uid , oldNickName, nickName).collect {
                 updateUserNicknameCheck.postValue(it)
             }
         }

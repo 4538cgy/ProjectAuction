@@ -122,14 +122,44 @@ class ProfileRepository {
     
     //닉네임 업데이트
     @ExperimentalCoroutinesApi
-    fun updateNickName(uid : String, nickname : String) = callbackFlow<Boolean> {
-        val eventListener = db.collection("User").whereEqualTo("uid",uid).get().addOnSuccessListener {
-            it?.let {
+    fun updateNickName(uid : String, oldNickName : String, nickname : String) = callbackFlow<Boolean> {
+        val tsNickName = db.collection("nickName").document("nickList")
+        val databaseReference = db.collection("User").whereEqualTo("uid",uid)
 
-            }?.run {
+            val eventListener = databaseReference.get().addOnSuccessListener {
+                it?.let {
+                    if (!it.isEmpty)
+                    {
+                        it.documents.forEach {
+                            if (it["uid"] == uid){
+                                var data = it.toObject(UserDTO::class.java)
+                                val tsUserData = db.collection("User").document(it.id)
+                                db.runTransaction {
+                                    transaction ->
+                                    data!!.nickName = nickname
+                                    transaction.set(tsUserData,data)
+                                    this@callbackFlow.sendBlocking(true)
+                                    return@runTransaction
+                                }.addOnFailureListener {
+                                    println("${it.toString()}")
+                                }
 
+                                db.runTransaction { transaction ->
+                                    var nickList = transaction.get(tsNickName).toObject(NickNameDTO::class.java)
+
+                                    nickList!!.nickNameList.remove(oldNickName)
+                                    nickList!!.nickNameList.put(nickname, true)
+                                    transaction.set(tsNickName,nickList)
+                                }.addOnFailureListener {
+                                    println("${it.toString()}")
+                                }
+                            }
+                        }
+                    }
+                }?.run {
+
+                }
             }
-        }
 
         awaitClose { eventListener }
     }

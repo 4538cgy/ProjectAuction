@@ -63,26 +63,11 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(R.layout.ac
             //텍스트 수 체크
             activityEditProfileEdittextNick.addTextChangedListener {
                 activityEditProfileTextviewNickCount.text = it!!.length.toString() + "/12"
-                if (it!!.length > 2){
-                    activityEditProfileButtonVerifyNick.visibility = View.VISIBLE
-                }else{
-                    activityEditProfileButtonVerifyNick.visibility = View.GONE
-                }
             }
-
-            //닉네임 중복 체크
-            activityEditProfileButtonVerifyNick.setOnClickListener {
-                nickCheck(activityEditProfileEdittextNick.text.toString())
-            }
-
-
-
         }
 
         //닉네임 중복 체크 관찰
         profileViewModel.duplicateCheck.observe(this, Observer {
-
-            println("으아아아아아 $it")
             if (it) {
                 toast("해당 닉네임이 이미 사용 중 입니다.")
             }else{
@@ -90,11 +75,7 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(R.layout.ac
                 builder.apply {
                     setMessage("닉네임이 존재하지 않습니다. 해당 닉네임으로 진행하시겠습니까?")
                     setPositiveButton("예" , DialogInterface.OnClickListener { dialog, which ->
-                        binding.activityEditProfileButtonComplete.apply {
-                            setBackgroundResource(R.drawable.background_round_yellow_24dp)
-                            isEnabled = true
-                        }
-                        binding.activityEditProfileEdittextNick.isEnabled = false
+                        updateNickName()
                     })
                     setNegativeButton("아니요" , DialogInterface.OnClickListener { dialog, which ->
 
@@ -104,6 +85,8 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(R.layout.ac
                 }
             }
         })
+
+
 
         //프로필 이미지
         profileViewModel.getProfileImage(auth.currentUser!!.uid)
@@ -123,21 +106,16 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(R.layout.ac
 
         //프로필 이미지 업로드 확인
         profileViewModel.profileUploadCheck.observe(this , Observer {
-            if (it) updateNickname()
+            if (it) updateNicknameCheck()
         })
 
         //닉네임까지 변경됬는지 확인
         profileViewModel.updateUserNicknameCheck.observe(this, Observer {
             if (it) {
-                finish()
                 binding.activityEditProfileContainerLoading.visibility = View.GONE
-                binding.activityEditProfileButtonComplete.visibility = View.VISIBLE
+                finish()
             }
         })
-    }
-
-    fun nickCheck(nickName : String){
-        profileViewModel.nickNameDuplicatedCheck(nickName)
     }
 
     fun openGallery(){
@@ -146,18 +124,32 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(R.layout.ac
         profileCallback.launch(intent)
     }
 
-    fun updateProfile(){
 
+    //프로필 업데이트
+    fun updateProfile(){
+        //새로운 사진이 존재하면 사진 변경
         if (profileViewModel.updateProfileImage.value != null)
         profileViewModel.uploadProfileImage(auth.currentUser!!.uid, Uri.parse(profileViewModel.updateProfileImage.value.toString()) )
+        //새로운 사진이 존재하지 않으면 닉네임만 변경
         else{
-            updateNickname()
+            updateNicknameCheck()
         }
 
     }
 
-    fun updateNickname(){
-        profileViewModel.updateUserNickName(auth.currentUser!!.uid,binding.activityEditProfileEdittextNick.text.toString())
+
+    fun updateNicknameCheck(){
+        //처음 뷰를 열었을 때의 내 닉네임과 지금 바꿀 닉네임이 다르면 닉네임 변경 로직 호출
+        if (profileViewModel.nickName.value.toString() != binding.activityEditProfileEdittextNick.text.toString()) {
+            //닉네임 중복 체크 호출
+            profileViewModel.nickNameDuplicatedCheck(binding.activityEditProfileEdittextNick.text.toString())
+        }else{
+            //닉네임에 변동이 없으면 그냥 종료
+            binding.activityEditProfileContainerLoading.visibility = View.GONE
+            finish()
+        }
     }
+
+    fun updateNickName(){ profileViewModel.updateUserNickName(auth.currentUser!!.uid,profileViewModel.nickName.value.toString(), binding.activityEditProfileEdittextNick.text.toString()) }
 
 }
