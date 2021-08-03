@@ -13,6 +13,7 @@ import com.example.project_auction.data.SettingType
 import com.example.project_auction.databinding.FragmentAccountBinding
 import com.example.project_auction.view.activity.account.AccountSettingActivity
 import com.example.project_auction.view.activity.history.HistoryAuctionActivity
+import com.example.project_auction.view.activity.history.HistoryTradeActivity
 import com.example.project_auction.view.activity.profile.EditProfileActivity
 
 
@@ -54,7 +55,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
 
                     }
                     "판매 내역" ->{
-
+                        startActivity(Intent(binding.root.context,HistoryTradeActivity::class.java))
                     }
                     "이벤트" ->{
 

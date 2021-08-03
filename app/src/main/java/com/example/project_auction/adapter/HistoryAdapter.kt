@@ -57,6 +57,21 @@ class HistoryAdapter(private val items : ArrayList<HistoryItemDTO>) : RecyclerVi
             }
         }else{
             (holder as TradeViewHolder).bind(items[position].trades!!)
+            holder.binding.itemHistoryTradeTextviewTitle.text = items[position].trades!!.title
+            holder.binding.itemHistoryTradeTextviewTimestamp.text = TimeUtil().formatTimeString(items[position].trades!!.timestamp!!)
+            holder.binding.itemHistoryTradeTextviewState.text = when(items[position].trades!!.tradeState){
+                0 ->{ "판매 중" }
+                1 ->{ "예약 중"}
+                2 ->{ "판매 완료"}
+                else -> return
+            }
+            holder.binding.itemHistoryTradeTextviewFavoriteCount.text = items[position].trades!!.favoriteCount.toString()
+
+            Glide.with(holder.binding.root.context)
+                .load(items[position].trades!!.photoList!![0])
+                .centerCrop()
+                .thumbnail(0.1f)
+                .into(holder.binding.itemHistoryTradeImageview)
         }
     }
 

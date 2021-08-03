@@ -137,8 +137,6 @@ class AuctionRepository {
         val eventListener = db.collection("productAuction").whereEqualTo("uid",uid).get().addOnSuccessListener {
             it?.let {
                 if (!it.isEmpty){
-                    val datas = arrayListOf<ProductAuctionDTO>()
-                    val dataId = arrayListOf<String>()
 
                     var map : MutableMap<String,ProductAuctionDTO> = hashMapOf()
                     it.forEach {
@@ -155,6 +153,30 @@ class AuctionRepository {
 
             }
         }
+        awaitClose { eventListener }
+    }
+
+    //내 판매글 가져오기
+    @ExperimentalCoroutinesApi
+    fun getMyTradeProduct(uid : String) = callbackFlow<Map<String,ProductTradeDTO>?> {
+        val eventListener = db.collection("ProductTrade").whereEqualTo("uid",uid).get().addOnSuccessListener {
+            it?.let {
+                if (!it.isEmpty){
+                    var map : MutableMap<String,ProductTradeDTO> = hashMapOf()
+                    it.forEach {
+                        map.put(it.id,it.toObject(ProductTradeDTO::class.java))
+                    }
+
+                    this@callbackFlow.sendBlocking(map)
+                }else{
+                    this@callbackFlow.sendBlocking(null)
+                }
+
+            }?.run {
+
+            }
+        }
+
         awaitClose { eventListener }
     }
 
