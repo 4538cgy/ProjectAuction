@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.activity.history.HistoryTradeActivity">
+
+    <data>
+        <variable
+            name="activityhistorytrade"
+            type="com.example.project_auction.view.activity.history.HistoryTradeActivity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <ImageButton
+            android:id="@+id/activity_history_trade_imagebutton_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_close_24"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@android:color/transparent"
+            android:layout_margin="24dp"
+            />
+
+        <TextView
+            app:layout_constraintTop_toTopOf="@+id/activity_history_trade_imagebutton_close"
+            app:layout_constraintBottom_toBottomOf="@+id/activity_history_trade_imagebutton_close"
+            app:layout_constraintLeft_toRightOf="@+id/activity_history_trade_imagebutton_close"
+            android:layout_marginLeft="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="내 판매 목록"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
+            android:textSize="18dp"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activity_history_trade_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_history_trade_imagebutton_close"
+            android:layout_marginTop="12dp"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

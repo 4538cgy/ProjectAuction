@@ -33,7 +33,7 @@ class SignOut(private val context: Context, private val activity: Activity) : Ac
         gac?.registerConnectionCallbacks(object : GoogleApiClient.ConnectionCallbacks {
             override fun onConnected(bundle: Bundle?) {
                 FirebaseAuth.getInstance().signOut()
-                if (gac!!.isConnected()) {
+                if (gac!!.isConnected) {
                     Auth.GoogleSignInApi.signOut(gac).setResultCallback { status ->
                         if (status.isSuccess) {
                             Log.v("알림", "로그아웃 성공")

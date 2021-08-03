@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.activity.account.AccountSettingActivity">
+
+    <data>
+
+        <variable
+            name="activityaccountsetting"
+            type="com.example.project_auction.view.activity.account.AccountSettingActivity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/activity_account_setting_imagebutton_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_baseline_close_24"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/activity_account_setting_textview_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:text="계정 설정"
+            android:textColor="@color/colorBlack"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="@+id/activity_account_setting_imagebutton_close"
+            app:layout_constraintLeft_toRightOf="@+id/activity_account_setting_imagebutton_close"
+            app:layout_constraintTop_toTopOf="@+id/activity_account_setting_imagebutton_close" />
+
+
+        <TextView
+            android:id="@+id/activity_account_setting_textview_account_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:text="계정 정보"
+            android:textColor="@color/colorBlack"
+            android:textSize="18dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_account_setting_imagebutton_close" />
+
+        <TextView
+            android:id="@+id/activity_account_setting_textview_address_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="12dp"
+            android:text="주소"
+            android:textColor="@color/colorBlack"
+            android:textSize="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_account_setting_textview_account_info" />
+
+        <TextView
+            android:id="@+id/activity_account_setting_textview_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="대구 달성군 옥포읍 송촌길 201 1"
+            app:layout_constraintLeft_toLeftOf="@+id/activity_account_setting_textview_address_title"
+            app:layout_constraintTop_toBottomOf="@+id/activity_account_setting_textview_address_title" />
+
+        <TextView
+            android:id="@+id/activity_account_setting_textview_nickname_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="12dp"
+            android:text="닉네임"
+            android:textColor="@color/colorBlack"
+            android:textSize="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_account_setting_textview_address" />
+
+        <TextView
+            android:id="@+id/activity_account_setting_textview_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="NickName"
+            app:layout_constraintLeft_toLeftOf="@+id/activity_account_setting_textview_nickname_title"
+            app:layout_constraintTop_toBottomOf="@+id/activity_account_setting_textview_nickname_title" />
+
+        <View
+            android:id="@+id/activity_account_setting_view_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/colorLightGray"
+            app:layout_constraintTop_toBottomOf="@+id/activity_account_setting_textview_nickname" />
+
+
+        <TextView
+            android:id="@+id/activity_account_setting_textview_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:text="로그아웃"
+            android:textColor="@color/colorBlack"
+            android:textSize="18dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_account_setting_view_line" />
+
+        <TextView
+            android:id="@+id/activity_account_setting_textview_delete_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:text="회원 탈퇴"
+            android:textColor="@color/colorBlack"
+            android:textSize="18dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_account_setting_textview_logout" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

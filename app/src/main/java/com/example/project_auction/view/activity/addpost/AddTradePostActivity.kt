@@ -235,6 +235,7 @@ class AddTradePostActivity :
         productTradeData.tradeMethod = meetState
         productTradeData.productState = newState
         productTradeData.exchangeState = transCheck
+        productTradeData.tradeState = 0
         
         db.collection("ProductTrade").document().set(productTradeData).addOnCompleteListener { 
             println("성공")

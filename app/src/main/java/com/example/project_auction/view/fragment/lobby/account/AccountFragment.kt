@@ -11,6 +11,9 @@ import com.example.project_auction.base.BaseFragment
 import com.example.project_auction.data.SettingItem
 import com.example.project_auction.data.SettingType
 import com.example.project_auction.databinding.FragmentAccountBinding
+import com.example.project_auction.view.activity.account.AccountSettingActivity
+import com.example.project_auction.view.activity.history.HistoryAuctionActivity
+import com.example.project_auction.view.activity.history.HistoryTradeActivity
 import com.example.project_auction.view.activity.profile.EditProfileActivity
 
 
@@ -26,11 +29,11 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
             fragmentAccountRecyclerSetting.adapter = SettingAdapter(
                 arrayListOf(
                     SettingItem(SettingType.TITLE, R.drawable.ic_baseline_add_24, "경매", true),
-                    SettingItem(SettingType.BUY_LIST, R.drawable.ic_baseline_add_24, "경매 낙찰 내역"),
-                    SettingItem(SettingType.BUY_LIST, R.drawable.ic_baseline_add_24, "내 경매품 내역"),
+                    SettingItem(SettingType.BUY_LIST, R.drawable.ic_baseline_subject_24, "경매 참여 내역"),
+                    SettingItem(SettingType.BUY_LIST, R.drawable.ic_baseline_subject_24, "내 경매품 내역"),
                     SettingItem(SettingType.TITLE, R.drawable.ic_baseline_add_24, "거래", true),
-                    SettingItem(SettingType.BUY_LIST, R.drawable.ic_baseline_add_24, "구매 내역"),
-                    SettingItem(SettingType.BUY_LIST, R.drawable.ic_baseline_add_24, "판매 내역"),
+                    SettingItem(SettingType.BUY_LIST, R.drawable.ic_baseline_subject_24, "구매 내역"),
+                    SettingItem(SettingType.BUY_LIST, R.drawable.ic_baseline_subject_24, "판매 내역"),
                     SettingItem(SettingType.TITLE, R.drawable.ic_baseline_add_24, "혜택", true),
                     SettingItem(SettingType.BUY_LIST, R.drawable.ic_baseline_add_24, "이벤트"),
                     SettingItem(SettingType.TITLE, R.drawable.ic_baseline_add_24, "더보기", true),
@@ -42,17 +45,17 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
                     )
             ).setOnSettingItemClickListener {
                 when(this.title){
-                    "경매 낙찰 내역" ->{
+                    "경매 참여 내역" ->{
 
                     }
                     "내 경매품 내역" ->{
-
+                        startActivity(Intent(binding.root.context,HistoryAuctionActivity::class.java))
                     }
                     "구매 내역" ->{
 
                     }
                     "판매 내역" ->{
-
+                        startActivity(Intent(binding.root.context,HistoryTradeActivity::class.java))
                     }
                     "이벤트" ->{
 
@@ -61,7 +64,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
 
                     }
                     "계정 설정"->{
-
+                        startActivity(Intent(binding.root.context,AccountSettingActivity::class.java))
                     }
                     "공지사항" ->{
 

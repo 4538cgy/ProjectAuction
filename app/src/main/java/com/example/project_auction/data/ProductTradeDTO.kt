@@ -23,7 +23,9 @@ data class ProductTradeDTO(
     //신상품 여부 [ 신상품 / 중고상품 ]
     var productState : String ? = null,
     //교환 여부
-    var exchangeState : String ? = null
+    var exchangeState : String ? = null,
+    // 0 = 기본상태 1 = 예약중 2 = 거래완료
+    var tradeState : Int  = 0
 
 ) : Serializable {
     data class ProductResponseDTO(
