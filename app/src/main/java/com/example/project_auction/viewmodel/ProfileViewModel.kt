@@ -22,6 +22,8 @@ class ProfileViewModel : ViewModel() {
 
     var duplicateCheck = MutableLiveData<Boolean>()
 
+    var userTotalAddress = MutableLiveData<String>()
+
     //유저 닉네임 얻어오기
     fun getUserNickName(uid : String){
         viewModelScope.launch {
@@ -73,6 +75,15 @@ class ProfileViewModel : ViewModel() {
         viewModelScope.launch {
             profileRepository.nickDuplicateCheck(nickName).collect {
                 duplicateCheck.postValue(it)
+            }
+        }
+    }
+
+    //주소 정보 가져오기
+    fun getUserAddress(uid : String ){
+        viewModelScope.launch {
+            profileRepository.getUserAddress(uid).collect {
+                userTotalAddress.postValue(it)
             }
         }
     }

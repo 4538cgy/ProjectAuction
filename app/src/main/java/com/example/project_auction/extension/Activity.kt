@@ -1,6 +1,7 @@
 package com.example.project_auction.extension
 
 import android.app.Activity
+import android.content.Context
 import android.widget.Toast
 
 // toast extension 추가

@@ -11,6 +11,7 @@ import com.example.project_auction.base.BaseFragment
 import com.example.project_auction.data.SettingItem
 import com.example.project_auction.data.SettingType
 import com.example.project_auction.databinding.FragmentAccountBinding
+import com.example.project_auction.view.activity.account.AccountSettingActivity
 import com.example.project_auction.view.activity.profile.EditProfileActivity
 
 
@@ -61,7 +62,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
 
                     }
                     "계정 설정"->{
-
+                        startActivity(Intent(binding.root.context,AccountSettingActivity::class.java))
                     }
                     "공지사항" ->{
 

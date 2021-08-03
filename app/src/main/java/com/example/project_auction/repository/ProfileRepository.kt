@@ -183,4 +183,30 @@ class ProfileRepository {
         awaitClose { eventListener }
     }
 
+    //주소 정보 가져오기
+    @ExperimentalCoroutinesApi
+    fun getUserAddress(uid : String) = callbackFlow<String> {
+
+        val eventListener = db.collection("User").whereEqualTo("uid",uid).get().addOnSuccessListener {
+            it?.let {
+                if (!it.isEmpty){
+                    var data = it.toObjects(UserDTO::class.java)
+                    data.forEach {
+                        userDTO ->
+                        if (userDTO.uid == uid){
+
+                            this@callbackFlow.sendBlocking(userDTO.zipAddress + " " + userDTO.detailAddress)
+                            return@forEach
+                        }
+                    }
+                }
+            }?.run {
+
+            }
+        }
+
+        awaitClose { eventListener }
+
+    }
+
 }
