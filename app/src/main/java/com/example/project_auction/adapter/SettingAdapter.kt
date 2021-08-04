@@ -22,6 +22,8 @@ class SettingAdapter(private val items : ArrayList<SettingItem>) : RecyclerView.
         fun onItemClick(item: SettingItem)
     }
 
+
+
     fun setOnSettingItemClickListener(action: SettingItem.() -> Unit): SettingAdapter {
         listener = object : OnSettingItemClickListener {
             override fun onItemClick(item: SettingItem) {

@@ -88,7 +88,6 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (!binding.fragmentAuctionRecyclerview.canScrollVertically(1)) {
-                    println("끝에 도달")
 
                     binding.fragmentAuctionButtonLoadMore.visibility = View.VISIBLE
 
@@ -205,14 +204,12 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
 
             //옥션 버튼
             fragmentAuctionButtonAuction.setOnClickListener {
-                println("옥션으로 변경")
                 viewState = "Auction"
                 initRecyclerData()
             }
 
             //거래 버튼
             fragmentAuctionButtonTrade.setOnClickListener {
-                println("거래로 변경")
                 viewState = "Trade"
                 initRecyclerData()
             }

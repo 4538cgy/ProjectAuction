@@ -41,6 +41,9 @@ class BottomSheetCategory : BottomSheetDialogFragment() {
         binding.bottomSheetDialogCategoryRecycler.layoutManager =
             LinearLayoutManager(binding.root.context, LinearLayoutManager.VERTICAL, false)
 
+        binding.bottomSheetDialogCategoryImagebuttonClose.setOnClickListener {
+            dismiss()
+        }
         return binding.root
     }
 
@@ -50,53 +53,13 @@ class BottomSheetCategory : BottomSheetDialogFragment() {
     }
 
     fun initRecyclerData() {
-        println("리사이클러뷰 부착")
-
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.close_btn_img, "관상어"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수초"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "관상새우"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_search_24, "수조용품"))
-
-
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_fish, "희귀 관상어"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_shrimp, "희귀 관상 새우"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_malware, "희귀 곤충"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_diamond, "희귀 보석"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_antique, "골동품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_canvas, "예술품"))
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_more_three_dots_button, "기타"))
     }
 
     interface BottomSheetButtonClickListener {
