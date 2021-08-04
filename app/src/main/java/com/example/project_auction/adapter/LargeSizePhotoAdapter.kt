@@ -22,6 +22,10 @@ class LargeSizePhotoAdapter (val context : Context, val photoList : ArrayList<St
 
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         var viewHolder = (holder as CustomViewHolder).itemView
 

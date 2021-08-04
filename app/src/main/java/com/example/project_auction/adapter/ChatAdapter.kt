@@ -37,6 +37,10 @@ class ChatAdapter(private val context : Context,private val chatList : ArrayList
         return MessageViewHolder(binding)
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         holder.onBind(chatList[position])
 

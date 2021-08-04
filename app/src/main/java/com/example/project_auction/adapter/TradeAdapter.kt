@@ -39,6 +39,10 @@ val dataIdList: ArrayList<String>
         return TradeViewHolder(binding)
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
     override fun onBindViewHolder(holder: TradeViewHolder, position: Int) {
         holder.onBind(dataList[position])
 
