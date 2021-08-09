@@ -38,18 +38,18 @@ class AuctionViewModel() : ViewModel() {
     var myTradeData = MutableLiveData<Map<String,ProductTradeDTO>?>()
 
     //경매글 가져오기
-    fun loadAuctionData(page : Int , orderBy : Int , uid : String , sortKey : String){
+    fun loadAuctionData(page : Int , orderBy : Int , uid : String , sortKey : String,category : String){
         viewModelScope.launch {
-            auctionRepository.loadAuctionData(page,orderBy,uid,sortKey).collect {
+            auctionRepository.loadAuctionData(page,orderBy,uid,sortKey,category).collect {
                 auctionData.postValue(it)
             }
         }
     }
 
     //거래글 가져오기
-    fun loadTradeData(page : Int , orderBy: Int , uid : String, sortKey: String , endFlag : Boolean){
+    fun loadTradeData(page : Int , orderBy: Int , uid : String, sortKey: String , endFlag : Boolean,category : String){
         viewModelScope.launch {
-            auctionRepository.loadTradeData(page , orderBy , uid , sortKey , endFlag).collect {
+            auctionRepository.loadTradeData(page , orderBy , uid , sortKey , endFlag,category).collect {
                 tradeData.postValue(it)
             }
         }

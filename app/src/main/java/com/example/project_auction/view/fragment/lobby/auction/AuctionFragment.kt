@@ -46,14 +46,17 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
     private var pageAuction = 1
     private var pageTrade = 1
 
-    fun initRecyclerData(){
+    //옵션에서 선택한 카테고리
+    private var boardCategory : String ? = null
+
+    fun initRecyclerData(category : String){
         if(viewState == "Auction") {
             binding.fragmentAuctionRecyclerview.adapter = AuctionAdapter(binding.root.context, auctionData, auctionDataId)
             binding.fragmentAuctionRecyclerview.layoutManager = LinearLayoutManager(binding.root.context, LinearLayoutManager.VERTICAL, false)
             (binding.fragmentAuctionRecyclerview.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
             binding.fragmentAuctionButtonTrade.setBackgroundResource(R.drawable.background_round_gray_24dp)
             binding.fragmentAuctionButtonAuction.setBackgroundResource(R.drawable.background_round_yellow_24dp)
-            auctionViewModel.loadAuctionData(1,-1,auth.currentUser!!.uid,"timestamp")
+            auctionViewModel.loadAuctionData(1,-1,auth.currentUser!!.uid,"timestamp",category)
             pageAuction = 1
         }else if (viewState == "Trade"){
             binding.fragmentAuctionRecyclerview.adapter = TradeAdapter(binding.root.context,tradeData,tradeDataId)
@@ -69,7 +72,7 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
             (binding.fragmentAuctionRecyclerview.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
             binding.fragmentAuctionButtonTrade.setBackgroundResource(R.drawable.background_round_yellow_24dp)
             binding.fragmentAuctionButtonAuction.setBackgroundResource(R.drawable.background_round_gray_24dp)
-            auctionViewModel.loadTradeData(pageTrade, 1, auth.currentUser!!.uid,"timestamp",false)
+            auctionViewModel.loadTradeData(pageTrade, 1, auth.currentUser!!.uid,"timestamp",false,category)
             pageTrade = 1
         }
     }
@@ -82,7 +85,7 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
         auctionData.clear()
         auctionDataId.clear()
 
-        initRecyclerData()
+        initRecyclerData("전체")
 
         binding.fragmentAuctionRecyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -179,9 +182,9 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
             //게시글 더 가져오기 버튼
             fragmentAuctionButtonLoadMore.setOnClickListener {
                 if (viewState == "Auction") {
-                    auctionViewModel.loadAuctionData(pageAuction, -1, auth.currentUser!!.uid, "timestamp")
+                    auctionViewModel.loadAuctionData(pageAuction, -1, auth.currentUser!!.uid, "timestamp","관상어")
                 }else if(viewState == "Trade"){
-                    auctionViewModel.loadTradeData(pageTrade, -1, auth.currentUser!!.uid,"timestamp",false)
+                    auctionViewModel.loadTradeData(pageTrade, -1, auth.currentUser!!.uid,"timestamp",false,"관상어")
                 }
             }
 
@@ -205,13 +208,13 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
             //옥션 버튼
             fragmentAuctionButtonAuction.setOnClickListener {
                 viewState = "Auction"
-                initRecyclerData()
+                initRecyclerData("전체")
             }
 
             //거래 버튼
             fragmentAuctionButtonTrade.setOnClickListener {
                 viewState = "Trade"
-                initRecyclerData()
+                initRecyclerData("전체")
             }
             
             //더보기 버튼
@@ -221,7 +224,7 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
             }
 
             fragmentAuctionSwipeRefreshLayout.setOnRefreshListener {
-                initRecyclerData()
+                if (boardCategory != null) { initRecyclerData(boardCategory!!) } else { initRecyclerData("전체") }
                 fragmentAuctionSwipeRefreshLayout.isRefreshing = false
             }
         }
@@ -233,7 +236,8 @@ class AuctionFragment : BaseFragment<FragmentAuctionBinding>(R.layout.fragment_a
 
 
     fun updateRecyclerDataByCategory(category : String){
-        println(category)
+        boardCategory = category
+        initRecyclerData(category)
     }
 
     fun clickFab() {

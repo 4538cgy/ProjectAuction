@@ -25,8 +25,8 @@ class AuctionRepository {
 
     //경매글 가져오기 map(document key,document value)
     @ExperimentalCoroutinesApi
-    fun loadAuctionData(page : Int, orderBy : Int, uid : String , sortKey : String ) = callbackFlow<ProductAuctionDTO.ProductResponseDTO?> {
-        val eventListener = HttpApi().getAuctionProduct(page,orderBy,uid,sortKey).enqueue(object : Callback<ProductAuctionDTO.ProductResponseDTO>{
+    fun loadAuctionData(page : Int, orderBy : Int, uid : String , sortKey : String , category : String) = callbackFlow<ProductAuctionDTO.ProductResponseDTO?> {
+        val eventListener = HttpApi().getAuctionProduct(page,orderBy,uid,sortKey,category).enqueue(object : Callback<ProductAuctionDTO.ProductResponseDTO>{
             override fun onResponse(
                 call: Call<ProductAuctionDTO.ProductResponseDTO>,
                 response: Response<ProductAuctionDTO.ProductResponseDTO>
@@ -50,9 +50,9 @@ class AuctionRepository {
 
     //거래글 가져오기 map(document key, document value
     @ExperimentalCoroutinesApi
-    fun loadTradeData(page: Int , orderBy: Int , uid: String , sortKey: String , endFlag : Boolean) = callbackFlow<ProductTradeDTO.ProductResponseDTO?>{
+    fun loadTradeData(page: Int , orderBy: Int , uid: String , sortKey: String , endFlag : Boolean, category : String) = callbackFlow<ProductTradeDTO.ProductResponseDTO?>{
 
-        val eventListener = HttpApi().getTradeProduct(page , orderBy , uid , sortKey, endFlag).enqueue(object : Callback<ProductTradeDTO.ProductResponseDTO>{
+        val eventListener = HttpApi().getTradeProduct(page , orderBy , uid , sortKey, endFlag, category).enqueue(object : Callback<ProductTradeDTO.ProductResponseDTO>{
             override fun onResponse(
                 call: Call<ProductTradeDTO.ProductResponseDTO>,
                 response: Response<ProductTradeDTO.ProductResponseDTO>

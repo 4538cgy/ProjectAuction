@@ -19,11 +19,11 @@ interface LoginToken {
 
     @Headers("Accept: application/json")
     @GET("/acutionRead")
-    fun getAuctionProduct(@Query("page") page : Int , @Query("orderBy") orderBy : Int , @Query("uid") uid : String , @Query("sortKey") sortkey : String) : Call<ProductAuctionDTO.ProductResponseDTO>
+    fun getAuctionProduct(@Query("page") page : Int , @Query("orderBy") orderBy : Int , @Query("uid") uid : String , @Query("sortKey") sortkey : String, @Query("category") category : String) : Call<ProductAuctionDTO.ProductResponseDTO>
 
     @Headers("Accept: application/json")
     @GET("/tradeRead")
-    fun getTradeProduct(@Query("page") page : Int , @Query("orderBy") orderBy: Int, @Query("uid") uid : String , @Query("sortKey") sortkey: String , @Query("endFlag") endFlag : Boolean) : Call<ProductTradeDTO.ProductResponseDTO>
+    fun getTradeProduct(@Query("page") page : Int , @Query("orderBy") orderBy: Int, @Query("uid") uid : String , @Query("sortKey") sortkey: String , @Query("endFlag") endFlag : Boolean, @Query("category") category : String) : Call<ProductTradeDTO.ProductResponseDTO>
 
     @Headers("Accept: application/json")
     @GET("/acutionRead2")

@@ -34,14 +34,14 @@ class HttpApi {
         return loginTokenInterface.test3(testDTO)
     }
 
-    fun getAuctionProduct(page : Int , orderBy : Int , uid : String , sortKey : String) : Call<ProductAuctionDTO.ProductResponseDTO>
+    fun getAuctionProduct(page : Int , orderBy : Int , uid : String , sortKey : String,category : String) : Call<ProductAuctionDTO.ProductResponseDTO>
     {
-        return loginTokenInterface.getAuctionProduct(page,orderBy,uid,sortKey)
+        return loginTokenInterface.getAuctionProduct(page,orderBy,uid,sortKey,category)
     }
 
-    fun getTradeProduct(page : Int , orderBy: Int , uid : String, sortKey: String , endFlag : Boolean) : Call<ProductTradeDTO.ProductResponseDTO>
+    fun getTradeProduct(page : Int , orderBy: Int , uid : String, sortKey: String , endFlag : Boolean,category : String) : Call<ProductTradeDTO.ProductResponseDTO>
     {
-        return loginTokenInterface.getTradeProduct(page,orderBy,uid,sortKey,endFlag)
+        return loginTokenInterface.getTradeProduct(page,orderBy,uid,sortKey,endFlag,category)
     }
 
     fun getAuctionProduct2(page : Int , orderBy : Int , uid : String , sortKey : String) : Call<ProductAuctionDTO.ProductResponseDTO>
