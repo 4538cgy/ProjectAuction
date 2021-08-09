@@ -316,8 +316,7 @@ class AddAuctionPostActivity :
 
         mainScope.launch {
             getTimestamp(
-                binding.activityAddAuctionPostTextviewCloseTime.text.toString()
-                    .replace(("[^0-9]").toRegex(), "").toInt()
+                binding.activityAddAuctionPostTextviewCloseTime.text.toString().replace(("[^0-9]").toRegex(), "").toInt()
             ).collect {
                 product.timestamp = it.data!!.nowTime
                 product.closeTimestamp = it.data!!.afterTime

@@ -5,7 +5,7 @@ import com.example.project_auction.data.ProductTradeDTO
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.channels.sendBlocking
+import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.callbackFlow
 
 class ProductCollectionRepository {
@@ -30,18 +30,18 @@ class ProductCollectionRepository {
                 snapshot.viewCount += 1
                 snapshot.viewers.put(uid,true)
                 transaction.set(transactionReference,snapshot)
-                this@callbackFlow.sendBlocking(true)
+                this@callbackFlow.trySendBlocking(true)
                 return@runTransaction
             }else{
                 //뷰어 삭제 + 카운트 1차감
                 snapshot.viewCount -= 1
                 snapshot.viewers.remove(uid)
                 transaction.set(transactionReference,snapshot)
-                this@callbackFlow.sendBlocking(true)
+                this@callbackFlow.trySendBlocking(true)
                 return@runTransaction
             }
         }.addOnFailureListener {
-            this@callbackFlow.sendBlocking(false)
+            this@callbackFlow.trySendBlocking(false)
         }
         awaitClose { evenetListener }
     }
@@ -56,10 +56,10 @@ class ProductCollectionRepository {
                     val data = it.toObject(ProductAuctionDTO::class.java)
                     if (data!!.viewers.containsKey(uid)){
                         //이미 좋아요 누름
-                        this@callbackFlow.sendBlocking(true)
+                        this@callbackFlow.trySendBlocking(true)
                     }else{
                         //좋아요 누르지 않음
-                        this@callbackFlow.sendBlocking(false)
+                        this@callbackFlow.trySendBlocking(false)
                     }
                 }
             }?.run {
@@ -82,18 +82,18 @@ class ProductCollectionRepository {
                 snapshot.viewCount += 1
                 snapshot.viewers.put(uid,true)
                 transaction.set(transactionReference,snapshot)
-                this@callbackFlow.sendBlocking(true)
+                this@callbackFlow.trySendBlocking(true)
                 return@runTransaction
             }else{
                 //뷰어 삭제 + 카운트 1차감
                 snapshot.viewCount -= 1
                 snapshot.viewers.remove(uid)
                 transaction.set(transactionReference,snapshot)
-                this@callbackFlow.sendBlocking(true)
+                this@callbackFlow.trySendBlocking(true)
                 return@runTransaction
             }
         }.addOnFailureListener {
-            this@callbackFlow.sendBlocking(false)
+            this@callbackFlow.trySendBlocking(false)
         }
 
         awaitClose { evenetListener }
@@ -110,10 +110,10 @@ class ProductCollectionRepository {
 
                     if (data!!.viewers.containsKey(uid)){
                         //이미 좋아요 누름
-                        this@callbackFlow.sendBlocking(true)
+                        this@callbackFlow.trySendBlocking(true)
                     }else{
                         //좋아요 누르지 않음
-                        this@callbackFlow.sendBlocking(false)
+                        this@callbackFlow.trySendBlocking(false)
                     }
                 }
             }?.run {
@@ -136,18 +136,18 @@ class ProductCollectionRepository {
                 snapshot.viewCount += 1
                 snapshot.viewers.put(uid,true)
                 transaction.set(transactionReference,snapshot)
-                this@callbackFlow.sendBlocking(true)
+                this@callbackFlow.trySendBlocking(true)
                 return@runTransaction
             }else{
                 //뷰어 삭제 + 카운트 1차감
                 snapshot.viewCount -= 1
                 snapshot.viewers.remove(uid)
                 transaction.set(transactionReference,snapshot)
-                this@callbackFlow.sendBlocking(true)
+                this@callbackFlow.trySendBlocking(true)
                 return@runTransaction
             }
         }.addOnFailureListener {
-            this@callbackFlow.sendBlocking(false)
+            this@callbackFlow.trySendBlocking(false)
         }
 
         awaitClose { evenetListener }
@@ -164,10 +164,10 @@ class ProductCollectionRepository {
 
                     if (data!!.viewers.containsKey(uid)){
                         //이미 좋아요 누름
-                        this@callbackFlow.sendBlocking(true)
+                        this@callbackFlow.trySendBlocking(true)
                     }else{
                         //좋아요 누르지 않음
-                        this@callbackFlow.sendBlocking(false)
+                        this@callbackFlow.trySendBlocking(false)
                     }
                 }
             }?.run {

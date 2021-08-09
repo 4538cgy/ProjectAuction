@@ -56,7 +56,7 @@ class BottomSheetAuctionMenu: BottomSheetDialogFragment() {
     }
 
     fun initRecyclerData() {
-
+        categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_baseline_format_align_left_24,"전체"))
         categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_fish, "희귀 관상어"))
         categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_shrimp, "희귀 관상 새우"))
         categoryList.add(BottomSheetRecyclerDTO(R.drawable.ic_malware, "희귀 곤충"))

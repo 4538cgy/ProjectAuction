@@ -15,7 +15,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.channels.sendBlocking
+import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.callbackFlow
 import java.util.ArrayList
 
@@ -39,7 +39,7 @@ class ProfileRepository {
                     if (it.isSuccessful) {
 
                         val url = it.result!!["image"].toString()
-                        this@callbackFlow.sendBlocking(url)
+                        this@callbackFlow.trySendBlocking(url)
 
                     }
                 }?.run {
@@ -61,7 +61,7 @@ class ProfileRepository {
                         val data = it.result.toObjects(UserDTO::class.java)
                         data.forEach {  userDTO ->
                             if (userDTO.uid == uid){
-                                this@callbackFlow.sendBlocking(userDTO.nickName!!)
+                                this@callbackFlow.trySendBlocking(userDTO.nickName!!)
                                 return@forEach
                             }
 
@@ -87,9 +87,9 @@ class ProfileRepository {
                 map["image"] = uri.toString()
                 db.collection("UserProfileImages").document(uid).set(map)
                     .addOnSuccessListener {
-                        this@callbackFlow.sendBlocking(true)
+                        this@callbackFlow.trySendBlocking(true)
                     }.addOnFailureListener {
-                        this@callbackFlow.sendBlocking(false)
+                        this@callbackFlow.trySendBlocking(false)
                     }
             }
 
@@ -110,9 +110,9 @@ class ProfileRepository {
                     it.set(dataReference, dataList)
                     return@runTransaction
                 }.addOnSuccessListener {
-                   this@callbackFlow.sendBlocking(true)
+                   this@callbackFlow.trySendBlocking(true)
                 }.addOnFailureListener {
-                    this@callbackFlow.sendBlocking(false)
+                    this@callbackFlow.trySendBlocking(false)
                 }
             }
 
@@ -138,7 +138,7 @@ class ProfileRepository {
                                     transaction ->
                                     data!!.nickName = nickname
                                     transaction.set(tsUserData,data)
-                                    this@callbackFlow.sendBlocking(true)
+                                    this@callbackFlow.trySendBlocking(true)
                                     return@runTransaction
                                 }.addOnFailureListener {
                                     println("${it.toString()}")
@@ -173,9 +173,9 @@ class ProfileRepository {
                     var nickList = it.toObject(NickNameDTO::class.java)
 
                     if (nickList!!.nickNameList.containsKey(nickName)){
-                        this@callbackFlow.sendBlocking(true)
+                        this@callbackFlow.trySendBlocking(true)
                     }else{
-                        this@callbackFlow.sendBlocking(false)
+                        this@callbackFlow.trySendBlocking(false)
                     }
                 }
             }
@@ -195,7 +195,7 @@ class ProfileRepository {
                         userDTO ->
                         if (userDTO.uid == uid){
 
-                            this@callbackFlow.sendBlocking(userDTO.zipAddress + " " + userDTO.detailAddress)
+                            this@callbackFlow.trySendBlocking(userDTO.zipAddress + " " + userDTO.detailAddress)
                             return@forEach
                         }
                     }
