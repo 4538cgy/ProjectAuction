@@ -5,7 +5,7 @@ import com.example.project_auction.data.FcmPushDTO
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.channels.sendBlocking
+import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.callbackFlow
 
 class AlarmRepository {
@@ -26,7 +26,7 @@ class AlarmRepository {
                     it.result.toObjects(AlarmDTO::class.java).forEach {
                         datas.add(it)
                     }
-                    this@callbackFlow.sendBlocking(datas)
+                    this@callbackFlow.trySendBlocking(datas)
                 }
             }?.run {
 
@@ -42,9 +42,9 @@ class AlarmRepository {
     @ExperimentalCoroutinesApi
     fun setAlarm(alarmDTO: AlarmDTO) = callbackFlow<Boolean>{
         val eventListener = db.collection("Alarm").document().set(alarmDTO).addOnCompleteListener {
-            this@callbackFlow.sendBlocking(true)
+            this@callbackFlow.trySendBlocking(true)
         }.addOnFailureListener {
-            this@callbackFlow.sendBlocking(false)
+            this@callbackFlow.trySendBlocking(false)
         }
         awaitClose { eventListener }
     }

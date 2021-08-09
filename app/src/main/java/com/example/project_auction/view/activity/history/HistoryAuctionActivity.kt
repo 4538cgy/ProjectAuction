@@ -26,11 +26,21 @@ class HistoryAuctionActivity : BaseActivity<ActivityHistoryAuctionBinding>(R.lay
             }
         }
 
+        //데이터 가져오기
+        getData(intent.getStringExtra("HistoryType").toString())
+
         //리사이클러뷰 부착
         initRecyclerAdapter()
 
-        //내 경매물품 데이터 요청
-        auctionViewModel.getMyAuctionData(auth.currentUser!!.uid)
+        //내가 참여한 경매물품 데이터 관찰
+        auctionViewModel.myBiddedAUctionData.observe(this, Observer {
+            it!!.forEach {
+                list.add(HistoryItemDTO(HistoryType.auction,it.value,it.key))
+            }
+            binding.activityHistoryAuctionRecycler.adapter!!.notifyDataSetChanged()
+        })
+
+        //내 경매물품 데이터 관찰
         auctionViewModel.myAuctionData.observe(this , Observer {
             it!!.forEach {
                 list.add(HistoryItemDTO(HistoryType.auction,it.value,it.key))
@@ -38,6 +48,17 @@ class HistoryAuctionActivity : BaseActivity<ActivityHistoryAuctionBinding>(R.lay
             binding.activityHistoryAuctionRecycler.adapter!!.notifyDataSetChanged()
         })
 
+    }
+
+    fun getData(historyType : String){
+        when(historyType){
+            "BIDDED" -> {
+                auctionViewModel.getBiddedAuctionData(auth.currentUser!!.uid)
+            }
+            "MYAUCTION" ->{
+                auctionViewModel.getMyAuctionData(auth.currentUser!!.uid)
+            }
+        }
     }
 
     fun initRecyclerAdapter(){
