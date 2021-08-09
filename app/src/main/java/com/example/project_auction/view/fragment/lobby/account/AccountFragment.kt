@@ -11,6 +11,8 @@ import com.example.project_auction.base.BaseFragment
 import com.example.project_auction.data.SettingItem
 import com.example.project_auction.data.SettingType
 import com.example.project_auction.databinding.FragmentAccountBinding
+import com.example.project_auction.util.email.EmailUtils
+import com.example.project_auction.util.email.EmailUtils.Companion.emailUtils
 import com.example.project_auction.view.activity.account.AccountSettingActivity
 import com.example.project_auction.view.activity.history.HistoryAuctionActivity
 import com.example.project_auction.view.activity.history.HistoryTradeActivity
@@ -70,7 +72,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
 
                     }
                     "문의하기" ->{
-
+                        EmailUtils(binding.root.context).sendReport()
                     }
                 }
             }
