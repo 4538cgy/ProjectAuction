@@ -20,12 +20,9 @@ import com.example.project_auction.data.TimeRequestDTO
 import com.example.project_auction.data.UserDTO
 import com.example.project_auction.databinding.ActivityDetailAuctionBinding
 import com.example.project_auction.extension.toast
-import com.example.project_auction.util.fcm.FcmPush
 import com.example.project_auction.util.http.HttpApi
 import com.example.project_auction.util.time.TimeUtil
 import com.example.project_auction.view.bottomsheet.BottomSheetBidding
-import com.example.project_auction.view.bottomsheet.BottomSheetSetCloseProduct
-import kotlinx.android.synthetic.main.activity_detail_auction.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

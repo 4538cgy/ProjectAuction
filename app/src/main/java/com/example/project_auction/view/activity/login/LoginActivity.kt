@@ -55,7 +55,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         }
     }
 
-    fun kakaoLogin(view : View){
+    fun kakaoLogin(){
         UserApiClient.instance.loginWithKakaoTalk(binding.root.context){
             token, error ->
 
@@ -124,6 +124,17 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         //naver sdk 초기화
         mOAuthLoginModule.init(this,"D0nkJ2NHnNrr9qsuaobQ","oeQaBdgtSn","Auction")
 
+        binding.apply {
+            activityLoginButtonKakaoLogin.setOnClickListener {
+                kakaoLogin()
+            }
+            activityLoginImagebuttonGoogleLogin.setOnClickListener {
+                google()
+            }
+            activityLoginButtonNaverLogin.setOnClickListener {
+                naver()
+            }
+        }
 
         //kakao sdk 초기화
         KakaoSdk.init(binding.root.context, "a569b6cca45eb6678adf418f11dc4357")
@@ -144,7 +155,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         moveMainPage(auth?.currentUser)
     }
 
-    fun naver(view : View){
+    fun naver(){
         val mOAuthHandler = object : OAuthLoginHandler(){
             override fun run(success: Boolean) {
                 if (success){
@@ -211,7 +222,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         mOAuthLoginModule.startOauthLoginActivity(this,mOAuthHandler)
     }
 
-    fun google(view : View){
+    fun google(){
         val signInIntent = googleSignInClient?.signInIntent
         googleLoginCallback.launch(signInIntent)
         //startActivityForResult(signInIntent, GOOGLE_LOGIN_CODE)

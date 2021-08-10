@@ -3,6 +3,7 @@ package com.example.project_auction.util.fcm
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.job.JobService
 import android.content.Context
 import android.content.Intent
 import android.media.Ringtone
@@ -15,6 +16,7 @@ import com.example.project_auction.view.activity.lobby.LobbyActivity
 import com.example.project_auction.view.activity.login.LoginActivity
 import com.firebase.jobdispatcher.FirebaseJobDispatcher
 import com.firebase.jobdispatcher.GooglePlayDriver
+import com.google.android.gms.common.GooglePlayServicesUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -91,6 +93,9 @@ class FCM : FirebaseMessagingService() {
     }
 
     private fun scheduleJob() { //장기작업인지(10초이상)일때 처리하는 메소드
+
+
+
         val dispatcher = FirebaseJobDispatcher(GooglePlayDriver(this))
         val myJob = dispatcher.newJobBuilder()
             .setService(MyJobService::class.java)
