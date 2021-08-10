@@ -7,19 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.project_auction.R
+import com.example.project_auction.databinding.ItemLargeSizePhotoBinding
 import com.example.project_auction.view.activity.photo.PhotoViewActivity
-import kotlinx.android.synthetic.main.item_large_size_photo.view.*
-import kotlinx.android.synthetic.main.item_photo.view.*
 
 class LargeSizePhotoAdapter (val context : Context, val photoList : ArrayList<String>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        var view = LayoutInflater.from(parent.context).inflate(R.layout.item_large_size_photo, parent, false)
-        return CustomViewHolder(view)
-    }
-
-    inner class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
+        val view = ItemLargeSizePhotoBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return LargeSizeViewHolder(view)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -27,7 +21,7 @@ class LargeSizePhotoAdapter (val context : Context, val photoList : ArrayList<St
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        var viewHolder = (holder as CustomViewHolder).itemView
+        var viewHolder = (holder as LargeSizeViewHolder)
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
 
@@ -35,14 +29,14 @@ class LargeSizePhotoAdapter (val context : Context, val photoList : ArrayList<St
                 .load(photoList[position])
                 .centerCrop()
                 .thumbnail(0.1f)
-                .into(viewHolder.item_large_size_photo_imageview)
+                .into(viewHolder.binding.itemLargeSizePhotoImageview)
         }
-        viewHolder.item_large_size_photo_imageview.setOnClickListener {
+        viewHolder.binding.itemLargeSizePhotoImageview.setOnClickListener {
             //photoview activity 열리게
-            var intent = Intent(viewHolder.context,PhotoViewActivity::class.java)
+            var intent = Intent(viewHolder.binding.root.context,PhotoViewActivity::class.java)
             intent.apply {
                 putExtra("photoUri",photoList[position])
-                viewHolder.context.startActivity(intent)
+                viewHolder.binding.root.context.startActivity(intent)
             }
 
         }
@@ -51,5 +45,11 @@ class LargeSizePhotoAdapter (val context : Context, val photoList : ArrayList<St
 
     override fun getItemCount(): Int {
         return photoList.size
+    }
+}
+
+class LargeSizeViewHolder(var binding: ItemLargeSizePhotoBinding) : RecyclerView.ViewHolder(binding.root){
+    fun onBind(){
+
     }
 }

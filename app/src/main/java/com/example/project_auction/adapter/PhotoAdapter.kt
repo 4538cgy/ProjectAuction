@@ -6,21 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.project_auction.R
-import kotlinx.android.synthetic.main.item_photo.view.*
+import com.example.project_auction.databinding.ItemPhotoBinding
 
 class PhotoAdapter(val context : Context,val photoList : ArrayList<String>,val deleteType : Boolean) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        var view = LayoutInflater.from(parent.context).inflate(R.layout.item_photo, parent, false)
-        return CustomViewHolder(view)
+        val view = ItemPhotoBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return PhotoViewHolder(view)
     }
 
-    inner class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        var viewHolder = (holder as CustomViewHolder).itemView
+        var viewHolder = (holder as PhotoViewHolder)
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
 
@@ -28,12 +25,12 @@ class PhotoAdapter(val context : Context,val photoList : ArrayList<String>,val d
                 .load(photoList[position])
                 .centerCrop()
                 .thumbnail(0.1f)
-                .into(viewHolder.item_photo_imageview_photo)
+                .into(viewHolder.binding.itemPhotoImageviewPhoto)
         }
 
-        if (deleteType) viewHolder.item_photo_imagebutton_close.visibility = View.VISIBLE
+        if (deleteType) viewHolder.binding.itemPhotoImagebuttonClose.visibility = View.VISIBLE
 
-        viewHolder.item_photo_const_all.setOnClickListener {
+        viewHolder.binding.itemPhotoConstAll.setOnClickListener {
             if (deleteType) {
                 photoList.removeAt(position)
 
@@ -41,7 +38,7 @@ class PhotoAdapter(val context : Context,val photoList : ArrayList<String>,val d
             }
         }
 
-        viewHolder.item_photo_imagebutton_close.setOnClickListener {
+        viewHolder.binding.itemPhotoImagebuttonClose.setOnClickListener {
             if (deleteType) {
                 photoList.removeAt(position)
 
@@ -54,4 +51,7 @@ class PhotoAdapter(val context : Context,val photoList : ArrayList<String>,val d
     override fun getItemCount(): Int {
         return photoList.size
     }
+}
+
+class PhotoViewHolder(var binding: ItemPhotoBinding) : RecyclerView.ViewHolder(binding.root){
 }
